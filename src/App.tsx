@@ -11,6 +11,7 @@ import { Suspense } from 'react';
 import { QueryProvider } from './providers/query-provider';
 import { Spinner } from './components/spinner';
 import { LogoutScreen } from './screen/logout-screen';
+import { TransactionScreen } from './screen/transaction-screen';
 
 export function App() {
   return (
@@ -45,6 +46,10 @@ export function App() {
                   <Route
                     path='receive'
                     element={<ReceiveScreen />}
+                  />
+                  <Route
+                    path='transaction/:id'
+                    element={<TransactionScreen />}
                   />
                 </Route>
                 <Route

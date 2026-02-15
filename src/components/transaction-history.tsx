@@ -5,6 +5,8 @@ import { useSession } from '../providers/auth-provider';
 import { withApi } from '../util/server-config';
 import { Spinner } from './spinner';
 import { CircleArrowDown, CircleArrowUp } from 'lucide-react';
+import { useTransactions } from '../providers/transactions-provider';
+import { useNavigate } from 'react-router-dom';
 
 type TTransaction = {
   id: string;
@@ -16,21 +18,11 @@ type TTransaction = {
 };
 
 export function TransactionHistory() {
-  const { session } = useSession();
-  const { data: transactions, isPending } = useQuery({
-    queryKey: ['transactions', session?.user.id],
-    queryFn: async () => {
-      const res = await fetch(withApi('accounts/transactions'), {
-        credentials: 'include',
-      });
-      return res.status === 200 ? await res.json() : [];
-    },
-    refetchInterval: 30000,
-  });
+  const { transactions, transactionsPending } = useTransactions();
 
   return (
     <div className='flex flex-col w-full gap-2 overflow-y-scroll max-h-full flex-1 rounded-md'>
-      {isPending ? (
+      {transactionsPending ? (
         <Spinner />
       ) : transactions.length > 0 ? (
         transactions.map((t, i) => (
@@ -50,13 +42,16 @@ export function TransactionHistory() {
 
 function Transaction({ data }: { data: TTransaction }) {
   const { account } = useAccount();
+  const navigate = useNavigate();
   const received = data.to === account?.id;
   const amt = (data.amount_in_cents / 100).toFixed(2);
 
   const amountClassName = useClassName(received ? 'text-green-400' : 'text-red-400', 'font-mono');
   const amtString = received ? `+${amt}` : `-${amt}`;
   return (
-    <div className='flex flex-row w-full bg-white rounded-md shadow-md py-2 px-4 gap-4 items-center'>
+    <div
+      className='flex flex-row w-full bg-white rounded-md shadow-md py-2 px-4 gap-4 items-center cursor-pointer'
+      onClick={() => navigate(`/auth/overview/transaction/${data.id}`)}>
       {received ? (
         <CircleArrowDown
           className='text-green-400'
