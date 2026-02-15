@@ -9,12 +9,16 @@ export function LogoutScreen() {
   const navigate = useNavigate();
   const [pending, setPending] = useState(false);
   const { signout } = useSession();
+
   const handleSignout = async () => {
     setPending(true);
-    await signout();
+    const res = await signout();
+    if (res.status === 200) {
+      navigate('/');
+    }
     setPending(false);
-    navigate('/');
   };
+
   return (
     <Modal
       title='Kirjaudu Ulos'

@@ -11,29 +11,26 @@ const [AuthContext, useSession] = setupContext<{
     };
   };
   signin: (credentials: any) => Promise<Response>;
-  signout: () => Promise<void>;
+  signout: () => Promise<Response>;
 }>('AuthContext');
 
 export function AuthProvider({ children }: React.PropsWithChildren) {
-  const query = useQuery({
+  const { data: session, refetch } = useQuery({
     queryKey: ['session'],
     queryFn: async () => {
       const res = await fetch(withApi('auth/session'), {
         method: 'GET',
         credentials: 'include',
       });
-      return res.status === 200 ? await res.json() : null;
-    },
-    enabled: false,
-    retryDelay: 3000,
-  });
 
-  const [session, setSession] = useState(() => {
-    const storedSession = localStorage.getItem('cbdc-markka-session');
-    if (storedSession) {
-      return JSON.parse(storedSession);
-    }
-    return null;
+      if (res.status === 200) {
+        const data = await res.json();
+        localStorage.setItem('cbdc-markka-session', JSON.stringify(data));
+        return data;
+      }
+      return null;
+    },
+    retryDelay: 3000,
   });
 
   const signin = async (credentials: any) => {
@@ -47,17 +44,22 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
     });
 
     if (res.status === 200) {
-      const res = await query.refetch();
-      if (res.data) {
-        setSession(res.data);
-        localStorage.setItem('cbdc-markka-session', JSON.stringify(res.data));
-      }
+      await refetch();
     }
+
     return res;
   };
 
   const signout = async () => {
-    setSession(null);
+    const res = await fetch(withApi('auth/logout'), {
+      method: 'GET',
+      credentials: 'include',
+    });
+    if (res.status === 200) {
+      localStorage.removeItem('cbdc-markka-session');
+      await refetch();
+    }
+    return res;
   };
 
   return (

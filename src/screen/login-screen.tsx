@@ -20,7 +20,9 @@ export function LoginScreen() {
 
       if (res.status === 200) {
         setStatus('success');
-        navigate('/auth/overview');
+        setTimeout(() => {
+          navigate('/auth/overview');
+        }, 2000);
       } else {
         const err = await res.json();
         setStatus(err.error);
