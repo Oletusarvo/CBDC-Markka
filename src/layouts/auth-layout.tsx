@@ -2,14 +2,15 @@ import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { Button } from '../components/button';
 import { LogOut } from 'lucide-react';
 import { useSession } from '../providers/auth-provider';
+import { Spinner } from '../components/spinner';
 
 export function AuthLayout() {
-  const { session } = useSession();
-  const navigate = useNavigate();
-  const logout = () => navigate('/auth/logout');
+  const { status } = useSession();
 
-  if (!session) {
+  if (status === 'unauthenticated') {
     return <Navigate to='/login' />;
+  } else if (status === 'loading') {
+    return <Spinner />;
   }
 
   return (

@@ -56,7 +56,7 @@ export function OverviewLayout() {
 function WalletContainer() {
   const { account, isPending } = useAccount();
   return (
-    <div className='rounded-xl shadow-lg bg-linear-to-r from-primary to-green-400 p-8 w-full flex flex-col items-center'>
+    <div className='rounded-xl shadow-md bg-linear-to-r from-primary to-green-400 p-8 w-full flex flex-col items-center'>
       <h3 className='text-white text-sm'>Tilin Saldo</h3>
       <h2 className='text-white font-semibold text-2xl font-mono'>
         {isPending ? (

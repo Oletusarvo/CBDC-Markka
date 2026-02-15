@@ -12,10 +12,15 @@ const [AuthContext, useSession] = setupContext<{
   };
   signin: (credentials: any) => Promise<Response>;
   signout: () => Promise<Response>;
+  status: 'authenticated' | 'unauthenticated' | 'loading';
 }>('AuthContext');
 
 export function AuthProvider({ children }: React.PropsWithChildren) {
-  const { data: session, refetch } = useSuspenseQuery({
+  const {
+    data: session,
+    isPending: sessionPending,
+    refetch,
+  } = useQuery({
     queryKey: ['session'],
     queryFn: async () => {
       const res = await fetch(withApi('auth/session'), {
@@ -32,6 +37,8 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
     },
     retryDelay: 3000,
   });
+
+  const status = session ? 'authenticated' : sessionPending ? 'loading' : 'unauthenticated';
 
   const signin = async (credentials: any) => {
     const res = await fetch(withApi('auth/login'), {
@@ -63,7 +70,9 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
   };
 
   return (
-    <AuthContext.Provider value={{ session, signin, signout }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ session, signin, signout, status }}>
+      {children}
+    </AuthContext.Provider>
   );
 }
 
