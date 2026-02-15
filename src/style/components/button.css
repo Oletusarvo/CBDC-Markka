@@ -1,0 +1,54 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: --spacing(2) --spacing(4);
+  color: var(--color-fuchsia-500);
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  gap: --spacing(2);
+  transition: transform 0.2s ease-out;
+  font-size: var(--text-xs);
+}
+
+.button:enabled:active {
+  transform: scale(0.95);
+}
+
+.button.--contained,
+.button.--outlined {
+  min-height: 2rem;
+}
+
+.button.--primary.--contained:disabled {
+  background-color: var(--color-gray-400);
+}
+
+.button.--primary.--contained {
+  background-color: var(--color-fuchsia-500);
+  color: white;
+  border: none;
+}
+
+.button.--primary-pretty.--contained {
+  background: linear-gradient(to right, var(--color-fuchsia-500), var(--color-purple-500));
+  color: white;
+  border: none;
+}
+
+.button.--primary.--outlined {
+  background-color: transparent;
+  color: var(--color-fuchsia-500);
+  border: 1px solid var(--color-fuchsia-500);
+}
+
+.button.--primary.--ghost {
+  background-color: transparent;
+  color: var(--color-fuchsia-500);
+  border: none;
+}
+
+.button.--ghost:hover {
+  background-color: color-mix(in oklab, black 10%, transparent 100%);
+}

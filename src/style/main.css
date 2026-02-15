@@ -1,0 +1,7 @@
+@import './components/button.css';
+@import './components/input.css';
+
+a {
+  font-size: var(--text-sm);
+  color: var(--color-fuchsia-500);
+}
