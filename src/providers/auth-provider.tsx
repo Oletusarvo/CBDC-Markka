@@ -15,7 +15,7 @@ const [AuthContext, useSession] = setupContext<{
 }>('AuthContext');
 
 export function AuthProvider({ children }: React.PropsWithChildren) {
-  const { data: session, refetch } = useQuery({
+  const { data: session, refetch } = useSuspenseQuery({
     queryKey: ['session'],
     queryFn: async () => {
       const res = await fetch(withApi('auth/session'), {
