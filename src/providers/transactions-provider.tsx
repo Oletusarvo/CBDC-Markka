@@ -20,6 +20,7 @@ export function TransactionsProvider({ children }: React.PropsWithChildren) {
 
       return res.status === 200 ? await res.json() : [];
     },
+    refetchInterval: 30000,
   });
 
   return (

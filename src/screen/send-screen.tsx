@@ -17,6 +17,7 @@ export function SendScreen() {
   const cancel = () => navigate('/auth/overview');
 
   const handleSubmit = async (e: any) => {
+    console.log('Sending money...');
     e.preventDefault();
     setStatus('loading');
     try {
@@ -93,6 +94,7 @@ export function SendScreen() {
             Peruuta
           </Button>
           <LoaderButton
+            type='submit'
             loading={loading}
             fullWidth
             rounded

@@ -5,6 +5,7 @@ import { AccountProvider, useAccount } from '../providers/account-provider';
 import { Spinner } from '../components/spinner';
 import { LogOut } from 'lucide-react';
 import { TransactionsProvider } from '../providers/transactions-provider';
+import { useAnimatedNumber } from '../hooks/use-animated-number';
 
 export function OverviewLayout() {
   const navigate = useNavigate();
@@ -58,11 +59,12 @@ export function OverviewLayout() {
 
 function WalletContainer() {
   const { account, isPending } = useAccount();
+  const currentBalance = useAnimatedNumber(account?.balance_in_cents / 100 || 0);
   return (
     <div className='rounded-xl shadow-md bg-linear-to-r from-primary to-green-400 p-8 w-full flex flex-col items-center'>
       <h3 className='text-white text-sm'>Tilin Saldo</h3>
       <h2 className='text-white font-semibold text-2xl font-mono'>
-        {isPending ? <Spinner /> : Number(account.balance_in_cents / 100).toFixed(2)} mk
+        {isPending ? <Spinner /> : Number(currentBalance).toFixed(2)} mk
       </h2>
     </div>
   );
