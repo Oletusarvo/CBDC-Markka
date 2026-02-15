@@ -17,17 +17,18 @@ export function LogoutScreen() {
   };
   return (
     <Modal
-      title='Logout'
+      title='Kirjaudu Ulos'
       onClose={() => navigate('/auth/overview')}>
       <div className='flex flex-col gap-2 w-full'>
-        <p>Are you sure you wish to log out?</p>
+        <p>Haluatko varmasti kirjautua ulos?</p>
         <div className='flex items-center gap-2 w-full'>
           <Button
+            onClick={() => navigate('/auth/overview')}
             fullWidth
             rounded
             variant='outlined'
             type='button'>
-            Cancel
+            Peruuta
           </Button>
           <LoaderButton
             loading={pending}
@@ -37,7 +38,7 @@ export function LogoutScreen() {
             shadow
             variant='contained'
             type='button'>
-            Yes, Logout
+            Kyllä
           </LoaderButton>
         </div>
       </div>
