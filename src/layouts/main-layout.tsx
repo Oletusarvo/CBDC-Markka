@@ -48,6 +48,7 @@ function CirculationDisplay() {
       });
       return res.status === 200 ? await res.json() : null;
     },
+    refetchInterval: 30000,
   });
 
   const currentCirculation = useAnimatedNumber(!isPending ? data.circulation / 100 : 0);
