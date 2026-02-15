@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   padding: --spacing(2) --spacing(4);
-  color: var(--color-fuchsia-500);
+  color: var(--color-primary);
   text-transform: uppercase;
   font-weight: 600;
   cursor: pointer;
@@ -26,26 +26,26 @@
 }
 
 .button.--primary.--contained {
-  background-color: var(--color-fuchsia-500);
+  background-color: var(--color-primary);
   color: white;
   border: none;
 }
 
 .button.--primary-pretty.--contained {
-  background: linear-gradient(to right, var(--color-fuchsia-500), var(--color-purple-500));
+  background: linear-gradient(to right, var(--color-primary), var(--color-green-400));
   color: white;
   border: none;
 }
 
 .button.--primary.--outlined {
   background-color: transparent;
-  color: var(--color-fuchsia-500);
-  border: 1px solid var(--color-fuchsia-500);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
 }
 
 .button.--primary.--ghost {
   background-color: transparent;
-  color: var(--color-fuchsia-500);
+  color: var(--color-primary);
   border: none;
 }
 

@@ -28,7 +28,13 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
     retryDelay: 3000,
   });
 
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState(() => {
+    const storedSession = localStorage.getItem('cbdc-markka-session');
+    if (storedSession) {
+      return JSON.parse(storedSession);
+    }
+    return null;
+  });
 
   const signin = async (credentials: any) => {
     const res = await fetch(withApi('auth/login'), {
@@ -44,6 +50,7 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
       const res = await query.refetch();
       if (res.data) {
         setSession(res.data);
+        localStorage.setItem('cbdc-markka-session', JSON.stringify(res.data));
       }
     }
     return res;

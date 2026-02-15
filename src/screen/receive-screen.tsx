@@ -22,10 +22,10 @@ export function ReceiveScreen() {
             <QRCodeSVG
               className='rounded-md'
               value={account?.id}
-              fgColor='purple'
+              fgColor='green'
               minVersion={5}
             />
-            <span className='text-slate-500'>{session?.user.email}</span>
+            <span className='text-slate-500 mt-4'>{session?.user.email}</span>
           </>
         )}
       </div>

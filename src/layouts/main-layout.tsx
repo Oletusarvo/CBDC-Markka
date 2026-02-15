@@ -6,7 +6,11 @@ export function MainLayout() {
 
   return (
     <div className='flex flex-col gap-2 items-center justify-center h-full px-4'>
-      <h1 className='text-lg font-semibold text-slate-500 mb-4'>Korruptiomummon Markka</h1>
+      <div
+        className='absolute top-0 left-0 w-full h-full opacity-15 -z-10'
+        id='index-image'
+      />
+      <h1 className='text-2xl font-semibold text-primary mb-4'>CBDC Markka</h1>
       <Button
         color='primary-pretty'
         onClick={() => navigate('/register')}

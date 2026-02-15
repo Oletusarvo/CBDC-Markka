@@ -17,14 +17,6 @@ export function AuthLayout() {
       <main className='flex flex-col w-full flex-1 h-full overflow-y-scroll'>
         <Outlet />
       </main>
-      <footer className='flex w-full items-center bg-white p-2 justify-center'>
-        <Button
-          onClick={logout}
-          variant='ghost'
-          circular>
-          <LogOut />
-        </Button>
-      </footer>
     </div>
   );
 }

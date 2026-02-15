@@ -20,7 +20,7 @@ export function LogoutScreen() {
       title='Kirjaudu Ulos'
       onClose={() => navigate('/auth/overview')}>
       <div className='flex flex-col gap-2 w-full'>
-        <p>Haluatko varmasti kirjautua ulos?</p>
+        <p className='text-slate-500'>Haluatko varmasti kirjautua ulos?</p>
         <div className='flex items-center gap-2 w-full'>
           <Button
             onClick={() => navigate('/auth/overview')}

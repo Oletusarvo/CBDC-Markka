@@ -5,8 +5,10 @@ import { Send, XCircle } from 'lucide-react';
 import { useState } from 'react';
 import { Input } from '../components/input';
 import { withApi } from '../util/server-config';
+import { useAccount } from '../providers/account-provider';
 
 export function SendScreen() {
+  const { account } = useAccount();
   const navigate = useNavigate();
   const [pending, setPending] = useState(false);
   const [currentAddress, setCurrentAddress] = useState('');
@@ -49,12 +51,14 @@ export function SendScreen() {
           type='number'
           step={0.01}
           min={0.01}
+          max={account.balance_in_cents / 100}
           placeholder='Määrä...'
         />
         <textarea
           className='w-full textarea'
           name='message'
-          placeholder='Kirjoita vaihtoehtoinen viesti...'
+          placeholder='Kirjoita viesti...'
+          required
         />
         <div className='flex gap-2 w-full'>
           <Button
@@ -63,7 +67,7 @@ export function SendScreen() {
             variant='outlined'
             type='button'
             onClick={cancel}>
-            Cancel
+            Peruuta
           </Button>
           <LoaderButton
             loading={pending}
