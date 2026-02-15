@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Input } from '../components/input';
 import { withApi } from '../util/server-config';
 import { useAccount } from '../providers/account-provider';
+import { ErrorMessage } from '../components/helper-message';
 
 export function SendScreen() {
   const { account } = useAccount();
@@ -60,9 +61,9 @@ export function SendScreen() {
             onChange={e => setCurrentAddress(e.target.value)}
           />
           {status === 'transaction:invalid-recipient' ? (
-            <span className='text-sm text-red-600'>Vastaanottajaa ei ole!</span>
+            <ErrorMessage>Vastaanottajaa ei ole!</ErrorMessage>
           ) : status === 'transaction:self-transaction' ? (
-             <span className='text-sm text-red-600'>Samalle tilille ei voi lähettää rahaa!</span>
+            <ErrorMessage>Samalle tilille ei voi lähettää rahaa!</ErrorMessage>
           ) : null}
         </div>
         <div className='flex flex-col w-full'>
@@ -76,7 +77,7 @@ export function SendScreen() {
           />
 
           {status === 'transaction:insufficient-funds' ? (
-            <span className='text-sm text-red-600'>Saldosi ei riitä!</span>
+            <ErrorMessage>Saldosi ei riitä!</ErrorMessage>
           ) : null}
         </div>
 

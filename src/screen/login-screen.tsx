@@ -2,9 +2,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Modal } from '../components/modal';
 import { Input } from '../components/input';
 import { Button, LoaderButton } from '../components/button';
-import { withApi } from '../util/server-config';
+
 import { useState } from 'react';
 import { useSession } from '../providers/auth-provider';
+import { ErrorMessage } from '../components/helper-message';
 
 export function LoginScreen() {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ export function LoginScreen() {
             placeholder='Salasanasi...'
           />
           {status.includes('auth:') ? (
-            <span className='text-sm text-red-600'>Virheelliset tunnistautumistiedot!</span>
+            <ErrorMessage>Virheelliset tunnistautumistiedot!</ErrorMessage>
           ) : null}
         </div>
 

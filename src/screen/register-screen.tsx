@@ -4,6 +4,7 @@ import { Input } from '../components/input';
 import { Button, LoaderButton } from '../components/button';
 import { withApi } from '../util/server-config';
 import { useState } from 'react';
+import { ErrorMessage } from '../components/helper-message';
 
 export function RegisterScreen() {
   const [status, setStatus] = useState('idle');
@@ -14,6 +15,10 @@ export function RegisterScreen() {
     setStatus('loading');
     try {
       const credentials = Object.fromEntries(new FormData(e.currentTarget)) as any;
+      if (credentials.password1 !== credentials.password2) {
+        setStatus('auth:password-mismatch');
+        return;
+      }
 
       const res = await fetch(withApi('auth/register'), {
         method: 'POST',
@@ -52,7 +57,7 @@ export function RegisterScreen() {
             placeholder='Kirjoita sähköpostiosoitteesi...'
           />
           {status === 'auth:email-taken' ? (
-            <span className='text-sm text-red-600'>Antamasi sähköpostiosoite on jo käytössä!</span>
+            <ErrorMessage>Antamasi sähköpostiosoite on jo käytössä!</ErrorMessage>
           ) : null}
         </div>
 
@@ -63,13 +68,17 @@ export function RegisterScreen() {
           placeholder='Luo salasana...'
           autoComplete='new-password webauthn'
         />
-        <Input
-          type='password'
-          name='password2'
-          required
-          placeholder='Kirjoita salasana uudelleen...'
-          autoComplete='new-password webauthn'
-        />
+        <div className='flex flex-col w-full'>
+          <Input
+            type='password'
+            name='password2'
+            required
+            placeholder='Kirjoita salasana uudelleen...'
+            autoComplete='new-password webauthn'
+          />
+          <ErrorMessage>Salasanat eivät täsmää!</ErrorMessage>
+        </div>
+
         <div className='flex gap-2 w-full'>
           <Button
             rounded
