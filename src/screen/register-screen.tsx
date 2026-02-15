@@ -13,7 +13,7 @@ export function RegisterScreen() {
     e.preventDefault();
     setStatus('loading');
     const credentials = Object.fromEntries(new FormData(e.currentTarget)) as any;
-    console.log(credentials);
+
     const res = await fetch(withApi('auth/register'), {
       method: 'POST',
       body: JSON.stringify(credentials),
