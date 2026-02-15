@@ -61,6 +61,8 @@ export function SendScreen() {
           />
           {status === 'transaction:invalid-recipient' ? (
             <span className='text-sm text-red-600'>Vastaanottajaa ei ole!</span>
+          ) : status === 'transaction:self-transaction' ? (
+             <span className='text-sm text-red-600'>Samalle tilille ei voi lähettää rahaa!</span>
           ) : null}
         </div>
         <div className='flex flex-col w-full'>
