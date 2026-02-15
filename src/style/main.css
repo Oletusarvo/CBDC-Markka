@@ -15,7 +15,7 @@ body {
 }
 
 #index-image {
-  background: url('/bg-image.png');
+  background: url('/bg-image.jpg');
   background-size: cover;
   background-position-x: -50px;
 }
