@@ -12,22 +12,28 @@ export function RegisterScreen() {
   const handleRegister = async (e: any) => {
     e.preventDefault();
     setStatus('loading');
-    const credentials = Object.fromEntries(new FormData(e.currentTarget)) as any;
+    try {
+      const credentials = Object.fromEntries(new FormData(e.currentTarget)) as any;
 
-    const res = await fetch(withApi('auth/register'), {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (res.status === 200) {
-      setStatus('success');
-      navigate('/login');
-    } else {
-      const error = await res.json();
-      setStatus(error.error);
+      const res = await fetch(withApi('auth/register'), {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (res.status === 200) {
+        setStatus('success');
+        navigate('/login');
+      } else {
+        const error = await res.json();
+        setStatus(error.error);
+      }
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      setStatus(prev => (prev === 'loading' ? 'idle' : prev));
     }
   };
 

@@ -14,14 +14,21 @@ export function LoginScreen() {
   const handleLogin = async (e: any) => {
     e.preventDefault();
     setStatus('loading');
-    const credentials = Object.fromEntries(new FormData(e.currentTarget)) as any;
-    const res = await signin(credentials);
+    try {
+      const credentials = Object.fromEntries(new FormData(e.currentTarget)) as any;
+      const res = await signin(credentials);
 
-    if (res.status === 200) {
-      navigate('/auth/overview');
-    } else {
-      const err = await res.json();
-      setStatus(err.error);
+      if (res.status === 200) {
+        setStatus('success');
+        navigate('/auth/overview');
+      } else {
+        const err = await res.json();
+        setStatus(err.error);
+      }
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      setStatus(prev => (prev === 'loading' ? 'idle' : prev));
     }
   };
 
