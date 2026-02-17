@@ -7,6 +7,7 @@ import { Spinner } from './spinner';
 import { CircleArrowDown, CircleArrowUp } from 'lucide-react';
 import { useTransactions } from '../providers/transactions-provider';
 import { useNavigate } from 'react-router-dom';
+import { DataContainer } from './data-container';
 
 type TTransaction = {
   id: string;
@@ -49,18 +50,16 @@ function Transaction({ data }: { data: TTransaction }) {
   const amountClassName = useClassName(received ? 'text-green-400' : 'text-red-400', 'font-mono');
   const amtString = received ? `+${amt}` : `-${amt}`;
   return (
-    <div
-      className='flex flex-row w-full bg-white rounded-md shadow-md py-2 px-4 gap-4 items-center cursor-pointer'
-      onClick={() => navigate(`/auth/overview/transaction/${data.id}`)}>
+    <DataContainer onClick={() => navigate(`/auth/overview/transaction/${data.id}`)}>
       {received ? (
         <CircleArrowDown
           className='text-green-400'
-          size={32}
+          size={24}
         />
       ) : (
         <CircleArrowUp
           className='text-red-400'
-          size={32}
+          size={24}
         />
       )}
       <div className='flex flex-col w-full'>
@@ -71,6 +70,6 @@ function Transaction({ data }: { data: TTransaction }) {
           {new Date(data.timestamp).toLocaleDateString('fi')}
         </span>
       </div>
-    </div>
+    </DataContainer>
   );
 }

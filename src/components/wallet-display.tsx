@@ -3,6 +3,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTokens } from '../providers/token-provider';
 import { Spinner } from './spinner';
+import { DataContainer } from './data-container';
 
 export function WalletDisplay() {
   const { tokens, isPending } = useTokens();
@@ -30,9 +31,8 @@ function Token({ data }: { data: any }) {
   const value = data.value_in_cents / 100;
   const navigate = useNavigate();
   return (
-    <div
-      className='flex flex-row w-full bg-white rounded-md shadow-md py-2 px-4 gap-4 items-center cursor-pointer'
-      onClick={() => navigate(`/auth/overview/token/${data.id}`)}>
+    <DataContainer onClick={() => navigate(`/auth/overview/token/${data.id}`)}>
+      <div className='absolute top-0 left-0 bg-primary w-1 h-full' />
       <div className='flex flex-col'>
         <span className='font-mono text-blue-500'>{value.toFixed(2)} mk</span>
         <span className='text-slate-500 text-xs'>{data.id}</span>
@@ -40,6 +40,6 @@ function Token({ data }: { data: any }) {
           {new Date(data.minted_on).getFullYear()}
         </span>
       </div>
-    </div>
+    </DataContainer>
   );
 }
