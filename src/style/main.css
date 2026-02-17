@@ -16,6 +16,7 @@ body {
 
 #index-image {
   background: url('/bg-image.jpg');
+  filter: grayscale();
   background-size: cover;
   background-position-x: -50px;
 }

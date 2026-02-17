@@ -76,7 +76,9 @@ export function RegisterScreen() {
             placeholder='Kirjoita salasana uudelleen...'
             autoComplete='new-password webauthn'
           />
-          <ErrorMessage>Salasanat eivät täsmää!</ErrorMessage>
+          {status === 'auth:password-mismatch' ? (
+            <ErrorMessage>Salasanat eivät täsmää!</ErrorMessage>
+          ) : null}
         </div>
 
         <div className='flex gap-2 w-full'>

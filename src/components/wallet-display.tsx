@@ -34,7 +34,7 @@ function Token({ data }: { data: any }) {
       className='flex flex-row w-full bg-white rounded-md shadow-md py-2 px-4 gap-4 items-center cursor-pointer'
       onClick={() => navigate(`/auth/overview/token/${data.id}`)}>
       <div className='flex flex-col'>
-        <span className='font-mono'>{value.toFixed(2)} mk</span>
+        <span className='font-mono text-blue-500'>{value.toFixed(2)} mk</span>
         <span className='text-slate-500 text-xs'>{data.id}</span>
         <span className='text-slate-500 text-xs mt-4'>
           {new Date(data.minted_on).getFullYear()}

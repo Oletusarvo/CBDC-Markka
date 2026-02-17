@@ -79,7 +79,7 @@ function WalletContainer() {
     tokens?.reduce((acc, cur) => (acc += parseInt(cur.value_in_cents as any)), 0) / 100 || 0,
   );
   return (
-    <div className='rounded-xl shadow-md bg-linear-to-r from-primary to-green-400 p-8 w-full flex flex-col items-center'>
+    <div className='rounded-xl shadow-md bg-linear-to-r from-primary to-cyan-400 p-8 w-full flex flex-col items-center'>
       <h3 className='text-white text-sm'>Tilin Saldo</h3>
       <h2 className='text-white font-semibold text-2xl font-mono'>
         {isPending ? <Spinner /> : Number(currentBalance).toFixed(2)} mk

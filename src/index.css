@@ -2,7 +2,7 @@
 @import './style/main.css';
 
 :root {
-  --primary: var(--color-green-700);
+  --primary: var(--color-blue-500);
 }
 
 @theme {

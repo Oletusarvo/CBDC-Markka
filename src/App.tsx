@@ -14,13 +14,14 @@ import { LogoutScreen } from './screen/logout-screen';
 import { TransactionScreen } from './screen/transaction-screen';
 import { ServiceWorkerLoader } from './components/service-worker-loader';
 import { TokenScreen } from './screen/token-screen';
+import { LoadingScreen } from './screen/loading-screen';
 
 export function App() {
   return (
     <>
       <QueryProvider>
         <HashRouter>
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<LoadingScreen />}>
             <AuthProvider>
               <Routes>
                 <Route
