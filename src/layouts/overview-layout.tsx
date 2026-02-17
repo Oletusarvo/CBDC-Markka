@@ -9,10 +9,11 @@ import { useAnimatedNumber } from '../hooks/use-animated-number';
 import { TokenProvider, useTokens } from '../providers/token-provider';
 import { WalletDisplay } from '../components/wallet-display';
 import { useState } from 'react';
+import { TabButton } from '../components/tab-button';
 
 export function OverviewLayout() {
   const navigate = useNavigate();
-  const [currentTab, setCurrentTab] = useState('tokens');
+  const [currentTab, setCurrentTab] = useState('wallet');
 
   return (
     <AccountProvider>
@@ -32,18 +33,22 @@ export function OverviewLayout() {
               </div>
             </div>
             <div className='w-full flex'>
-              <Button
-                onClick={() => setCurrentTab('transactions')}
-                variant='ghost'
-                fullWidth>
-                Tapahtumat
-              </Button>
-              <Button
-                onClick={() => setCurrentTab('wallet')}
-                variant='ghost'
-                fullWidth>
-                Lompakko
-              </Button>
+              <TabButton selected={currentTab === 'transactions'}>
+                <Button
+                  onClick={() => setCurrentTab('transactions')}
+                  variant='ghost'
+                  fullWidth>
+                  Tapahtumat
+                </Button>
+              </TabButton>
+              <TabButton selected={currentTab === 'wallet'}>
+                <Button
+                  onClick={() => setCurrentTab('wallet')}
+                  variant='ghost'
+                  fullWidth>
+                  Lompakko
+                </Button>
+              </TabButton>
             </div>
             {currentTab === 'transactions' ? <TransactionHistory /> : <WalletDisplay />}
 
