@@ -7,6 +7,7 @@ import { Input } from '../components/input';
 import { withApi } from '../util/server-config';
 import { useAccount } from '../providers/account-provider';
 import { ErrorMessage } from '../components/helper-message';
+import {useTokens} from "../providers/token-provider";
 
 export function SendScreen() {
   const { account } = useAccount();
