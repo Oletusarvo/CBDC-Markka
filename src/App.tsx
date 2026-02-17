@@ -13,6 +13,7 @@ import { Spinner } from './components/spinner';
 import { LogoutScreen } from './screen/logout-screen';
 import { TransactionScreen } from './screen/transaction-screen';
 import { ServiceWorkerLoader } from './components/service-worker-loader';
+import { TokenScreen } from './screen/token-screen';
 
 export function App() {
   return (
@@ -52,6 +53,10 @@ export function App() {
                     <Route
                       path='transaction/:id'
                       element={<TransactionScreen />}
+                    />
+                    <Route
+                      path='token/:id'
+                      element={<TokenScreen />}
                     />
                   </Route>
                   <Route
