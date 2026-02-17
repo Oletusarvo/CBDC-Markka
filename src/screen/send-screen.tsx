@@ -10,12 +10,15 @@ import { ErrorMessage } from '../components/helper-message';
 
 export function SendScreen() {
   const { account } = useAccount();
+const {tokens, isPending: tokensPending} = useTokens();
   const navigate = useNavigate();
   const [status, setStatus] = useState('idle');
   const loading = status === 'loading';
   const [currentAddress, setCurrentAddress] = useState('');
 
   const cancel = () => navigate('/auth/overview');
+
+const balance = !tokensPending ? tokens.reduce((acc, cur) => acc += parseInt(cur.value_in_cents as any), 0) : 0;
 
   const handleSubmit = async (e: any) => {
     console.log('Sending money...');
@@ -72,7 +75,7 @@ export function SendScreen() {
             type='number'
             step={0.01}
             min={0.01}
-            max={account.balance_in_cents / 100}
+            max={balance / 100}
             placeholder='Määrä...'
           />
 
