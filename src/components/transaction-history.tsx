@@ -51,17 +51,6 @@ function Transaction({ data }: { data: TTransaction }) {
   const amtString = received ? `+${amt}` : `-${amt}`;
   return (
     <DataContainer onClick={() => navigate(`/auth/overview/transaction/${data.id}`)}>
-      {received ? (
-        <CircleArrowDown
-          className='text-green-400'
-          size={24}
-        />
-      ) : (
-        <CircleArrowUp
-          className='text-red-400'
-          size={24}
-        />
-      )}
       <div className='flex flex-col w-full'>
         <span className={amountClassName}>{amtString} mk</span>
 
