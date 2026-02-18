@@ -41,6 +41,7 @@ export function TokenScreen() {
               <span className='text-slate-500'>Ei Kuvaa.</span>
             ) : (
               <img
+                width={400}
                 key={token.value_in_cents}
                 src={`/coins/bill-${token.value_in_cents}.jpg`}
                 onLoad={() => setImageState('loaded')}
