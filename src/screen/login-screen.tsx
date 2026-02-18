@@ -23,7 +23,7 @@ export function LoginScreen() {
         setStatus('success');
         setTimeout(() => {
           navigate('/auth/overview');
-        }, 2000);
+        }, 700);
       } else {
         const err = await res.json();
         setStatus(err.error);

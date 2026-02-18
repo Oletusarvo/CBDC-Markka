@@ -34,11 +34,14 @@ function Token({ data }: { data: any }) {
     <DataContainer onClick={() => navigate(`/auth/overview/token/${data.id}`)}>
       <div className='absolute top-0 left-0 bg-primary w-1 h-full' />
       <div className='flex flex-col'>
+        <img
+          src={`/coins/bill-${data.value_in_cents}.jpg`}
+          width={120}
+        />
+      </div>
+      <div className='flex flex-col'>
         <span className='font-mono text-blue-500'>{value.toFixed(2)} mk</span>
-        <span className='text-slate-500 text-xs'>{data.id}</span>
-        <span className='text-slate-500 text-xs mt-4'>
-          {new Date(data.minted_on).getFullYear()}
-        </span>
+        <span className='text-slate-500 text-xs'>{new Date(data.minted_on).getFullYear()}</span>
       </div>
     </DataContainer>
   );
