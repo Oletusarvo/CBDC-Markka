@@ -10,7 +10,7 @@ export function MainLayout() {
 
   return (
     <div className='flex flex-col h-full'>
-      <section className='w-full px-4 py-32 flex items-center'>
+      <section className='w-full px-4 py-32 flex items-center relative'>
         <div
           className='absolute top-0 left-0 w-full h-full opacity-15 -z-10'
           id='index-image'
@@ -51,6 +51,10 @@ export function MainLayout() {
         </p>
       </section>
 
+      <footer className='flex w-full py-16 px-4 bg-primary text-white'>
+        <CirculationDisplay />
+      </footer>
+
       <Outlet />
     </div>
   );
@@ -72,8 +76,8 @@ function CirculationDisplay() {
 
   return (
     <div className='flex flex-col w-full items-center mb-4'>
-      <span>Kierrossa</span>
-      <span className='font-mono'>
+      <span className='text-sm'>Kierrossa</span>
+      <span className='font-mono text-lg'>
         {isPending ? <Spinner /> : currentCirculation.toFixed(2)} mk
       </span>
     </div>
