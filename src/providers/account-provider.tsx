@@ -22,7 +22,7 @@ export function AccountProvider({ children }: React.PropsWithChildren) {
       });
       return res.status === 200 ? await res.json() : null;
     },
-    refetchInterval: 30000,
+    refetchInterval: 10000,
   });
 
   return (

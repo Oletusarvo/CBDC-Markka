@@ -24,7 +24,7 @@ export function TokenProvider({ children }: React.PropsWithChildren) {
 
       return res.status === 200 ? await res.json() : [];
     },
-    refetchInterval: 30000,
+    refetchInterval: 10000,
   });
 
   return <TokenContext.Provider value={{ tokens, isPending }}>{children}</TokenContext.Provider>;

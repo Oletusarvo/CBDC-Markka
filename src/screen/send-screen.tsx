@@ -7,11 +7,11 @@ import { Input } from '../components/input';
 import { withApi } from '../util/server-config';
 import { useAccount } from '../providers/account-provider';
 import { ErrorMessage } from '../components/helper-message';
-import {useTokens} from "../providers/token-provider";
+import { useTokens } from '../providers/token-provider';
 
 export function SendScreen() {
   const { account } = useAccount();
-const {tokens, isPending: tokensPending} = useTokens();
+  const { tokens, isPending: tokensPending } = useTokens();
   const navigate = useNavigate();
   const [status, setStatus] = useState('idle');
   const loading = status === 'loading';
@@ -19,7 +19,9 @@ const {tokens, isPending: tokensPending} = useTokens();
 
   const cancel = () => navigate('/auth/overview');
 
-const balance = !tokensPending ? tokens.reduce((acc, cur) => acc += parseInt(cur.value_in_cents as any), 0) : 0;
+  const balance = !tokensPending
+    ? tokens.reduce((acc, cur) => (acc += parseInt(cur.value_in_cents as any)), 0)
+    : 0;
 
   const handleSubmit = async (e: any) => {
     console.log('Sending money...');
@@ -82,6 +84,8 @@ const balance = !tokensPending ? tokens.reduce((acc, cur) => acc += parseInt(cur
 
           {status === 'transaction:insufficient-funds' ? (
             <ErrorMessage>Saldosi ei riitä!</ErrorMessage>
+          ) : status === 'transaction:double-spend' ? (
+            <ErrorMessage>Jotakin meni pieleen!</ErrorMessage>
           ) : null}
         </div>
 

@@ -3,7 +3,7 @@ import { Button } from '../components/button';
 import { TransactionHistory } from '../components/transaction-history';
 import { AccountProvider, useAccount } from '../providers/account-provider';
 import { Spinner } from '../components/spinner';
-import { LogOut } from 'lucide-react';
+import { CircleArrowDown, CircleArrowUp, LogOut } from 'lucide-react';
 import { TransactionsProvider } from '../providers/transactions-provider';
 import { useAnimatedNumber } from '../hooks/use-animated-number';
 import { TokenProvider, useTokens } from '../providers/token-provider';
@@ -58,6 +58,10 @@ export function OverviewLayout() {
                 fullWidth
                 shadow
                 rounded>
+                <CircleArrowUp
+                  size='1rem'
+                  color='white'
+                />
                 Lähetä
               </Button>
 
@@ -67,6 +71,10 @@ export function OverviewLayout() {
                 shadow
                 variant='outlined'
                 rounded>
+                <CircleArrowDown
+                  size='1rem'
+                  className='text-primary'
+                />
                 Pyydä
               </Button>
             </div>
