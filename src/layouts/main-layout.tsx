@@ -17,8 +17,10 @@ export function MainLayout() {
         />
         <div className='flex flex-col items-center w-full'>
           <h1 className='text-2xl font-semibold text-primary'>CBDC Markka</h1>
-          <p>Raha, joka toimii kuin fyysinen seteli — mutta digitaalisesti.</p>
-          <div className='flex w-full gap-2 mt-4'>
+          <p className='text-center text-sm'>
+            Raha, joka toimii kuin fyysinen seteli — mutta digitaalisesti.
+          </p>
+          <div className='flex w-full gap-2 mt-8'>
             <Button
               color='primary-pretty'
               onClick={() => navigate('/register')}
