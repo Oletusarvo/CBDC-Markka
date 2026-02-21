@@ -17,7 +17,7 @@ export function MainLayout() {
         />
         <div className='flex flex-col items-center w-full'>
           <h1 className='text-2xl font-semibold text-primary'>CBDC Markka</h1>
-          <p>Fyysesti mallinnettu digitaaliraha</p>
+          <p>Raha, joka toimii kuin fyysinen seteli — mutta digitaalisesti.</p>
           <div className='flex w-full gap-2 mt-4'>
             <Button
               color='primary-pretty'
