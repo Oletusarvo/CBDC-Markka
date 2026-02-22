@@ -24,7 +24,6 @@ export function SendScreen() {
     : 0;
 
   const handleSubmit = async (e: any) => {
-    console.log('Sending money...');
     e.preventDefault();
     setStatus('loading');
     try {
@@ -44,6 +43,8 @@ export function SendScreen() {
       } else if (res.status !== 500) {
         const err = await res.json();
         setStatus(err.error);
+      } else {
+        setStatus('error');
       }
     } catch (err) {
       console.log(err.message);
@@ -84,7 +85,7 @@ export function SendScreen() {
 
           {status === 'transaction:insufficient-funds' ? (
             <ErrorMessage>Saldosi ei riitä!</ErrorMessage>
-          ) : status === 'transaction:double-spend' ? (
+          ) : status !== 'idle' && status !== 'loading' ? (
             <ErrorMessage>Jotakin meni pieleen!</ErrorMessage>
           ) : null}
         </div>
