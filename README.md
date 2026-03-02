@@ -1,6 +1,6 @@
 # CBDC Markka
 
-**CBDC Markka** is a centralized digital currency inspired by the Finnish markka. Unlike standard account-based systems, it represents balances as **tokenized denominations**, similar to digital cash.
+**CBDC Markka** is a centralized digital currency named after the Finnish markka. Unlike standard account-based systems, it represents balances as **tokenized denominations**, similar to digital cash.
 
 ## Concept
 

@@ -13,7 +13,7 @@ import {
 } from '../../currencies/util/currency-util';
 import { CoinBatch } from '../../currencies/util/coin-batch';
 
-export const createTransactionWithTokens = createHandler(
+export const createTokenTransactionHandler = createHandler(
   async (req: AuthenticatedExpressRequest, res) => {
     const session = req.session;
     const senderAccount = await db(tablenames.accounts)

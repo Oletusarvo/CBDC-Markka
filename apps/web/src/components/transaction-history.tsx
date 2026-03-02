@@ -4,7 +4,7 @@ import { useAccount } from '../providers/account-provider';
 import { useSession } from '../providers/auth-provider';
 import { withApi } from '../util/server-config';
 import { Spinner } from './spinner';
-import { CircleArrowDown, CircleArrowUp } from 'lucide-react';
+import { ArrowDownCircle, ArrowUpCircle, CircleArrowDown, CircleArrowUp } from 'lucide-react';
 import { useTransactions } from '../providers/transactions-provider';
 import { useNavigate } from 'react-router-dom';
 import { DataContainer } from './data-container';
@@ -12,6 +12,8 @@ import { DataContainer } from './data-container';
 type TTransaction = {
   id: string;
   from: string;
+  from_email: string;
+  to_email: string;
   to: string;
   amount_in_cents: number;
   timestamp: number;
@@ -50,15 +52,15 @@ function Transaction({ data }: { data: TTransaction }) {
   const amountClassName = useClassName(received ? 'text-green-400' : 'text-red-400', 'font-mono');
   const amtString = received ? `+${amt}` : `-${amt}`;
   return (
-    <DataContainer onClick={() => navigate(`/auth/overview/transaction/${data.id}`)}>
-      <div className='flex flex-col w-full'>
+    <div
+      className='bg-white rounded-md shadow-md py-2 px-4 flex w-full gap-4 items-center cursor-pointer'
+      onClick={() => navigate('transaction/' + data.id)}>
+      {received ? <ArrowDownCircle color='green' /> : <ArrowUpCircle color='red' />}
+      <div className='flex flex-col'>
         <span className={amountClassName}>{amtString} mk</span>
 
-        <p className='text-slate-500 text-sm'>{data.message || 'No message.'}</p>
-        <span className='text-xs text-slate-500'>
-          {new Date(data.timestamp).toLocaleDateString('fi')}
-        </span>
+        <span className='text-xs text-slate-500'>{received ? data.from_email : data.to_email}</span>
       </div>
-    </DataContainer>
+    </div>
   );
 }
