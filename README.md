@@ -49,9 +49,3 @@ To send 130 Mark:
 1. User inputs `130`
 2. Server automatically selects tokens (e.g., 100 + 20 + 10)
 3. Ownership is reassigned behind the scenes
-
-## Philosophy
-
-CBDC Markka treats digital money **structurally like cash**, asking:
-
-> How does the economy change if digital money behaves like physical money?
