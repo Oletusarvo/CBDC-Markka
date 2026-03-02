@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+@import './style/main.css';
+
+:root {
+  --primary: var(--color-blue-500);
+}
+
+@theme {
+  --animate-slide-up: SlideUp 0.2s ease-out;
+  --color-primary: var(--primary);
+  --breakpoint-xs: 360px;
+}

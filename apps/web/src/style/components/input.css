@@ -1,0 +1,16 @@
+.input,
+.textarea {
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in oklab, var(--color-primary) 20%, transparent);
+  padding: --spacing(2) --spacing(4);
+  color: var(--color-slate-500);
+  outline: none;
+}
+
+.textarea {
+  resize: none;
+}
+
+.input::placeholder {
+  color: var(--color-slate-400);
+}
