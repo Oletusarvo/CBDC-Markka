@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start:server": "npm run start -w @cbdc-markka/server",
+    "build:packages": "npm run build -w @cbdc-markka/schemas",
+    "build:server": "npm run build -w @cbdc-markka/server",
+    "build:web": "npm run build -w @cbdc-markka/web",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

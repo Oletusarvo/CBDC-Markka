@@ -1,4 +1,4 @@
-import { userSchema } from '@cbdc-markka/schemas/src/features/auth/register-user-schema';
+import { userSchema } from '@cbdc-markka/schemas';
 import { createBodyParser } from '../../utils/create-body-parser';
 import { getRouter } from '../../utils/get-router';
 import { registerUserHandler } from '../auth/handlers/register-user-handler';

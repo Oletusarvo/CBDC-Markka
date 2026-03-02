@@ -6,8 +6,7 @@ import { loginHandler } from './handlers/login-handler';
 import { checkAuth } from './middleware/check-auth';
 import { getSessionHandler } from './handlers/get-session-handler';
 import { logoutHandler } from './handlers/logout-handler';
-import { userSchema } from '@cbdc-markka/schemas/src/features/auth/register-user-schema';
-import { loginCredentialsSchema } from '@cbdc-markka/schemas/src/features/auth/login-credentials-schema';
+import { loginCredentialsSchema, userSchema } from '@cbdc-markka/schemas';
 
 const router = getRouter();
 

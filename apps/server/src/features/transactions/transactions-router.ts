@@ -1,4 +1,4 @@
-import { transactionSchema } from '@cbdc-markka/schemas/src/features/transactions/transaction-schema';
+import { transactionSchema } from '@cbdc-markka/schemas';
 import { createBodyParser } from '../../utils/create-body-parser';
 import { getRouter } from '../../utils/get-router';
 import { checkAuth } from '../auth/middleware/check-auth';
