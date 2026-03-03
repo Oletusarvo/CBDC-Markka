@@ -4,9 +4,11 @@ import { getRouter } from '../../utils/get-router';
 import { checkAuth } from '../auth/middleware/check-auth';
 import { createTransaction } from './handlers/create-transaction';
 import { createTokenTransactionHandler } from './handlers/create-token-transaction-handler';
+import { getTransactionsHandler } from './handlers/get-transactions';
 
 const router = getRouter();
 
+router.get('/', checkAuth(), getTransactionsHandler);
 router.post('/', checkAuth(), createBodyParser(transactionSchema), createTokenTransactionHandler);
 
 export { router as transactionsRouter };
