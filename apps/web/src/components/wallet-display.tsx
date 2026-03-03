@@ -91,14 +91,16 @@ export function Token({ data }: { data: any }) {
         {value.toFixed(2)}
         <span className='text-sm'>mk</span>
       </div>
-      <span className='text-xs text-slate-400 z-10'>Minted {data.minted_on}</span>
+      <span className='text-xs text-slate-400 z-10'>
+        Lyöty: {new Date(data.minted_on).getFullYear()}
+      </span>
       <div className='z-10 absolute right-2 bg-linear-to-b from-slate-300 via-white to-gray-300 bg-clip-text select-none'>
         <span className='token-value text-7xl font-semibold font-playfair text-transparent'>
           <span className='text-4xl'>₵</span>
           {data.value_in_cents}
         </span>
       </div>
-      <TokenStatusStamp status='not-spendable' />
+      <TokenStatusStamp status='spendable' />
     </div>
   );
 }
@@ -108,26 +110,31 @@ export function TokenStatusStamp({
 }: {
   status: 'spendable' | 'limited' | 'not-spendable';
 }) {
-  const randomTranslateAmt = Math.random() * 8;
+  const randomTranslateAmt = Math.round(Math.random() * 2);
 
   const containerClassName = useClassName(
-    'absolute left-24 rotate-25 flex items-center justify-center w-16 h-16 z-20 border-2 text-xs rounded-full opacity-40',
+    'absolute left-24 flex items-center justify-center w-18 h-18 z-20 border-2 text-xs rounded-full opacity-40',
     status === 'spendable'
       ? 'border-green-600 text-green-600'
       : status === 'limited'
         ? 'border-yellow-600 text-yellow-600'
         : 'border-red-600 text-red-600',
-    `translate-x-[${randomTranslateAmt}px]`,
+    randomTranslateAmt == 1
+      ? 'translate-x-1 rotate-10'
+      : randomTranslateAmt == 2
+        ? '-translate-x-1 rotate-30'
+        : 'rotate-25',
   );
 
+  const StampText = ({ children }) => <span className='text-xs'>{children}</span>;
   return (
     <div className={containerClassName}>
       {status === 'spendable' ? (
-        <span>Spendable</span>
+        <StampText>Käytössä</StampText>
       ) : status === 'limited' ? (
-        <span>Limited</span>
+        <StampText>Rajoitettu</StampText>
       ) : (
-        <span>Expired</span>
+        <StampText>Erääntynyt</StampText>
       )}
     </div>
   );

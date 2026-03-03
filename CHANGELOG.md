@@ -6,6 +6,7 @@
 - Repo-classes for the server.
 - Descriptions for functions in the CoinBatch-class.
 - TransactionManager-class.
+- Indicator on the tokens wether they are spendable, restricted or expired.
 
 ### Changed
 
