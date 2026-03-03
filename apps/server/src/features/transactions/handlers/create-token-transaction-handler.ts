@@ -12,6 +12,7 @@ import {
   without,
 } from '../../currencies/util/currency-util';
 import { CoinBatch } from '../../currencies/util/coin-batch';
+import { tokenRepo } from '../../../utils/classes/token-repo';
 
 export const createTokenTransactionHandler = createHandler(
   async (req: AuthenticatedExpressRequest, res) => {
@@ -42,7 +43,7 @@ export const createTokenTransactionHandler = createHandler(
     const amtInCents = Math.round(req.data.amt * 100);
 
     const senderTokens = new CoinBatch(
-      await getTokens(db).where({
+      await tokenRepo.getRawQuery(db).where({
         account_id: senderAccount.id,
       }),
     );
@@ -54,17 +55,12 @@ export const createTokenTransactionHandler = createHandler(
     }
 
     const receiverTokens = new CoinBatch(
-      await getTokens(db).where({
+      await tokenRepo.getRawQuery(db).where({
         account_id: receiverAccount.id,
       }),
     );
 
-    const reserveTokens = new CoinBatch(
-      await getTokens(db)
-        .whereNull('account_id')
-        .orderBy('denom_type.value_in_cents', 'desc')
-        .limit(200),
-    );
+    const reserveTokens = new CoinBatch(await tokenRepo.getReserveTokensQuery(db).limit(200));
 
     const tender = senderTokens.pick(amtInCents);
     const tenderSum = tender.sum;

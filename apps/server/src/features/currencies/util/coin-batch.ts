@@ -1,6 +1,7 @@
 import { Coin } from './coin';
 import { TBill, without } from './currency-util';
 
+/**A class for handling batches of tokens. */
 export class CoinBatch {
   public readonly coins: TBill[];
   private total: number;
@@ -10,23 +11,28 @@ export class CoinBatch {
     this.total = this.coins.reduce((acc, cur) => (acc += cur.value_in_cents), 0);
   }
 
+  /**Returns the sum of the tokens. */
   public get sum() {
     return this.total;
   }
 
+  /**Sorts the held tokens in descending order. */
   private static desc(tokens: TBill[]) {
     return tokens.sort((a, b) => b.value_in_cents - a.value_in_cents);
   }
 
+  /**Finds a token passing the criteria defined by the callback. */
   find(callback: (t: TBill) => boolean) {
     return this.coins.find(callback);
   }
 
+  /**Inserts a new token into the batch and updates their total sum. */
   push(...coins: TBill[]) {
     this.coins.push(...coins);
     this.total += coins.reduce((acc, cur) => (acc += cur.value_in_cents), 0);
   }
 
+  /**Returns true if the current batch contains coins that add up exactly to the provided amount. */
   containsExactly(amtInCents: number) {
     const temp = CoinBatch.desc(this.coins).reverse();
     let total = 0;
@@ -45,10 +51,12 @@ export class CoinBatch {
     return false;
   }
 
+  /**Removes qty tokens from the specified index. */
   remove(fromIndex: number, qty: number) {
     this.coins.splice(fromIndex, qty);
   }
 
+  /**Finds a single token closest in value to the provided amount in cents. */
   findClosest(amtInCents: number, includeSmaller?: boolean) {
     const da1 = [];
     //First try to find bills that are closest and lower in value to what is left
@@ -73,7 +81,7 @@ export class CoinBatch {
     return closest && this.coins.at(closest.index);
   }
 
-  /**Picks from this batch a new batch with a value that satisfies amtInCents. */
+  /**Picks from this batch a new batch with a sum that satisfies amtInCents. */
   pick(amtInCents: number) {
     const temp = new CoinBatch(this.coins);
     const selected: TBill[] = [];
@@ -106,6 +114,7 @@ export class CoinBatch {
     return new CoinBatch(selected);
   }
 
+  /**Returns a copy of this batch where tokens exactly summing to amountInCents are ommitted. */
   without(amountInCents: number) {
     const temp = new CoinBatch([...this.coins]);
     if (!temp.containsExactly(amountInCents)) {
