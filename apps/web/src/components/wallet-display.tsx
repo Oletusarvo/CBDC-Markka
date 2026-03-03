@@ -98,6 +98,37 @@ export function Token({ data }: { data: any }) {
           {data.value_in_cents}
         </span>
       </div>
+      <TokenStatusStamp status='not-spendable' />
+    </div>
+  );
+}
+
+export function TokenStatusStamp({
+  status,
+}: {
+  status: 'spendable' | 'limited' | 'not-spendable';
+}) {
+  const randomTranslateAmt = Math.random() * 8;
+
+  const containerClassName = useClassName(
+    'absolute left-24 rotate-25 flex items-center justify-center w-16 h-16 z-20 border-2 text-xs rounded-full opacity-40',
+    status === 'spendable'
+      ? 'border-green-600 text-green-600'
+      : status === 'limited'
+        ? 'border-yellow-600 text-yellow-600'
+        : 'border-red-600 text-red-600',
+    `translate-x-[${randomTranslateAmt}px]`,
+  );
+
+  return (
+    <div className={containerClassName}>
+      {status === 'spendable' ? (
+        <span>Spendable</span>
+      ) : status === 'limited' ? (
+        <span>Limited</span>
+      ) : (
+        <span>Expired</span>
+      )}
     </div>
   );
 }

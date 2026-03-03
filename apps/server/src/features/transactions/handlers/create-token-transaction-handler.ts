@@ -13,6 +13,7 @@ import {
 } from '../../currencies/util/currency-util';
 import { CoinBatch } from '../../currencies/util/coin-batch';
 import { tokenRepo } from '../../../utils/classes/token-repo';
+import { TransactionManager } from '../../currencies/util/transaction-manager';
 
 export const createTokenTransactionHandler = createHandler(
   async (req: AuthenticatedExpressRequest, res) => {
@@ -65,66 +66,14 @@ export const createTokenTransactionHandler = createHandler(
     const tender = senderTokens.pick(amtInCents);
     const tenderSum = tender.sum;
     const changeAmtInCents = tenderSum - amtInCents;
-
-    const finalTokensToMint = [];
-    const finalTokensToUpdate = [];
-
-    const assignFinalTokensToUpdate = (
-      toSender: TBill[] = [],
-      toReceiver: TBill[] = [],
-      toReserve: TBill[] = [],
-    ) => {
-      finalTokensToUpdate.push(
-        ...toSender.map(t => {
-          return {
-            ...t,
-            old_account_id: receiverAccount.id,
-            account_id: senderAccount.id,
-          };
-        }),
-        ...toReceiver.map(t => {
-          return {
-            ...t,
-            old_account_id: senderAccount.id,
-            account_id: receiverAccount.id,
-          };
-        }),
-        ...toReserve.map(t => {
-          return {
-            ...t,
-            account_id: null,
-            old_account_id: senderAccount.id,
-          };
-        }),
-      );
-    };
-
-    const assignFinalTokensToMint = (
-      toSender: Pick<TBill, 'value_in_cents'>[] = [],
-      toReceiver: Pick<TBill, 'value_in_cents'>[] = [],
-    ) => {
-      finalTokensToMint.push(
-        ...toSender.map(t => {
-          return {
-            value_in_cents: t.value_in_cents,
-            account_id: senderAccount.id,
-          };
-        }),
-        ...toReceiver.map(t => {
-          return {
-            value_in_cents: t.value_in_cents,
-            account_id: receiverAccount.id,
-          };
-        }),
-      );
-    };
+    const tokenUpdater = new TransactionManager(senderAccount.id, receiverAccount.id);
 
     if (changeAmtInCents > 0) {
       //1. Try to get change from the receiver. Has to be exact.
       if (receiverTokens.containsExactly(changeAmtInCents)) {
         console.log('Getting change from receiver...');
         const change = receiverTokens.pick(changeAmtInCents);
-        assignFinalTokensToUpdate(change.coins, tender.coins);
+        tokenUpdater.updateCoinsToUpdate(change.coins, tender.coins);
       }
       //2. Try to get change from the reserve. Has to be exact.
       else if (
@@ -135,24 +84,23 @@ export const createTokenTransactionHandler = createHandler(
         console.log('Getting change from reserve...');
         const change = reserveTokens.pick(changeAmtInCents);
         const toReceiver = reserveTokens.pick(amtInCents);
-        assignFinalTokensToUpdate(change.coins, toReceiver.coins, tender.coins);
+        tokenUpdater.updateCoinsToUpdate(change.coins, toReceiver.coins, tender.coins);
       } else {
         //Mint new coins. Put original tender in reserve.
         console.log('Minting change and tender...');
-        const toReceiver = mint(amtInCents);
-        const change = mint(changeAmtInCents);
+        const toReceiver = CoinBatch.mint(amtInCents);
+        const change = CoinBatch.mint(changeAmtInCents);
 
-        assignFinalTokensToUpdate([], [], tender.coins);
-        console.log(change, toReceiver, changeAmtInCents);
-        assignFinalTokensToMint(change, toReceiver);
+        tokenUpdater.updateCoinsToUpdate([], [], tender.coins);
+        tokenUpdater.updateCoinsToMint(change, toReceiver);
       }
     } else {
       //No change; just give the tender to the receiver.
-      assignFinalTokensToUpdate([], tender.coins);
+      tokenUpdater.updateCoinsToUpdate([], tender.coins);
     }
 
     await db.transaction(async trx => {
-      for (const t of finalTokensToUpdate) {
+      for (const t of tokenUpdater.toUpdate) {
         const rows = await trx(tablenames.currencyObjects)
           .where({ id: t.id, account_id: t.old_account_id })
           .update({
@@ -164,7 +112,7 @@ export const createTokenTransactionHandler = createHandler(
         }
       }
 
-      for (const t of finalTokensToMint) {
+      for (const t of tokenUpdater.toMint) {
         await trx(tablenames.currencyObjects).insert({
           account_id: t.account_id,
           denom_type_id: trx

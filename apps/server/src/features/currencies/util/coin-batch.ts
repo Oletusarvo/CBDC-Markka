@@ -1,6 +1,10 @@
 import { Coin } from './coin';
 import { TBill, without } from './currency-util';
 
+export const DENOMS_IN_CENTS = [
+  1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 50000,
+].reverse();
+
 /**A class for handling batches of tokens. */
 export class CoinBatch {
   public readonly coins: TBill[];
@@ -19,6 +23,19 @@ export class CoinBatch {
   /**Sorts the held tokens in descending order. */
   private static desc(tokens: TBill[]) {
     return tokens.sort((a, b) => b.value_in_cents - a.value_in_cents);
+  }
+
+  /**Mints new bills. */
+  static mint(amountInCents: number) {
+    let mintedBills = [];
+    while (amountInCents > 0) {
+      const denom = DENOMS_IN_CENTS.find(den => den < amountInCents || den === amountInCents);
+      console.log(denom, amountInCents);
+      amountInCents = Math.round(amountInCents - denom);
+      mintedBills.push({ value_in_cents: denom });
+    }
+
+    return CoinBatch.desc(mintedBills);
   }
 
   /**Finds a token passing the criteria defined by the callback. */

@@ -5,6 +5,7 @@
 - This changelog.
 - Repo-classes for the server.
 - Descriptions for functions in the CoinBatch-class.
+- TransactionManager-class.
 
 ### Changed
 
@@ -16,6 +17,7 @@
 - Renamed getCirculation to getCirculationHandler.
 - Renamed getUserTokens to getUserTokensHandler.
 - Renamed getAccount to getAccountHandler.
+- Moved the minting function under the CoinBatch-class.
 
 ### Removed
 
