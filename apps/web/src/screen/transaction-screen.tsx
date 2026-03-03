@@ -19,6 +19,10 @@ export function TransactionScreen() {
         ) : (
           <>
             <div className='flex flex-col'>
+              <span className='text-xs text-slate-500'>Tunniste</span>
+              <span>{transaction.id}</span>
+            </div>
+            <div className='flex flex-col'>
               <span className='text-xs text-slate-500'>Lähettäjä</span>
               <span>{transaction.from_email}</span>
             </div>
@@ -43,10 +47,6 @@ export function TransactionScreen() {
             <div className='flex flex-col'>
               <span className='text-xs text-slate-500'>Viesti</span>
               <span>{transaction.message || 'Ei viestiä.'}</span>
-            </div>
-            <div className='flex flex-col'>
-              <span className='text-xs text-slate-500'>Tunniste</span>
-              <span>{transaction.id}</span>
             </div>
           </>
         )}

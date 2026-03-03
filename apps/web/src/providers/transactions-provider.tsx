@@ -13,7 +13,7 @@ export function TransactionsProvider({ children }: React.PropsWithChildren) {
   const { data: transactions, isPending: transactionsPending } = useQuery({
     queryKey: ['transactions', account?.id],
     queryFn: async () => {
-      const res = await fetch(withApi('accounts/transactions'), {
+      const res = await fetch(withApi('transactions'), {
         method: 'GET',
         credentials: 'include',
       });

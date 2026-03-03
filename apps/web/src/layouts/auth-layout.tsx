@@ -12,8 +12,8 @@ export function AuthLayout() {
   }
 
   return (
-    <div className='flex flex-col w-full h-full'>
-      <main className='flex flex-col w-full flex-1 h-full overflow-y-scroll'>
+    <div className='flex flex-col w-full h-full max-h-full'>
+      <main className='flex flex-col w-full flex-1 overflow-y-scroll'>
         <Outlet />
       </main>
     </div>

@@ -22,18 +22,39 @@ type TTransaction = {
 
 export function TransactionHistory() {
   const { transactions, transactionsPending } = useTransactions();
+  const today = new Date().toLocaleDateString('fi');
+  const dateSet: Set<string> = new Set(
+    transactions?.map(t => new Date(t.timestamp).toLocaleDateString('fi')),
+  );
+
+  const generateTransactionList = () => {
+    const list = [];
+    for (const date of dateSet) {
+      list.push(
+        <>
+          <span className='text-slate-500'>{date === today ? 'Tänään' : date}</span>
+          {transactions
+            .filter(t => new Date(t.timestamp).toLocaleDateString('fi') === date)
+            .map(t => {
+              return (
+                <Transaction
+                  data={t}
+                  key={`transaction-${t.id}`}
+                />
+              );
+            })}
+        </>,
+      );
+    }
+    return list;
+  };
 
   return (
     <div className='flex flex-col w-full gap-2 overflow-y-scroll max-h-full flex-1 rounded-md'>
       {transactionsPending ? (
         <Spinner />
       ) : transactions.length > 0 ? (
-        transactions.map((t, i) => (
-          <Transaction
-            data={t}
-            key={`transaction-${i}`}
-          />
-        ))
+        generateTransactionList()
       ) : (
         <div className='flex flex-col justify-center items-center flex-1'>
           <h2 className='text-sm text-slate-500'>Ei tapahtumia.</h2>

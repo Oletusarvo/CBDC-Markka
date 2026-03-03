@@ -6,19 +6,6 @@ import { Spinner } from './spinner';
 import { DataContainer } from './data-container';
 import { useClassName } from '../hooks/use-class-name';
 
-const denomColor: { [x: number]: { border: string; bg: string; text: string } } = {
-  1: {
-    border: 'yellow-100',
-    bg: 'yellow-50',
-    text: 'yellow-700',
-  },
-  2: {
-    border: 'red-100',
-    bg: 'red-50',
-    text: 'red-700',
-  },
-};
-
 export function WalletDisplay() {
   const { tokens, isPending } = useTokens();
   return (
@@ -41,7 +28,7 @@ export function WalletDisplay() {
   );
 }
 
-function Token({ data }: { data: any }) {
+export function Token({ data }: { data: any }) {
   const value = data.value_in_cents / 100;
   const navigate = useNavigate();
   const getColors = (): { value: string; bg: string; border: string } => {

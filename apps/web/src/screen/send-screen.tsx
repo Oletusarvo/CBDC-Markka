@@ -95,6 +95,7 @@ export function SendScreen() {
           name='message'
           placeholder='Kirjoita viesti...'
           required
+          spellCheck={'false'}
         />
         <div className='flex gap-2 w-full'>
           <Button
