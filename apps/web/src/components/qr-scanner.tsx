@@ -27,7 +27,7 @@ export default function QRScanner({ onScan }) {
       scannerRef.current?.stop();
       scannerRef.current?.destroy();
     };
-  }, [onScan, videoRef.current]);
+  }, [onScan, videoRef.current, scannerRef.current]);
 
   return (
     <video
