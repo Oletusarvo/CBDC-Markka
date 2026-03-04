@@ -1,9 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import QrScanner from 'qr-scanner';
+import { Button } from './button';
 
 export default function QRScanner({ onScan }) {
   const videoRef = useRef(null);
   const scannerRef = useRef(null);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
     if (!videoRef.current) return;
@@ -29,6 +31,9 @@ export default function QRScanner({ onScan }) {
 
   return (
     <video
+      autoPlay
+      playsInline
+      muted
       ref={videoRef}
       style={{ width: '100%', borderRadius: 12 }}
     />
