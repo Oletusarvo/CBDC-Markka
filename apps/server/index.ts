@@ -12,6 +12,7 @@ const allowedOrigins = [
   'http://10.215.98.92:5173',
   'http://localhost:5173',
   'http://localhost:61032',
+  'http://localhost:3000',
   'https://localhost',
   'capacitor://localhost',
   'https://cbdc-markka.onrender.com',
