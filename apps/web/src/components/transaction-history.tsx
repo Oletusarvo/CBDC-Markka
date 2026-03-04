@@ -1,13 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
 import { useClassName } from '../hooks/use-class-name';
-import { useAccount } from '../providers/account-provider';
-import { useSession } from '../providers/auth-provider';
-import { withApi } from '../util/server-config';
+
 import { Spinner } from './spinner';
-import { ArrowDownCircle, ArrowUpCircle, CircleArrowDown, CircleArrowUp } from 'lucide-react';
-import { useTransactions } from '../providers/transactions-provider';
+import { ArrowDownCircle, ArrowUpCircle } from 'lucide-react';
+
 import { useNavigate } from 'react-router-dom';
-import { DataContainer } from './data-container';
+import { useAccount, useTransactions } from '@cbdc-markka/utils-react';
 
 type TTransaction = {
   id: string;
@@ -50,7 +47,7 @@ export function TransactionHistory() {
   };
 
   return (
-    <div className='flex flex-col w-full gap-2 overflow-y-scroll max-h-full flex-1 rounded-md'>
+    <>
       {transactionsPending ? (
         <Spinner />
       ) : transactions.length > 0 ? (
@@ -60,7 +57,7 @@ export function TransactionHistory() {
           <h2 className='text-sm text-slate-500'>Ei tapahtumia.</h2>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

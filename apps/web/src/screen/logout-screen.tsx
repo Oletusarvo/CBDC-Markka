@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../components/modal';
 import { Button, LoaderButton } from '../components/button';
-import { withApi } from '../util/server-config';
 import { useState } from 'react';
-import { useSession } from '../providers/auth-provider';
+import { useSession } from '@cbdc-markka/utils-react';
 
 export function LogoutScreen() {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { setupContext } from '../util/setup-context';
 import { PassProps } from '../components/pass-props';
+import { setupContext } from '../util/setup-context';
 
 const [ToggleContext, useToggleContext] = setupContext<{
   toggled: boolean;

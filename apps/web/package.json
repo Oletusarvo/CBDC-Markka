@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "@cbdc-markka/schemas": "1.0.0",
+    "@cbdc-markka/utils-api": "1.0.0",
+    "@cbdc-markka/utils-react": "1.0.0",
     "@tailwindcss/vite": "^4.2.1",
     "@tanstack/react-query": "^5.90.21",
     "lucide-react": "^0.576.0",
+    "qr-scanner": "^1.4.2",
     "qrcode": "^1.5.4",
     "qrcode.react": "^4.2.0",
     "react": "^19.2.0",

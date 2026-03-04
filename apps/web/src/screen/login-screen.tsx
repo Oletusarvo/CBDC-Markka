@@ -4,8 +4,8 @@ import { Input } from '../components/input';
 import { Button, LoaderButton } from '../components/button';
 
 import { useState } from 'react';
-import { useSession } from '../providers/auth-provider';
 import { ErrorMessage } from '../components/helper-message';
+import { useSession } from '@cbdc-markka/utils-react';
 
 export function LoginScreen() {
   const navigate = useNavigate();

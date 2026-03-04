@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../components/modal';
 import { QRCodeSVG } from 'qrcode.react';
-import { useAccount } from '../providers/account-provider';
 import { Spinner } from '../components/spinner';
-import { useSession } from '../providers/auth-provider';
+import { useAccount, useSession } from '@cbdc-markka/utils-react';
+import { Input } from '../components/input';
+import { useState } from 'react';
 
 export function ReceiveScreen() {
   const { session } = useSession();
+  const [amount, setAmount] = useState(0.01);
   const { account, isPending } = useAccount();
   const navigate = useNavigate();
 
@@ -21,11 +23,11 @@ export function ReceiveScreen() {
           <>
             <QRCodeSVG
               className='rounded-md'
-              value={account?.id}
+              value={session?.user.email}
               fgColor='var(--color-primary)'
               minVersion={5}
             />
-            <span className='text-slate-500 mt-4'>{session?.user.email}</span>
+            <span className='text-slate-500 mt-4 text-sm'>{session?.user.email}</span>
           </>
         )}
       </div>

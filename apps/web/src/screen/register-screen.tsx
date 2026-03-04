@@ -2,11 +2,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Modal } from '../components/modal';
 import { Input } from '../components/input';
 import { Button, LoaderButton } from '../components/button';
-import { withApi } from '../util/server-config';
 import { useState } from 'react';
 import { ErrorMessage } from '../components/helper-message';
 
+import { useApi } from '@cbdc-markka/utils-react/src/providers/api-provider';
+
 export function RegisterScreen() {
+  const { apiInterface } = useApi();
   const [status, setStatus] = useState('idle');
   const navigate = useNavigate();
 
@@ -20,7 +22,7 @@ export function RegisterScreen() {
         return;
       }
 
-      const res = await fetch(withApi('auth/register'), {
+      const res = await fetch(apiInterface.withApi('auth/register'), {
         method: 'POST',
         body: JSON.stringify(credentials),
         credentials: 'include',

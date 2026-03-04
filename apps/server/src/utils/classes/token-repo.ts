@@ -16,13 +16,19 @@ class TokenRepo extends Repo<any> {
   }
 
   /**Returns the sum in cents of the tokens in circulation. */
-  async getCirculation(ctx: DBContext) {
+  async getTokenCirculation(ctx: DBContext): Promise<number> {
     const result = await ctx({ token: this.baseTablename })
       .leftJoin('denom_type', 'denom_type.id', 'token.denom_type_id')
       .whereNotNull('token.account_id')
       .sum('denom_type.value_in_cents as circulation')
       .first();
 
+    return result?.circulation ?? 0;
+  }
+
+  /**Returns the sum in cents of all accounts' balances */
+  async getBalanceCirculation(ctx: DBContext) {
+    const result = await ctx(tablenames.accounts).sum('balance_in_cents as circulation').first();
     return result?.circulation ?? 0;
   }
 

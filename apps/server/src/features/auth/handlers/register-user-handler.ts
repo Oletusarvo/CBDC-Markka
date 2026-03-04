@@ -4,9 +4,7 @@ import { ExpressRequest } from '../../../types/express';
 import { createHandler } from '../../../utils/create-handler';
 import { db } from '../../../db-config';
 import { hashPassword } from '../../../utils/password';
-import { containsExactly, mint, pick } from '../../currencies/util/currency-util';
 import { tablenames } from '../../../tablenames';
-import { getTokens } from '../../currencies/helpers/get-tokens';
 import { userSchema } from '@cbdc-markka/schemas';
 
 const MAX_SUPPLY_IN_CENTS = 110_000_000_000;
@@ -22,64 +20,17 @@ export const registerUserHandler = createHandler(
         })
         .returning('id');
 
-      const [acc] = await trx(tablenames.accounts)
-        .insert({
-          user_id: user.id,
-        })
-        .returning('id');
-
-      const currentSupplyInCents = await trx(tablenames.currencyObjects)
-        .leftJoin(tablenames.denomTypes, 'denom_type.id', 'currency_object.denom_type_id')
-        .whereNotNull('currency_object.account_id')
-        .sum('denom_type.value_in_cents as total')
+      const mint = 2000;
+      const currentSupplyInCents = await trx(tablenames.accounts)
+        .sum('balance_in_cents as total')
         .first();
 
-      if (currentSupplyInCents.total + 2000 > MAX_SUPPLY_IN_CENTS) {
-        return;
-      }
-
-      const reserveTokens = await trx(tablenames.currencyObjects)
-        .whereNull('account_id')
-        .whereIn(
-          'denom_type_id',
-          trx.select('id').from(tablenames.denomTypes).where('value_in_cents', '<=', 2000),
-        )
-        .forUpdate()
-        .skipLocked()
-        .limit(200);
-
-      if (reserveTokens.length > 0 && containsExactly(reserveTokens, 2000)) {
-        //Give the unassigned tokens to the new user.
-        const tokens = pick(reserveTokens, 2000);
-        await trx(tablenames.currencyObjects)
-          .whereIn(
-            'id',
-            tokens.map(t => t.id),
-          )
-          .update(
-            tokens.map(t => {
-              return {
-                ...t,
-                account_id: acc.id,
-              };
-            }),
-          );
-      } else {
-        //Mint new tokens to give to the user
-        const mintedTokens = mint(2000);
-        await Promise.all(
-          mintedTokens.map(async t => {
-            await trx(tablenames.currencyObjects).insert({
-              account_id: acc.id,
-              denom_type_id: trx
-                .select('id')
-                .from(tablenames.denomTypes)
-                .where({ value_in_cents: t.value_in_cents })
-                .limit(1),
-            });
-          }),
-        );
-      }
+      await trx(tablenames.accounts)
+        .insert({
+          user_id: user.id,
+          balance_in_cents: currentSupplyInCents + mint < MAX_SUPPLY_IN_CENTS ? mint : 0,
+        })
+        .returning('id');
     });
     return res.status(200).end();
   },

@@ -49,6 +49,12 @@
   border: none;
 }
 
+.button.--white.--ghost {
+  background-color: transparent;
+  color: white;
+  border: none;
+}
+
 .button.--ghost:hover {
   background-color: color-mix(in oklab, black 10%, transparent 100%);
 }

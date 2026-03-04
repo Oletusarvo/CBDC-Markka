@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Modal } from '../components/modal';
-import { useTransactions } from '../providers/transactions-provider';
+
 import { Spinner } from '../components/spinner';
-import { useTokens } from '../providers/token-provider';
-import { Switch } from '../components/switch';
-import { useRef, useState } from 'react';
+
+import { useState } from 'react';
+import { useTokens } from '@cbdc-markka/utils-react';
 
 export function TokenScreen() {
   const navigate = useNavigate();

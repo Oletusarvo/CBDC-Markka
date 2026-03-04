@@ -11,6 +11,7 @@ body {
   flex-flow: column;
   width: 100vw;
   height: 100vh;
+  max-height: 100vh;
   background-color: var(--color-gray-100);
 }
 

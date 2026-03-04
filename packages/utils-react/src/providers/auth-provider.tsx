@@ -1,7 +1,7 @@
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { setupContext } from '../util/setup-context';
-import { withApi } from '../util/server-config';
-import { useState } from 'react';
+
+import { useApi } from './api-provider';
 
 const [AuthContext, useSession] = setupContext<{
   session: {
@@ -15,7 +15,8 @@ const [AuthContext, useSession] = setupContext<{
   status: 'authenticated' | 'unauthenticated' | 'loading';
 }>('AuthContext');
 
-export function AuthProvider({ children }: React.PropsWithChildren) {
+function AuthProvider({ children }: React.PropsWithChildren) {
+  const { apiInterface } = useApi();
   const {
     data: session,
     isPending: sessionPending,
@@ -23,7 +24,7 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
   } = useQuery({
     queryKey: ['session'],
     queryFn: async () => {
-      const res = await fetch(withApi('auth/session'), {
+      const res = await fetch(apiInterface.withApi('auth/session'), {
         method: 'GET',
         credentials: 'include',
       });
@@ -41,7 +42,7 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
   const status = session ? 'authenticated' : sessionPending ? 'loading' : 'unauthenticated';
 
   const signin = async (credentials: any) => {
-    const res = await fetch(withApi('auth/login'), {
+    const res = await fetch(apiInterface.withApi('auth/login'), {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(credentials),
@@ -58,7 +59,7 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
   };
 
   const signout = async () => {
-    const res = await fetch(withApi('auth/logout'), {
+    const res = await fetch(apiInterface.withApi('auth/logout'), {
       method: 'GET',
       credentials: 'include',
     });
@@ -76,4 +77,4 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
   );
 }
 
-export { useSession };
+export { AuthProvider, useSession };

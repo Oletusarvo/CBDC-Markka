@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Modal } from '../components/modal';
-import { useTransactions } from '../providers/transactions-provider';
+
 import { Spinner } from '../components/spinner';
+import { useTransactions } from '@cbdc-markka/utils-react';
 
 export function TransactionScreen() {
   const navigate = useNavigate();

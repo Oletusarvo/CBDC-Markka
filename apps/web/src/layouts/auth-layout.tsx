@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useSession } from '../providers/auth-provider';
 import { LoadingScreen } from '../screen/loading-screen';
+import { useSession } from '@cbdc-markka/utils-react';
 
 export function AuthLayout() {
   const { status = 'loading' } = useSession();

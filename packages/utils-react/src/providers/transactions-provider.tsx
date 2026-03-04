@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { setupContext } from '../util/setup-context';
 import { useAccount } from './account-provider';
-import { withApi } from '../util/server-config';
+import { setupContext } from '../util/setup-context';
+
+import { useApi } from './api-provider';
 
 const [TransactionsContext, useTransactions] = setupContext<{
   transactions: any[];
@@ -9,11 +10,12 @@ const [TransactionsContext, useTransactions] = setupContext<{
 }>('TransactionsContext');
 
 export function TransactionsProvider({ children }: React.PropsWithChildren) {
+  const { apiInterface } = useApi();
   const { account } = useAccount();
   const { data: transactions, isPending: transactionsPending } = useQuery({
     queryKey: ['transactions', account?.id],
     queryFn: async () => {
-      const res = await fetch(withApi('transactions'), {
+      const res = await fetch(apiInterface.withApi('transactions'), {
         method: 'GET',
         credentials: 'include',
       });

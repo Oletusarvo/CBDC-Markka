@@ -3,7 +3,7 @@ import { useClassName } from '../hooks/use-class-name';
 
 type ButtonProps = React.ComponentProps<'button'> & {
   variant?: 'contained' | 'outlined' | 'ghost';
-  color?: 'primary' | 'primary-pretty';
+  color?: 'primary' | 'primary-pretty' | 'white';
   fullWidth?: boolean;
   shadow?: boolean;
   rounded?: boolean;

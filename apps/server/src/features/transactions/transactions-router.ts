@@ -9,6 +9,6 @@ import { getTransactionsHandler } from './handlers/get-transactions';
 const router = getRouter();
 
 router.get('/', checkAuth(), getTransactionsHandler);
-router.post('/', checkAuth(), createBodyParser(transactionSchema), createTokenTransactionHandler);
+router.post('/', checkAuth(), createBodyParser(transactionSchema), createTransaction);
 
 export { router as transactionsRouter };

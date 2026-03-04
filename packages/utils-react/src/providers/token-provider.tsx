@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { setupContext } from '../util/setup-context';
-import { withApi } from '../util/server-config';
 import { useSession } from './auth-provider';
+import { setupContext } from '../util/setup-context';
+import { ApiInterface } from '@cbdc-markka/utils-api';
+import { useApi } from './api-provider';
 
 const [TokenContext, useTokens] = setupContext<{
   tokens: {
@@ -14,11 +15,12 @@ const [TokenContext, useTokens] = setupContext<{
 }>('TokenContext');
 
 export function TokenProvider({ children }: React.PropsWithChildren) {
+  const { apiInterface } = useApi();
   const { session } = useSession();
   const { data: tokens, isPending } = useQuery({
     queryKey: ['tokens', session?.user.id],
     queryFn: async () => {
-      const res = await fetch(withApi('currencies/tokens'), {
+      const res = await fetch(apiInterface.withApi('currencies/tokens'), {
         credentials: 'include',
       });
 

@@ -1,11 +1,13 @@
 import { Link, Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { Button } from '../components/button';
 import { useQuery } from '@tanstack/react-query';
-import { withApi } from '../util/server-config';
 import { useAnimatedNumber } from '../hooks/use-animated-number';
 import { Spinner } from '../components/spinner';
-import { useSession } from '../providers/auth-provider';
+
 import { LoadingScreen } from '../screen/loading-screen';
+
+import { useSession } from '@cbdc-markka/utils-react';
+import { apiInterface } from '../util/api-interface';
 
 export function MainLayout() {
   const { status } = useSession();
@@ -16,7 +18,7 @@ export function MainLayout() {
   }
 
   return (
-    <div className='flex flex-col h-full'>
+    <div className='flex flex-col h-full antialiased'>
       <section className='w-full px-4 py-32 flex items-center relative flex-1'>
         <div
           className='absolute top-0 left-0 w-full h-full opacity-15 -z-10'
@@ -73,7 +75,7 @@ function CirculationDisplay() {
   const { data, isPending } = useQuery({
     queryKey: ['circulation'],
     queryFn: async () => {
-      const res = await fetch(withApi('currencies/circulation'), {
+      const res = await fetch(apiInterface.withApi('currencies/circulation'), {
         method: 'GET',
       });
       return res.status === 200 ? await res.json() : null;

@@ -1,15 +1,14 @@
 /**Displays the coins currently owned by the user. */
 
 import { useNavigate } from 'react-router-dom';
-import { useTokens } from '../providers/token-provider';
 import { Spinner } from './spinner';
-import { DataContainer } from './data-container';
 import { useClassName } from '../hooks/use-class-name';
+import { useTokens } from '@cbdc-markka/utils-react';
 
 export function WalletDisplay() {
   const { tokens, isPending } = useTokens();
   return (
-    <div className='flex flex-col gap-2 w-full overflow-x-scroll max-h-full h-full flex-1'>
+    <div className='flex flex-col gap-2 w-full overflow-x-scroll max-h-full h-full flex-1 px-4'>
       {isPending ? (
         <Spinner />
       ) : tokens.length > 0 ? (
