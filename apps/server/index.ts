@@ -9,7 +9,7 @@ import { currenciesRouter } from './src/features/currencies/currencies-router';
 
 const app = express();
 const allowedOrigins = [
-  'http://10.215.98.92:5173',
+  'http://10.146.16.92:5173',
   'http://localhost:5173',
   'http://localhost:61032',
   'http://localhost:3000',

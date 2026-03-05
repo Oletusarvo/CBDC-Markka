@@ -15,6 +15,7 @@ import { TokenScreen } from './screen/token-screen';
 import { LoadingScreen } from './screen/loading-screen';
 import { ApiProvider, AuthProvider, QueryProvider } from '@cbdc-markka/utils-react';
 import { apiInterface } from './util/api-interface';
+import { Toaster } from 'react-hot-toast';
 
 export function App() {
   return (
@@ -77,6 +78,7 @@ export function App() {
         </QueryProvider>
         <ServiceWorkerLoader />
       </ApiProvider>
+      <Toaster position='bottom-center' />
     </>
   );
 }

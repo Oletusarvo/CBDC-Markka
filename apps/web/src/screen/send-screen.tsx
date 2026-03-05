@@ -13,6 +13,8 @@ import { Spinner } from '../components/spinner';
 const [SendContext, useSendContext] = setupContext<{
   status: string;
   currentAddress: string;
+  updateCurrentAddress: (e) => void;
+  updateStep: (currentStep: number) => void;
 }>('SendContext');
 
 export function SendScreen() {
@@ -23,7 +25,7 @@ export function SendScreen() {
   const loading = status === 'loading';
   const [currentAddress, setCurrentAddress] = useState('');
   const formRef = useRef(null);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
 
   const cancel = () => navigate('/auth/overview');
 
@@ -54,8 +56,16 @@ export function SendScreen() {
     }
   };
 
+  const updateCurrentAddress = e => {
+    setCurrentAddress(e.target.value);
+  };
+
+  const updateStep = (currentStep: number) => {
+    setStep(currentStep);
+  };
+
   return (
-    <SendContext.Provider value={{ status, currentAddress }}>
+    <SendContext.Provider value={{ status, currentAddress, updateCurrentAddress, updateStep }}>
       <Modal
         title='Lähetä Rahaa'
         onClose={cancel}>
@@ -63,6 +73,8 @@ export function SendScreen() {
           className='flex flex-col w-full gap-2'
           onSubmit={handleSubmit}>
           {step === 0 ? (
+            <ChooseSendMethod />
+          ) : step === 1 ? (
             <QRCodeReadStep
               onScan={data => {
                 setCurrentAddress(data);
@@ -70,10 +82,7 @@ export function SendScreen() {
               }}
             />
           ) : (
-            <AmountAndMessageStep
-              onCancel={() => setStep(0)}
-              onEmailChanged={e => setCurrentAddress(e.target.value)}
-            />
+            <ManualInputStep />
           )}
         </form>
       </Modal>
@@ -81,12 +90,53 @@ export function SendScreen() {
   );
 }
 
-function QRCodeReadStep({ onScan }: { onScan: (data) => void }) {
-  return <QRScanner onScan={onScan} />;
+function ChooseSendMethod() {
+  const { updateStep } = useSendContext();
+  return (
+    <div className='flex flex-col gap-2 w-full'>
+      <Button
+        type='button'
+        fullWidth
+        rounded
+        shadow
+        onClick={() => updateStep(1)}>
+        Skannaa QR-koodi
+      </Button>
+      <Button
+        type='button'
+        fullWidth
+        rounded
+        shadow
+        variant='outlined'
+        onClick={() => updateStep(2)}>
+        Kirjoita osoite
+      </Button>
+    </div>
+  );
 }
 
-function AmountAndMessageStep({ onCancel, onEmailChanged }) {
-  const { status, currentAddress } = useSendContext();
+function QRCodeReadStep({ onScan }: { onScan: (data) => void }) {
+  const { updateStep } = useSendContext();
+
+  return (
+    <div className='w-full'>
+      <QRScanner onScan={onScan} />
+      <div className='flex w-full gap-2'>
+        <Button
+          fullWidth
+          type='button'
+          variant='outlined'
+          rounded
+          onClick={() => updateStep(0)}>
+          Takaisin
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function ManualInputStep() {
+  const { status, currentAddress, updateCurrentAddress, updateStep } = useSendContext();
   const { account, isPending: isAccountPending } = useAccount();
   const balance = isAccountPending ? 0 : account.balance_in_cents;
   const loading = status === 'loading';
@@ -96,24 +146,20 @@ function AmountAndMessageStep({ onCancel, onEmailChanged }) {
       <Input
         type='email'
         placeholder='Vastaanottaan sähköpostiosoite...'
-        onChange={onEmailChanged}
+        onChange={updateCurrentAddress}
+        required
       />
-      <div className='flex flex-col w-full'>
-        <Input
-          name='amt'
-          type='number'
-          step={0.01}
-          min={0.01}
-          max={balance / 100}
-          placeholder='Määrä...'
-        />
 
-        {status === 'transaction:insufficient-funds' ? (
-          <ErrorMessage>Saldosi ei riitä!</ErrorMessage>
-        ) : status !== 'idle' && status !== 'loading' ? (
-          <ErrorMessage>Jotakin meni pieleen!</ErrorMessage>
-        ) : null}
-      </div>
+      <Input
+        name='amt'
+        type='number'
+        step={0.01}
+        min={0.01}
+        max={balance / 100}
+        placeholder='Määrä...'
+        required
+      />
+
       <textarea
         className='w-full textarea'
         name='message'
@@ -121,7 +167,22 @@ function AmountAndMessageStep({ onCancel, onEmailChanged }) {
         required
         spellCheck={'false'}
       />
+      {status === 'transaction:insufficient-funds' ? (
+        <ErrorMessage>Saldosi ei riitä!</ErrorMessage>
+      ) : status === 'transaction:invalid-recipient' ? (
+        <ErrorMessage>Virheellinen vastaanottaja!</ErrorMessage>
+      ) : status !== 'idle' && status !== 'loading' ? (
+        <ErrorMessage>Jotakin meni pieleen!</ErrorMessage>
+      ) : null}
       <div className='flex w-full gap-2'>
+        <Button
+          fullWidth
+          type='button'
+          variant='outlined'
+          rounded
+          onClick={() => updateStep(0)}>
+          Takaisin
+        </Button>
         <LoaderButton
           loading={loading}
           disabled={loading}

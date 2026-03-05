@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import QrScanner from 'qr-scanner';
 import { Button, LoaderButton } from './button';
+import toast from 'react-hot-toast';
 
 export default function QRScanner({ onScan }) {
   const videoRef = useRef(null);
   const scannerRef = useRef(null);
   const [started, setStarted] = useState(false);
   const [scannerLoading, setScannerLoading] = useState(false);
+
   const startScan = async () => {
     if (!videoRef.current) return;
 
@@ -24,14 +26,20 @@ export default function QRScanner({ onScan }) {
     try {
       setScannerLoading(true);
       await scannerRef.current.start();
+      setStarted(true);
       console.log('Scanner started.');
     } catch (err) {
-      console.log(err.message);
+      console.log(err);
+      if (typeof err === 'string') {
+        if (err.includes('Camera not found')) {
+          toast.error('Kameraa ei löydy!');
+        } else {
+          toast.error(err);
+        }
+      }
     } finally {
       setScannerLoading(false);
     }
-
-    setStarted(true);
   };
 
   useEffect(() => {
@@ -44,14 +52,13 @@ export default function QRScanner({ onScan }) {
   return (
     <div className='flex w-full relative flex-col justify-center'>
       {!started && (
-        <div className='absolute w-full z-20'>
+        <div className='absolute w-full z-20 flex justify-center'>
           <LoaderButton
             loading={scannerLoading}
             disabled={scannerLoading}
             type='button'
             rounded
-            onClick={startScan}
-            fullWidth>
+            onClick={startScan}>
             Avaa Kamera
           </LoaderButton>
         </div>
