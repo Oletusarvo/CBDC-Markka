@@ -35,7 +35,7 @@ export default function QRScanner({ onScan }) {
   return (
     <div className='flex w-full relative flex-col justify-center'>
       {!started && (
-        <div className='absolute w-full'>
+        <div className='absolute w-full z-20'>
           <Button
             disabled={started}
             type='button'
