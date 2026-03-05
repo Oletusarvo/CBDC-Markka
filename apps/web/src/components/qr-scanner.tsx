@@ -9,7 +9,7 @@ export default function QRScanner({ onScan }) {
 
   const startScan = () => {
     setStarted(() => true);
-    if (!videoRef.current) return;
+    //if (!videoRef.current) return;
 
     scannerRef.current = new QrScanner(
       videoRef.current,
