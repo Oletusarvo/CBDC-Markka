@@ -7,7 +7,8 @@ export default function QRScanner({ onScan }) {
   const scannerRef = useRef(null);
   const [started, setStarted] = useState(false);
 
-  useEffect(() => {
+  const startScan = () => {
+    setStarted(() => true);
     if (!videoRef.current) return;
 
     scannerRef.current = new QrScanner(
@@ -22,20 +23,37 @@ export default function QRScanner({ onScan }) {
     );
 
     scannerRef.current.start();
+  };
 
+  useEffect(() => {
     return () => {
       scannerRef.current?.stop();
       scannerRef.current?.destroy();
     };
-  }, [onScan, videoRef.current, scannerRef.current]);
+  }, [onScan]);
 
   return (
-    <video
-      autoPlay
-      playsInline
-      muted
-      ref={videoRef}
-      style={{ width: '100%', borderRadius: 12 }}
-    />
+    <div className='flex w-full relative flex-col justify-center'>
+      {!started && (
+        <div className='absolute w-full'>
+          <Button
+            disabled={started}
+            type='button'
+            rounded
+            onClick={startScan}
+            fullWidth>
+            Avaa Kamera
+          </Button>
+        </div>
+      )}
+
+      <video
+        autoPlay={false}
+        playsInline
+        muted
+        ref={videoRef}
+        style={{ width: '100%', borderRadius: 12 }}
+      />
+    </div>
   );
 }
