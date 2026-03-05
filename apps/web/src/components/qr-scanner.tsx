@@ -8,8 +8,7 @@ export default function QRScanner({ onScan }) {
   const [started, setStarted] = useState(false);
 
   const startScan = () => {
-    setStarted(() => true);
-    //if (!videoRef.current) return;
+    if (!videoRef.current) return;
 
     scannerRef.current = new QrScanner(
       videoRef.current,
@@ -23,6 +22,7 @@ export default function QRScanner({ onScan }) {
     );
 
     scannerRef.current.start();
+    setStarted(true);
   };
 
   useEffect(() => {
@@ -48,7 +48,6 @@ export default function QRScanner({ onScan }) {
       )}
 
       <video
-        autoPlay={false}
         playsInline
         muted
         ref={videoRef}
