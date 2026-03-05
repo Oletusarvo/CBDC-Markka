@@ -13,6 +13,7 @@ import {
   TransactionsProvider,
   useAccount,
 } from '@cbdc-markka/utils-react';
+import { Currency } from '../components/currency';
 
 export function OverviewLayout() {
   const navigate = useNavigate();

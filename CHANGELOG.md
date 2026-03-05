@@ -1,9 +1,14 @@
 ## [2.0.0] - 04-03-2026
 
+### Added
+
+- Qr-code reading for sending money.
+
 ### Changed
 
 - Moved Providers and api-logic inside their won packages so they can be shared between a possible react-native app and the web app in the future.
 - Switched to an account-based model.
+- The readme to reflect the account-based model.
 
 ### Removed
 

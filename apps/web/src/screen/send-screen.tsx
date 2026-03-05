@@ -170,6 +170,7 @@ function PostQrInputs() {
       </div>
 
       <MessageInput />
+      <ErrorMessages />
       <div className='flex w-full gap-2'>
         <Button
           type='button'
@@ -247,13 +248,7 @@ function ManualInputStep() {
       <AmountInput />
       <MessageInput />
 
-      {status === 'transaction:insufficient-funds' ? (
-        <ErrorMessage>Saldosi ei riitä!</ErrorMessage>
-      ) : status === 'transaction:invalid-recipient' ? (
-        <ErrorMessage>Virheellinen vastaanottaja!</ErrorMessage>
-      ) : status !== 'idle' && status !== 'loading' ? (
-        <ErrorMessage>Jotakin meni pieleen!</ErrorMessage>
-      ) : null}
+      <ErrorMessages />
       <div className='flex w-full gap-2'>
         <Button
           fullWidth
@@ -274,4 +269,16 @@ function ManualInputStep() {
       </div>
     </>
   );
+}
+
+function ErrorMessages() {
+  const { status } = useSendContext();
+
+  return status === 'transaction:insufficient-funds' ? (
+    <ErrorMessage>Saldosi ei riitä!</ErrorMessage>
+  ) : status === 'transaction:invalid-recipient' ? (
+    <ErrorMessage>Virheellinen vastaanottaja!</ErrorMessage>
+  ) : status !== 'idle' && status !== 'loading' ? (
+    <ErrorMessage>Jotakin meni pieleen!</ErrorMessage>
+  ) : null;
 }

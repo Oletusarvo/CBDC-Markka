@@ -15,6 +15,8 @@ export function MainLayout() {
 
   if (status === 'loading') {
     return <LoadingScreen />;
+  } else if (status === 'authenticated') {
+    return <Navigate to='/auth/overview' />;
   }
 
   return (
