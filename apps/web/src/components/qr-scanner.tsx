@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import QrScanner from 'qr-scanner';
-import { Button } from './button';
+import { Button, LoaderButton } from './button';
 
 export default function QRScanner({ onScan }) {
   const videoRef = useRef(null);
   const scannerRef = useRef(null);
   const [started, setStarted] = useState(false);
-
-  const startScan = () => {
+  const [scannerLoading, setScannerLoading] = useState(false);
+  const startScan = async () => {
     if (!videoRef.current) return;
 
     scannerRef.current = new QrScanner(
@@ -21,7 +21,16 @@ export default function QRScanner({ onScan }) {
       },
     );
 
-    scannerRef.current.start();
+    try {
+      setScannerLoading(true);
+      await scannerRef.current.start();
+      console.log('Scanner started.');
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      setScannerLoading(false);
+    }
+
     setStarted(true);
   };
 
@@ -36,14 +45,15 @@ export default function QRScanner({ onScan }) {
     <div className='flex w-full relative flex-col justify-center'>
       {!started && (
         <div className='absolute w-full z-20'>
-          <Button
-            disabled={started}
+          <LoaderButton
+            loading={scannerLoading}
+            disabled={scannerLoading}
             type='button'
             rounded
             onClick={startScan}
             fullWidth>
             Avaa Kamera
-          </Button>
+          </LoaderButton>
         </div>
       )}
 
