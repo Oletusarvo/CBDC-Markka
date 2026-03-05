@@ -13,8 +13,10 @@ import { Spinner } from '../components/spinner';
 const [SendContext, useSendContext] = setupContext<{
   status: string;
   currentAddress: string;
+  currentAmount: number;
   updateCurrentAddress: (e) => void;
   updateStep: (currentStep: number) => void;
+  updateAmount: (e) => void;
 }>('SendContext');
 
 export function SendScreen() {
@@ -24,6 +26,7 @@ export function SendScreen() {
   const [status, setStatus] = useState('idle');
   const loading = status === 'loading';
   const [currentAddress, setCurrentAddress] = useState('');
+  const [currentAmount, setCurrentAmount] = useState(0);
   const formRef = useRef(null);
   const [step, setStep] = useState(0);
 
@@ -35,7 +38,7 @@ export function SendScreen() {
     try {
       const data = Object.fromEntries(new FormData(e.currentTarget));
       const res = await sendMoney({
-        amt: data.amt,
+        amt: currentAmount,
         email: currentAddress,
         message: data.message,
       } as any);
@@ -60,12 +63,22 @@ export function SendScreen() {
     setCurrentAddress(e.target.value);
   };
 
+  const updateAmount = e => setCurrentAmount(e.target.valueAsNumber);
+
   const updateStep = (currentStep: number) => {
     setStep(currentStep);
   };
 
   return (
-    <SendContext.Provider value={{ status, currentAddress, updateCurrentAddress, updateStep }}>
+    <SendContext.Provider
+      value={{
+        status,
+        currentAddress,
+        currentAmount,
+        updateCurrentAddress,
+        updateAmount,
+        updateStep,
+      }}>
       <Modal
         title='Lähetä Rahaa'
         onClose={cancel}>
@@ -77,10 +90,14 @@ export function SendScreen() {
           ) : step === 1 ? (
             <QRCodeReadStep
               onScan={data => {
-                setCurrentAddress(data);
-                setStep(1);
+                const d = JSON.parse(data);
+                setCurrentAddress(d.email);
+                setCurrentAmount(d.amt);
+                setStep(2);
               }}
             />
+          ) : step === 2 ? (
+            <PostQrInputs />
           ) : (
             <ManualInputStep />
           )}
@@ -108,7 +125,7 @@ function ChooseSendMethod() {
         rounded
         shadow
         variant='outlined'
-        onClick={() => updateStep(2)}>
+        onClick={() => updateStep(3)}>
         Kirjoita osoite
       </Button>
     </div>
@@ -135,6 +152,89 @@ function QRCodeReadStep({ onScan }: { onScan: (data) => void }) {
   );
 }
 
+function PostQrInputs() {
+  const { currentAddress, currentAmount, updateStep, status } = useSendContext();
+
+  const loading = status === 'loading';
+
+  return (
+    <>
+      <div className='flex flex-col'>
+        <span className='text-sm text-slate-500'>Vastaanottaja</span>
+        <span>{currentAddress}</span>
+      </div>
+
+      <div className='flex flex-col'>
+        <span className='text-sm text-slate-500'>Määrä</span>
+        <span>{currentAmount}</span>
+      </div>
+
+      <MessageInput />
+      <div className='flex w-full gap-2'>
+        <Button
+          type='button'
+          fullWidth
+          variant='outlined'
+          rounded
+          onClick={() => updateStep(0)}>
+          Peruuta
+        </Button>
+        <LoaderButton
+          loading={loading}
+          disabled={loading}
+          type='submit'
+          fullWidth
+          rounded
+          shadow>
+          Lähetä
+        </LoaderButton>
+      </div>
+    </>
+  );
+}
+
+function EmailInput() {
+  const { updateCurrentAddress } = useSendContext();
+  return (
+    <Input
+      type='email'
+      placeholder='Vastaanottaan sähköpostiosoite...'
+      onChange={updateCurrentAddress}
+      required
+    />
+  );
+}
+
+function AmountInput() {
+  const { updateAmount } = useSendContext();
+  const { account, isPending } = useAccount();
+  const balance = isPending ? 0 : account.balance_in_cents;
+  return (
+    <Input
+      onInput={updateAmount}
+      name='amt'
+      type='number'
+      step={0.01}
+      min={0.01}
+      max={balance / 100}
+      placeholder='Määrä...'
+      required
+    />
+  );
+}
+
+function MessageInput() {
+  return (
+    <textarea
+      className='w-full textarea'
+      name='message'
+      placeholder='Kirjoita viesti...'
+      required
+      spellCheck={'false'}
+    />
+  );
+}
+
 function ManualInputStep() {
   const { status, currentAddress, updateCurrentAddress, updateStep } = useSendContext();
   const { account, isPending: isAccountPending } = useAccount();
@@ -143,30 +243,10 @@ function ManualInputStep() {
 
   return (
     <>
-      <Input
-        type='email'
-        placeholder='Vastaanottaan sähköpostiosoite...'
-        onChange={updateCurrentAddress}
-        required
-      />
+      <EmailInput />
+      <AmountInput />
+      <MessageInput />
 
-      <Input
-        name='amt'
-        type='number'
-        step={0.01}
-        min={0.01}
-        max={balance / 100}
-        placeholder='Määrä...'
-        required
-      />
-
-      <textarea
-        className='w-full textarea'
-        name='message'
-        placeholder='Kirjoita viesti...'
-        required
-        spellCheck={'false'}
-      />
       {status === 'transaction:insufficient-funds' ? (
         <ErrorMessage>Saldosi ei riitä!</ErrorMessage>
       ) : status === 'transaction:invalid-recipient' ? (
