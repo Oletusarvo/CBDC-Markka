@@ -8,7 +8,6 @@ import { getAccountHandler } from '../../accounts/handlers/get-account-handler';
 /**Transfers money between two accounts. */
 export const createTransaction = createHandler(async (req: AuthenticatedExpressRequest, res) => {
   const session = req.session;
-  console.log(req.data);
   const senderAccount = await db(tablenames.accounts)
     .where({ user_id: session.user.id })
     .select('balance_in_cents', 'id')

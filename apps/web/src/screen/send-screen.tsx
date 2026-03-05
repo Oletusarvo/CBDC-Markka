@@ -23,7 +23,7 @@ export function SendScreen() {
   const loading = status === 'loading';
   const [currentAddress, setCurrentAddress] = useState('');
   const formRef = useRef(null);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
 
   const cancel = () => navigate('/auth/overview');
 
@@ -70,7 +70,10 @@ export function SendScreen() {
               }}
             />
           ) : (
-            <AmountAndMessageStep onCancel={() => setStep(0)} />
+            <AmountAndMessageStep
+              onCancel={() => setStep(0)}
+              onEmailChanged={e => setCurrentAddress(e.target.value)}
+            />
           )}
         </form>
       </Modal>
@@ -82,7 +85,7 @@ function QRCodeReadStep({ onScan }: { onScan: (data) => void }) {
   return <QRScanner onScan={onScan} />;
 }
 
-function AmountAndMessageStep({ onCancel }) {
+function AmountAndMessageStep({ onCancel, onEmailChanged }) {
   const { status, currentAddress } = useSendContext();
   const { account, isPending: isAccountPending } = useAccount();
   const balance = isAccountPending ? 0 : account.balance_in_cents;
@@ -90,10 +93,11 @@ function AmountAndMessageStep({ onCancel }) {
 
   return (
     <>
-      <div className='flex flex-col w-full'>
-        <label className='text-sm text-slate-500'>Vastaanottaja</label>
-        <span>{currentAddress}</span>
-      </div>
+      <Input
+        type='email'
+        placeholder='Vastaanottaan sähköpostiosoite...'
+        onChange={onEmailChanged}
+      />
       <div className='flex flex-col w-full'>
         <Input
           name='amt'
@@ -118,15 +122,6 @@ function AmountAndMessageStep({ onCancel }) {
         spellCheck={'false'}
       />
       <div className='flex w-full gap-2'>
-        <Button
-          onClick={onCancel}
-          disabled={loading}
-          rounded
-          type='button'
-          variant='outlined'
-          fullWidth>
-          Takaisin
-        </Button>
         <LoaderButton
           loading={loading}
           disabled={loading}
