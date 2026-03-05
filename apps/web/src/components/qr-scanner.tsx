@@ -18,7 +18,7 @@ export default function QRScanner({ onScan }) {
         onScan?.(result.data);
       },
       {
-        preferredCamera: 'environment',
+        //preferredCamera: 'environment',
         highlightScanRegion: true,
       },
     );
