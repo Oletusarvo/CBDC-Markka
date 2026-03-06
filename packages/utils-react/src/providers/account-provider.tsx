@@ -8,6 +8,7 @@ const [AccountContext, useAccount] = setupContext<{
   account: {
     balance_in_cents: number;
     id: string;
+    transactions: any[];
   };
   isPending: boolean;
   sendMoney: (data: { amt: number }) => Promise<Response>;
@@ -27,10 +28,15 @@ export function AccountProvider({ children }: React.PropsWithChildren) {
         method: 'GET',
         credentials: 'include',
       });
-      return res.status === 200 ? await res.json() : null;
+
+      if (res.ok) {
+        return await res.json();
+      }
+
+      return null;
     },
 
-    refetchInterval: 30000,
+    refetchInterval: 20000,
   });
 
   const sendMoney = async (data: any) => {

@@ -14,6 +14,7 @@ const [AuthContext, useSession] = setupContext<{
   status: 'authenticated' | 'unauthenticated' | 'loading';
 }>('AuthContext');
 
+const sessionName = 'cbdc-markka-session';
 function AuthProvider({ children }: React.PropsWithChildren) {
   const { apiInterface } = useApi();
   const {
@@ -30,7 +31,7 @@ function AuthProvider({ children }: React.PropsWithChildren) {
 
       if (res.status === 200) {
         const data = await res.json();
-        localStorage.setItem('cbdc-markka-session', JSON.stringify(data));
+
         return data;
       }
       return null;
@@ -63,7 +64,6 @@ function AuthProvider({ children }: React.PropsWithChildren) {
       credentials: 'include',
     });
     if (res.status === 200) {
-      localStorage.removeItem('cbdc-markka-session');
       await refetch();
     }
     return res;

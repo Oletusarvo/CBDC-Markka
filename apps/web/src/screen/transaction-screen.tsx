@@ -2,20 +2,20 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Modal } from '../components/modal';
 
 import { Spinner } from '../components/spinner';
-import { useTransactions } from '@cbdc-markka/utils-react';
+import { useAccount, useTransactions } from '@cbdc-markka/utils-react';
 
 export function TransactionScreen() {
   const navigate = useNavigate();
-  const { transactions, transactionsPending } = useTransactions();
+  const { account, isPending } = useAccount();
   const { id } = useParams();
-  const transaction = !transactionsPending ? transactions.find(t => t.id === id) : null;
+  const transaction = !isPending ? account.transactions.find(t => t.id === id) : null;
 
   return (
     <Modal
       title='Tapahtuma'
       onClose={() => navigate('/auth/overview')}>
       <div className='flex flex-col w-full gap-4'>
-        {transactionsPending ? (
+        {isPending ? (
           <Spinner />
         ) : (
           <>

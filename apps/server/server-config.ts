@@ -1,3 +1,3 @@
 export const serverConfig = {
-  accessTokenName: 'kryptomarkka-access-token',
+  accessTokenName: 'cbdc-markka-access-token',
 };

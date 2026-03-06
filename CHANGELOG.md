@@ -3,12 +3,14 @@
 ### Added
 
 - Qr-code reading for sending money.
+- Symbol for the currency.
 
 ### Changed
 
 - Moved Providers and api-logic inside their won packages so they can be shared between a possible react-native app and the web app in the future.
 - Switched to an account-based model.
 - The readme to reflect the account-based model.
+- Account balance and transactions are now loaded at the same time.
 
 ### Removed
 

@@ -18,10 +18,11 @@ type TTransaction = {
 };
 
 export function TransactionHistory() {
-  const { transactions, transactionsPending } = useTransactions();
+  const { account, isPending } = useAccount();
+
   const today = new Date().toLocaleDateString('fi');
   const dateSet: Set<string> = new Set(
-    transactions?.map(t => new Date(t.timestamp).toLocaleDateString('fi')),
+    account?.transactions?.map(t => new Date(t.timestamp).toLocaleDateString('fi')),
   );
 
   const generateTransactionList = () => {
@@ -30,7 +31,7 @@ export function TransactionHistory() {
       list.push(
         <>
           <span className='text-slate-500'>{date === today ? 'Tänään' : date}</span>
-          {transactions
+          {account?.transactions
             .filter(t => new Date(t.timestamp).toLocaleDateString('fi') === date)
             .map(t => {
               return (
@@ -48,9 +49,9 @@ export function TransactionHistory() {
 
   return (
     <>
-      {transactionsPending ? (
+      {isPending ? (
         <Spinner />
-      ) : transactions.length > 0 ? (
+      ) : account?.transactions.length > 0 ? (
         generateTransactionList()
       ) : (
         <div className='flex flex-col justify-center items-center flex-1'>
