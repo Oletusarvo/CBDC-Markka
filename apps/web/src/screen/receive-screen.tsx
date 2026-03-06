@@ -23,10 +23,7 @@ export function ReceiveScreen() {
           <>
             <QRCodeSVG
               className='rounded-md'
-              value={JSON.stringify({
-                email: session?.user.email,
-                amt: amount,
-              })}
+              value={`mrk:${session?.user.email}:${amount * 100}:`}
               fgColor='var(--color-primary)'
               minVersion={3}
             />

@@ -6,6 +6,7 @@ import { Button, LoaderButton } from '../components/button';
 import { useState } from 'react';
 import { ErrorMessage } from '../components/helper-message';
 import { useSession } from '@cbdc-markka/utils-react';
+import { ArrowLeft, LogIn } from 'lucide-react';
 
 export function LoginScreen() {
   const navigate = useNavigate();
@@ -69,6 +70,10 @@ export function LoginScreen() {
             variant='outlined'
             type='button'
             onClick={() => navigate('/')}>
+            <ArrowLeft
+              color='var(--color-primary)'
+              size='1rem'
+            />
             Peruuta
           </Button>
           <LoaderButton
@@ -78,6 +83,10 @@ export function LoginScreen() {
             fullWidth
             rounded
             shadow>
+            <LogIn
+              color='white'
+              size='1rem'
+            />
             Kirjaudu Sisään
           </LoaderButton>
         </div>

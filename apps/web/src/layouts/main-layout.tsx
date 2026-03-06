@@ -8,6 +8,7 @@ import { LoadingScreen } from '../screen/loading-screen';
 
 import { useSession } from '@cbdc-markka/utils-react';
 import { apiInterface } from '../util/api-interface';
+import { LogIn, UserPlus } from 'lucide-react';
 
 export function MainLayout() {
   const { status } = useSession();
@@ -37,6 +38,10 @@ export function MainLayout() {
               type='button'
               rounded
               shadow>
+              <UserPlus
+                color='white'
+                size='1rem'
+              />
               Luo Tili
             </Button>
             <Button
@@ -45,6 +50,10 @@ export function MainLayout() {
               type='button'
               variant='outlined'
               rounded>
+              <LogIn
+                color='var(--color-primary)'
+                size='1rem'
+              />
               Kirjaudu Sisään
             </Button>
           </div>
@@ -89,7 +98,7 @@ function CirculationDisplay() {
     <div className='flex flex-col w-full items-center mb-4'>
       <span className='text-sm'>Kierrossa</span>
       <span className='font-mono text-lg'>
-        {isPending ? <Spinner /> : currentCirculation.toFixed(2)} mk
+        ₥{isPending ? <Spinner /> : currentCirculation.toFixed(2)}
       </span>
     </div>
   );

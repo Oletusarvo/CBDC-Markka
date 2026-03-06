@@ -36,7 +36,7 @@ export function TransactionScreen() {
             <div className='flex flex-col'>
               <span className='text-xs text-slate-500'>Määrä</span>
               <span className='font-mono'>
-                {Number(transaction.amount_in_cents / 100).toFixed(2)} mk
+                ₥{Number(transaction.amount_in_cents / 100).toFixed(2)}
               </span>
             </div>
 

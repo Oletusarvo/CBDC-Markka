@@ -68,14 +68,14 @@ function Transaction({ data }: { data: TTransaction }) {
   const amt = (data.amount_in_cents / 100).toFixed(2);
 
   const amountClassName = useClassName(received ? 'text-green-400' : 'text-red-400', 'font-mono');
-  const amtString = received ? `+${amt}` : `-${amt}`;
+  const amtString = received ? `+ ₥${amt}` : `- ₥${amt}`;
   return (
     <div
       className='bg-white rounded-md shadow-md py-2 px-4 flex w-full gap-4 items-center cursor-pointer'
       onClick={() => navigate('transaction/' + data.id)}>
       {received ? <ArrowDownCircle color='green' /> : <ArrowUpCircle color='red' />}
       <div className='flex flex-col'>
-        <span className={amountClassName}>{amtString} mk</span>
+        <span className={amountClassName}>{amtString}</span>
 
         <span className='text-xs text-slate-500'>{received ? data.from_email : data.to_email}</span>
       </div>

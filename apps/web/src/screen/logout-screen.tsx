@@ -3,6 +3,7 @@ import { Modal } from '../components/modal';
 import { Button, LoaderButton } from '../components/button';
 import { useState } from 'react';
 import { useSession } from '@cbdc-markka/utils-react';
+import { ArrowLeft, Check, LogOut } from 'lucide-react';
 
 export function LogoutScreen() {
   const navigate = useNavigate();
@@ -12,10 +13,12 @@ export function LogoutScreen() {
   const handleSignout = async () => {
     setPending(true);
     const res = await signout();
-    if (res.status === 200) {
-      navigate('/');
-    }
-    setPending(false);
+    setTimeout(() => {
+      if (res.status === 200) {
+        navigate('/');
+      }
+      setPending(false);
+    }, 500);
   };
 
   return (
@@ -31,9 +34,14 @@ export function LogoutScreen() {
             rounded
             variant='outlined'
             type='button'>
+            <ArrowLeft
+              color='var(--color-primary)'
+              size='1rem'
+            />
             Peruuta
           </Button>
           <LoaderButton
+            disabled={pending}
             loading={pending}
             onClick={handleSignout}
             fullWidth
@@ -41,6 +49,10 @@ export function LogoutScreen() {
             shadow
             variant='contained'
             type='button'>
+            <LogOut
+              color='white'
+              size='1rem'
+            />
             Kyllä
           </LoaderButton>
         </div>

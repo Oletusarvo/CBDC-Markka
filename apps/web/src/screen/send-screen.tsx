@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../components/modal';
 import { Button, LoaderButton } from '../components/button';
-import { Send, XCircle } from 'lucide-react';
+import { ArrowLeft, AtSign, Check, QrCode, Send, XCircle } from 'lucide-react';
 import { useReducer, useRef, useState } from 'react';
 import { Input } from '../components/input';
 
@@ -90,9 +90,11 @@ export function SendScreen() {
           ) : step === 1 ? (
             <QRCodeReadStep
               onScan={data => {
-                const d = JSON.parse(data);
-                setCurrentAddress(d.email);
-                setCurrentAmount(d.amt);
+                const [protocol, to, amt] = data.split(':');
+                if (protocol !== 'mrk') return;
+
+                setCurrentAddress(to);
+                setCurrentAmount(amt);
                 setStep(2);
               }}
             />
@@ -117,6 +119,10 @@ function ChooseSendMethod() {
         rounded
         shadow
         onClick={() => updateStep(1)}>
+        <QrCode
+          color='white'
+          size='1rem'
+        />{' '}
         Skannaa QR-koodi
       </Button>
       <Button
@@ -126,6 +132,10 @@ function ChooseSendMethod() {
         shadow
         variant='outlined'
         onClick={() => updateStep(3)}>
+        <AtSign
+          color='var(--color-primary)'
+          size='1rem'
+        />
         Kirjoita osoite
       </Button>
     </div>
@@ -136,7 +146,7 @@ function QRCodeReadStep({ onScan }: { onScan: (data) => void }) {
   const { updateStep } = useSendContext();
 
   return (
-    <div className='w-full'>
+    <div className='w-full flex gap-2 flex-col'>
       <QRScanner onScan={onScan} />
       <div className='flex w-full gap-2'>
         <Button
@@ -145,6 +155,10 @@ function QRCodeReadStep({ onScan }: { onScan: (data) => void }) {
           variant='outlined'
           rounded
           onClick={() => updateStep(0)}>
+          <ArrowLeft
+            color='var(--color-primary)'
+            size='1rem'
+          />
           Takaisin
         </Button>
       </div>
@@ -166,7 +180,7 @@ function PostQrInputs() {
 
       <div className='flex flex-col'>
         <span className='text-sm text-slate-500'>Määrä</span>
-        <span>{currentAmount}</span>
+        <span>₥{currentAmount}</span>
       </div>
 
       <MessageInput />
@@ -178,6 +192,10 @@ function PostQrInputs() {
           variant='outlined'
           rounded
           onClick={() => updateStep(0)}>
+          <ArrowLeft
+            color='var(--color-primary)'
+            size='1rem'
+          />
           Peruuta
         </Button>
         <LoaderButton
@@ -187,6 +205,10 @@ function PostQrInputs() {
           fullWidth
           rounded
           shadow>
+          <Check
+            color='white'
+            size='1rem'
+          />
           Lähetä
         </LoaderButton>
       </div>
@@ -237,9 +259,7 @@ function MessageInput() {
 }
 
 function ManualInputStep() {
-  const { status, currentAddress, updateCurrentAddress, updateStep } = useSendContext();
-  const { account, isPending: isAccountPending } = useAccount();
-  const balance = isAccountPending ? 0 : account.balance_in_cents;
+  const { status, updateStep, currentAddress } = useSendContext();
   const loading = status === 'loading';
 
   return (
@@ -256,14 +276,22 @@ function ManualInputStep() {
           variant='outlined'
           rounded
           onClick={() => updateStep(0)}>
+          <ArrowLeft
+            color='var(--color-primary)'
+            size='1rem'
+          />
           Takaisin
         </Button>
         <LoaderButton
           loading={loading}
-          disabled={loading}
+          disabled={!currentAddress?.length || loading}
           rounded
           type='submit'
           fullWidth>
+          <Check
+            color='white'
+            size='1rem'
+          />
           Lähetä
         </LoaderButton>
       </div>

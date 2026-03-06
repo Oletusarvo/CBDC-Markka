@@ -77,10 +77,10 @@ function WalletContainer() {
   const { account, isPending } = useAccount();
   const currentBalance = useAnimatedNumber(!isPending ? account.balance_in_cents / 100 : 0);
   return (
-    <div className='p-8 w-full flex flex-col items-center'>
+    <div className='px-8 py-16 w-full flex flex-col items-center'>
       <h3 className='text-white text-sm'>Tilin Saldo</h3>
       <h2 className='text-white font-semibold text-3xl font-mono'>
-        {isPending ? <Spinner /> : Number(currentBalance).toFixed(2)} mk
+        ₥ {isPending ? <Spinner /> : Number(currentBalance).toFixed(2)}
       </h2>
     </div>
   );

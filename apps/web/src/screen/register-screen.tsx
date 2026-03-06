@@ -5,6 +5,7 @@ import { Button, LoaderButton } from '../components/button';
 import { useState } from 'react';
 import { ErrorMessage } from '../components/helper-message';
 import { useApi } from '@cbdc-markka/utils-react';
+import { ArrowLeft, Plus, UserPlus } from 'lucide-react';
 
 export function RegisterScreen() {
   const { apiInterface } = useApi();
@@ -89,6 +90,10 @@ export function RegisterScreen() {
             variant='outlined'
             type='button'
             onClick={() => navigate('/')}>
+            <ArrowLeft
+              color='var(--color-primary)'
+              size='1rem'
+            />
             Peruuta
           </Button>
           <LoaderButton
@@ -98,6 +103,10 @@ export function RegisterScreen() {
             fullWidth
             rounded
             shadow>
+            <UserPlus
+              color='white'
+              size='1rem'
+            />
             Luo Tili
           </LoaderButton>
         </div>

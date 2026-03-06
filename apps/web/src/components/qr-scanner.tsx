@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import QrScanner from 'qr-scanner';
 import { Button, LoaderButton } from './button';
 import toast from 'react-hot-toast';
+import { Camera } from 'lucide-react';
 
 export default function QRScanner({ onScan }) {
   const videoRef = useRef(null);
@@ -59,6 +60,10 @@ export default function QRScanner({ onScan }) {
             type='button'
             rounded
             onClick={startScan}>
+            <Camera
+              color='white'
+              size='1rem'
+            />
             Avaa Kamera
           </LoaderButton>
         </div>
