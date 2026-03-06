@@ -180,7 +180,7 @@ function PostQrInputs() {
 
       <div className='flex flex-col'>
         <span className='text-sm text-slate-500'>Määrä</span>
-        <span>₥{currentAmount}</span>
+        <span>₥{currentAmount / 100}</span>
       </div>
 
       <MessageInput />
