@@ -28,7 +28,7 @@ export const registerUserHandler = createHandler(
       await trx(tablenames.accounts)
         .insert({
           user_id: user.id,
-          balance_in_cents: currentSupplyInCents + mint < MAX_SUPPLY_IN_CENTS ? mint : 0,
+          balance_in_cents: currentSupplyInCents.total + mint < MAX_SUPPLY_IN_CENTS ? mint : 0,
         })
         .returning('id');
     });

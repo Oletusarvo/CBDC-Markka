@@ -20,7 +20,7 @@ export function MainLayout() {
   }
 
   return (
-    <div className='flex flex-col h-full antialiased'>
+    <div className='flex flex-col flex-1 antialiased'>
       <section className='w-full px-4 py-32 flex items-center relative flex-1'>
         <div
           className='absolute top-0 left-0 w-full h-full opacity-15 -z-10'
@@ -28,9 +28,7 @@ export function MainLayout() {
         />
         <div className='flex flex-col items-center w-full'>
           <h1 className='text-2xl font-semibold text-primary'>CBDC Markka</h1>
-          <p className='text-center text-sm'>
-            Raha, joka toimii kuin fyysinen seteli — mutta digitaalisesti.
-          </p>
+          <p className='text-center text-sm'>Suomen markan inspiroima digitaaliraha.</p>
           <div className='flex w-full gap-2 mt-8'>
             <Button
               color='primary-pretty'

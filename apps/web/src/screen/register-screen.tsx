@@ -4,8 +4,7 @@ import { Input } from '../components/input';
 import { Button, LoaderButton } from '../components/button';
 import { useState } from 'react';
 import { ErrorMessage } from '../components/helper-message';
-
-import { useApi } from '@cbdc-markka/utils-react/src/providers/api-provider';
+import { useApi } from '@cbdc-markka/utils-react';
 
 export function RegisterScreen() {
   const { apiInterface } = useApi();

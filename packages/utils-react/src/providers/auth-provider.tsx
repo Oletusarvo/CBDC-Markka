@@ -1,6 +1,5 @@
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { setupContext } from '../util/setup-context';
-
 import { useApi } from './api-provider';
 
 const [AuthContext, useSession] = setupContext<{

@@ -22,7 +22,7 @@ export function OverviewLayout() {
     <AccountProvider>
       <TokenProvider>
         <TransactionsProvider>
-          <div className='flex flex-col w-full flex-1 max-h-full bg-primary rounded-t-2xl'>
+          <div className='flex flex-col w-full flex-1 bg-primary rounded-t-2xl max-h-full'>
             <div className='w-full bg-primary flex flex-col relative'>
               <div className='w-full flex items-center justify-end absolute p-2'>
                 <Button
@@ -35,7 +35,7 @@ export function OverviewLayout() {
               </div>
               <WalletContainer />
             </div>
-            <div className='w-full flex flex-col flex-1 bg-slate-100 overflow-y-scroll p-4 gap-2 rounded-t-2xl'>
+            <div className='w-full flex flex-col flex-1 bg-slate-100 overflow-y-scroll p-4 gap-2 rounded-t-2xl max-h-full'>
               <TransactionHistory />
             </div>
 
