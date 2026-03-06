@@ -13,6 +13,6 @@ const router = getRouter();
 router.post('/register', createBodyParser(userSchema), registerUserHandler);
 router.post('/login', createBodyParser(loginCredentialsSchema), loginHandler);
 router.get('/session', checkAuth(), getSessionHandler);
-router.get('/logout', checkAuth(), logoutHandler);
+router.put('/logout', checkAuth(), logoutHandler);
 
 export { router as authRouter };

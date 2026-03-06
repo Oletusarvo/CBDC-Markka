@@ -60,9 +60,10 @@ function AuthProvider({ children }: React.PropsWithChildren) {
 
   const signout = async () => {
     const res = await fetch(apiInterface.withApi('auth/logout'), {
-      method: 'GET',
+      method: 'PUT',
       credentials: 'include',
     });
+
     if (res.status === 200) {
       await refetch();
     }
