@@ -8,7 +8,7 @@ import { LoadingScreen } from '../screen/loading-screen';
 
 import { useSession } from '@cbdc-markka/utils-react';
 import { apiInterface } from '../util/api-interface';
-import { LogIn, UserPlus } from 'lucide-react';
+import { LogIn, User, UserPlus } from 'lucide-react';
 
 export function MainLayout() {
   const { status } = useSession();
@@ -16,8 +16,6 @@ export function MainLayout() {
 
   if (status === 'loading') {
     return <LoadingScreen />;
-  } else if (status === 'authenticated') {
-    return <Navigate to='/auth/overview' />;
   }
 
   return (
@@ -30,32 +28,51 @@ export function MainLayout() {
         <div className='flex flex-col items-center w-full'>
           <h1 className='text-2xl font-semibold text-primary'>CBDC Markka</h1>
           <p className='text-center text-sm'>Suomen markan inspiroima digitaaliraha.</p>
-          <div className='flex w-full gap-2 mt-8'>
-            <Button
-              color='primary-pretty'
-              onClick={() => navigate('/register')}
-              fullWidth
-              type='button'
-              rounded
-              shadow>
-              <UserPlus
-                color='white'
-                size='1rem'
-              />
-              Luo Tili
-            </Button>
-            <Button
-              onClick={() => navigate('/login')}
-              fullWidth
-              type='button'
-              variant='outlined'
-              rounded>
-              <LogIn
-                color='var(--color-primary)'
-                size='1rem'
-              />
-              Kirjaudu Sisään
-            </Button>
+          <div className='flex w-full gap-2 mt-8 xs:flex-col sm:flex-row'>
+            {status === 'unauthenticated' ? (
+              <>
+                <Button
+                  color='primary-pretty'
+                  onClick={() => navigate('/register')}
+                  fullWidth
+                  type='button'
+                  rounded
+                  shadow>
+                  <UserPlus
+                    color='white'
+                    size='1rem'
+                  />
+                  Luo Tili
+                </Button>
+                <Button
+                  onClick={() => navigate('/login')}
+                  fullWidth
+                  type='button'
+                  variant='outlined'
+                  rounded>
+                  <LogIn
+                    color='var(--color-primary)'
+                    size='1rem'
+                  />
+                  Kirjaudu Sisään
+                </Button>
+              </>
+            ) : (
+              <Button
+                onClick={() => navigate('/auth/overview')}
+                color='primary-pretty'
+                fullWidth
+                type='button'
+                variant='contained'
+                rounded
+                shadow>
+                <User
+                  color='white'
+                  size='1rem'
+                />{' '}
+                Näytä Tilisi
+              </Button>
+            )}
           </div>
         </div>
       </section>
