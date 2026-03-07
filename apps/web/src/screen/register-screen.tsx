@@ -22,14 +22,7 @@ export function RegisterScreen() {
         return;
       }
 
-      const res = await fetch(apiInterface.withApi('auth/register'), {
-        method: 'POST',
-        body: JSON.stringify(credentials),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const res = await apiInterface.registerUser(credentials);
       if (res.status === 200) {
         setStatus('success');
         navigate('/login');

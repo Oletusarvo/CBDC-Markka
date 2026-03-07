@@ -21,54 +21,52 @@ export function OverviewLayout() {
   return (
     <AccountProvider>
       <TokenProvider>
-        <TransactionsProvider>
-          <div className='flex flex-col w-full flex-1 bg-primary rounded-t-2xl max-h-full'>
-            <div className='w-full bg-primary flex flex-col relative'>
-              <div className='w-full flex items-center justify-end absolute p-2'>
-                <Button
-                  circular
-                  type='button'
-                  variant='ghost'
-                  onClick={() => navigate('/auth/logout')}>
-                  <LogOut color='white' />
-                </Button>
-              </div>
-
-              <WalletContainer />
-            </div>
-            <div className='w-full flex flex-col flex-1 bg-slate-100 overflow-y-scroll p-4 gap-2 rounded-t-2xl max-h-full'>
-              <TransactionHistory />
-            </div>
-
-            <div className='flex w-full gap-4 p-4 bg-slate-100'>
+        <div className='flex flex-col w-full flex-1 bg-primary rounded-t-2xl max-h-full'>
+          <div className='w-full bg-primary flex flex-col relative'>
+            <div className='w-full flex items-center justify-end absolute p-2'>
               <Button
-                onClick={() => navigate('send')}
-                fullWidth
-                shadow
-                rounded>
-                <CircleArrowUp
-                  size='1rem'
-                  color='white'
-                />
-                Lähetä
-              </Button>
-
-              <Button
-                onClick={() => navigate('receive')}
-                fullWidth
-                shadow
-                variant='outlined'
-                rounded>
-                <CircleArrowDown
-                  size='1rem'
-                  className='text-primary'
-                />
-                Pyydä
+                circular
+                type='button'
+                variant='ghost'
+                onClick={() => navigate('/auth/logout')}>
+                <LogOut color='white' />
               </Button>
             </div>
+
+            <WalletContainer />
           </div>
-          <Outlet />
-        </TransactionsProvider>
+          <div className='w-full flex flex-col flex-1 bg-slate-100 overflow-y-scroll p-4 gap-2 rounded-t-2xl max-h-full'>
+            <TransactionHistory />
+          </div>
+
+          <div className='flex w-full gap-4 p-4 bg-slate-100'>
+            <Button
+              onClick={() => navigate('send')}
+              fullWidth
+              shadow
+              rounded>
+              <CircleArrowUp
+                size='1rem'
+                color='white'
+              />
+              Lähetä
+            </Button>
+
+            <Button
+              onClick={() => navigate('receive')}
+              fullWidth
+              shadow
+              variant='outlined'
+              rounded>
+              <CircleArrowDown
+                size='1rem'
+                className='text-primary'
+              />
+              Pyydä
+            </Button>
+          </div>
+        </div>
+        <Outlet />
       </TokenProvider>
     </AccountProvider>
   );

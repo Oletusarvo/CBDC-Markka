@@ -24,6 +24,6 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  console.log('Service worker: Intercepting a fetch...');
+ 
   return event.respondWith(fetch(event.request));
 });

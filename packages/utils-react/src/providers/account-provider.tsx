@@ -11,7 +11,7 @@ const [AccountContext, useAccount] = setupContext<{
     transactions: any[];
   };
   isPending: boolean;
-  sendMoney: (data: { amt: number }) => Promise<Response>;
+  createTransaction: (data: { amt: number }) => Promise<Response>;
 }>('AccountContext');
 
 export function AccountProvider({ children }: React.PropsWithChildren) {
@@ -24,10 +24,7 @@ export function AccountProvider({ children }: React.PropsWithChildren) {
   } = useQuery({
     queryKey: [session?.user.id, 'account'],
     queryFn: async () => {
-      const res = await fetch(apiInterface.withApi('accounts'), {
-        method: 'GET',
-        credentials: 'include',
-      });
+      const res = await apiInterface.getAccount();
 
       if (res.ok) {
         return await res.json();
@@ -39,18 +36,11 @@ export function AccountProvider({ children }: React.PropsWithChildren) {
     refetchInterval: 20000,
   });
 
-  const sendMoney = async (data: any) => {
-    const res = await fetch(apiInterface.withApi('transactions'), {
-      method: 'POST',
-      body: JSON.stringify({
-        amt: data.amt,
-        email: data.email.trim(),
-        message: data.message,
-      }),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  const createTransaction = async (data: any) => {
+    const res = await apiInterface.createTransaction({
+      amt: data.amt,
+      email: data.email.trim(),
+      message: data.message,
     });
 
     if (res.status === 200) {
@@ -64,7 +54,7 @@ export function AccountProvider({ children }: React.PropsWithChildren) {
       value={{
         account,
         isPending,
-        sendMoney,
+        createTransaction,
       }}>
       {children}
     </AccountContext.Provider>

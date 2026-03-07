@@ -20,14 +20,11 @@ const [SendContext, useSendContext] = setupContext<{
 }>('SendContext');
 
 export function SendScreen() {
-  const { apiInterface } = useApi();
-  const { account, sendMoney, isPending: isAccountPending } = useAccount();
+  const { createTransaction } = useAccount();
   const navigate = useNavigate();
   const [status, setStatus] = useState('idle');
-  const loading = status === 'loading';
   const [currentAddress, setCurrentAddress] = useState('');
   const [currentAmount, setCurrentAmount] = useState(0);
-  const formRef = useRef(null);
   const [step, setStep] = useState(0);
 
   const cancel = () => navigate('/auth/overview');
@@ -37,7 +34,7 @@ export function SendScreen() {
     setStatus('loading');
     try {
       const data = Object.fromEntries(new FormData(e.currentTarget));
-      const res = await sendMoney({
+      const res = await createTransaction({
         amt: currentAmount,
         email: currentAddress,
         message: data.message,

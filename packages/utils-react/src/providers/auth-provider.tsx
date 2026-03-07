@@ -24,10 +24,7 @@ function AuthProvider({ children }: React.PropsWithChildren) {
   } = useQuery({
     queryKey: ['session'],
     queryFn: async () => {
-      const res = await fetch(apiInterface.withApi('auth/session'), {
-        method: 'GET',
-        credentials: 'include',
-      });
+      const res = await apiInterface.getSession();
 
       if (res.status === 200) {
         const data = await res.json();
@@ -42,15 +39,7 @@ function AuthProvider({ children }: React.PropsWithChildren) {
   const status = session ? 'authenticated' : sessionPending ? 'loading' : 'unauthenticated';
 
   const signin = async (credentials: any) => {
-    const res = await fetch(apiInterface.withApi('auth/login'), {
-      method: 'POST',
-      credentials: 'include',
-      body: JSON.stringify(credentials),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
+    const res = await apiInterface.loginUser(credentials);
     if (res.status === 200) {
       await refetch();
     }
@@ -59,11 +48,7 @@ function AuthProvider({ children }: React.PropsWithChildren) {
   };
 
   const signout = async () => {
-    const res = await fetch(apiInterface.withApi('auth/logout'), {
-      method: 'PUT',
-      credentials: 'include',
-    });
-
+    const res = await apiInterface.logoutUser();
     if (res.status === 200) {
       await refetch();
     }

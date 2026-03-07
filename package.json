@@ -1,6 +1,6 @@
 {
   "name": "cbdc-markka",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,7 @@
     "build:web": "npm run build -w @cbdc-markka/web",
     "dev:server": "npm run dev -w @cbdc-markka/server",
     "dev:web": "npm run dev -w @cbdc-markka/web",
+    "dev:android": "npm run android -w @cbdc-markka/mobile",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

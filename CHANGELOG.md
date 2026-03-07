@@ -1,3 +1,14 @@
+## [2.1.0] - 07-03-2026
+
+### Added
+
+- React Native mobile project.
+
+### Changed
+
+- All api-calls the app can make are now in the ApiInterface-class.
+- Updated the previous log to contain the icons on all buttons as a change.
+
 ## [2.0.0] - 04-03-2026
 
 ### Added
@@ -11,6 +22,7 @@
 - Switched to an account-based model.
 - The readme to reflect the account-based model.
 - Account balance and transactions are now loaded at the same time.
+- Added icons to buttons.
 
 ### Removed
 
