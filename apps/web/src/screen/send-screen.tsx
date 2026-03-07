@@ -114,6 +114,7 @@ export function SendScreen() {
                 if (protocol !== 'mrk') {
                   return;
                 }
+
                 if (amount && amount !== 'null') {
                   setCurrentAmount(parseInt(amount) / 100);
                 }

@@ -11,7 +11,7 @@ import { Button } from '../components/button';
 
 export function ReceiveScreen() {
   const { session } = useSession();
-  const [amount, setAmount] = useState(0.01);
+  const [amount, setAmount] = useState(null);
   const { account, isPending } = useAccount();
   const navigate = useNavigate();
 
@@ -29,7 +29,9 @@ export function ReceiveScreen() {
             fontSize={18}
             fontWeight={600}
             max={account?.balance_in_cents}
-            onChange={e => setAmount(e.target.valueAsNumber * 100)}
+            onChange={e => {
+              setAmount(e.target?.valueAsNumber || null);
+            }}
             type='number'
             min={0.01}
             step={0.01}
@@ -47,7 +49,7 @@ export function ReceiveScreen() {
             <span className='text-slate-500 text-xs'>{session?.user.id}</span>
           </div>
 
-          <span className='text-xl font-semibold'>₥{Number(amount / 100).toFixed(2)}</span>
+          {amount && <span className='text-xl font-semibold'>₥{Number(amount).toFixed(2)}</span>}
         </div>
       </div>
     </AppScreen>
