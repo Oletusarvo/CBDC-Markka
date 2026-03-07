@@ -35,7 +35,7 @@ export function SendScreen() {
     try {
       const data = Object.fromEntries(new FormData(e.currentTarget));
       const res = await createTransaction({
-        amt: currentAmount,
+        amt: currentAmount / 100,
         email: currentAddress,
         message: data.message,
       } as any);
