@@ -7,6 +7,7 @@
 
 @theme {
   --animate-slide-up: SlideUp 0.2s ease-out;
+  --animate-scale-in: ScaleIn 0.2s ease-out;
   --color-primary: var(--primary);
   --breakpoint-xs: 360px;
 }

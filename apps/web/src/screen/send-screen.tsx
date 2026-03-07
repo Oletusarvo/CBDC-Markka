@@ -9,6 +9,8 @@ import { ErrorMessage } from '../components/helper-message';
 import { setupContext, useAccount, useApi, useTokens } from '@cbdc-markka/utils-react';
 import QRScanner from '../components/qr-scanner';
 import { Spinner } from '../components/spinner';
+import { AppScreen } from '../components/app-screen';
+import { TabButton } from '../components/tab-button';
 
 const [SendContext, useSendContext] = setupContext<{
   status: string;
@@ -24,7 +26,7 @@ export function SendScreen() {
   const navigate = useNavigate();
   const [status, setStatus] = useState('idle');
   const [currentAddress, setCurrentAddress] = useState('');
-  const [currentAmount, setCurrentAmount] = useState(0);
+  const [currentAmount, setCurrentAmount] = useState(0.01);
   const [step, setStep] = useState(0);
 
   const cancel = () => navigate('/auth/overview');
@@ -35,7 +37,7 @@ export function SendScreen() {
     try {
       const data = Object.fromEntries(new FormData(e.currentTarget));
       const res = await createTransaction({
-        amt: currentAmount / 100,
+        amt: currentAmount,
         email: currentAddress,
         message: data.message,
       } as any);
@@ -76,32 +78,53 @@ export function SendScreen() {
         updateAmount,
         updateStep,
       }}>
-      <Modal
+      <AppScreen
         title='Lähetä Rahaa'
         onClose={cancel}>
         <form
           className='flex flex-col w-full gap-2'
           onSubmit={handleSubmit}>
+          <div className='flex w-full'>
+            <TabButton selected={step === 0}>
+              <Button
+                type='button'
+                onClick={() => setStep(0)}
+                fullWidth
+                variant='ghost'>
+                Tietojen Täyttö
+              </Button>
+            </TabButton>
+
+            <TabButton selected={step === 1}>
+              <Button
+                type='button'
+                onClick={() => setStep(1)}
+                fullWidth
+                variant='ghost'>
+                Skannaa QR-Koodi
+              </Button>
+            </TabButton>
+          </div>
           {step === 0 ? (
-            <ChooseSendMethod />
-          ) : step === 1 ? (
+            <ManualInputStep />
+          ) : (
             <QRCodeReadStep
               onScan={data => {
-                const [protocol, to, amt] = data.split(':');
-                if (protocol !== 'mrk') return;
+                const [protocol, address, amount] = data.split(':');
+                if (protocol !== 'mrk') {
+                  return;
+                }
+                if (amount && amount !== 'null') {
+                  setCurrentAmount(parseInt(amount) / 100);
+                }
 
-                setCurrentAddress(to);
-                setCurrentAmount(amt);
-                setStep(2);
+                setCurrentAddress(address);
+                setStep(0);
               }}
             />
-          ) : step === 2 ? (
-            <PostQrInputs />
-          ) : (
-            <ManualInputStep />
           )}
         </form>
-      </Modal>
+      </AppScreen>
     </SendContext.Provider>
   );
 }
@@ -143,82 +166,19 @@ function QRCodeReadStep({ onScan }: { onScan: (data) => void }) {
   const { updateStep } = useSendContext();
 
   return (
-    <div className='w-full flex gap-2 flex-col'>
+    <div className='flex flex-col w-full h-full flex-1 justify-center'>
       <QRScanner onScan={onScan} />
-      <div className='flex w-full gap-2'>
-        <Button
-          fullWidth
-          type='button'
-          variant='outlined'
-          rounded
-          onClick={() => updateStep(0)}>
-          <ArrowLeft
-            color='var(--color-primary)'
-            size='1rem'
-          />
-          Takaisin
-        </Button>
-      </div>
     </div>
   );
 }
 
-function PostQrInputs() {
-  const { currentAddress, currentAmount, updateStep, status } = useSendContext();
-
-  const loading = status === 'loading';
-
-  return (
-    <>
-      <div className='flex flex-col'>
-        <span className='text-sm text-slate-500'>Vastaanottaja</span>
-        <span>{currentAddress}</span>
-      </div>
-
-      <div className='flex flex-col'>
-        <span className='text-sm text-slate-500'>Määrä</span>
-        <span>₥{currentAmount / 100}</span>
-      </div>
-
-      <MessageInput />
-      <ErrorMessages />
-      <div className='flex w-full gap-2'>
-        <Button
-          type='button'
-          fullWidth
-          variant='outlined'
-          rounded
-          onClick={() => updateStep(0)}>
-          <ArrowLeft
-            color='var(--color-primary)'
-            size='1rem'
-          />
-          Peruuta
-        </Button>
-        <LoaderButton
-          loading={loading}
-          disabled={loading}
-          type='submit'
-          fullWidth
-          rounded
-          shadow>
-          <Check
-            color='white'
-            size='1rem'
-          />
-          Lähetä
-        </LoaderButton>
-      </div>
-    </>
-  );
-}
-
 function EmailInput() {
-  const { updateCurrentAddress } = useSendContext();
+  const { updateCurrentAddress, currentAddress } = useSendContext();
   return (
     <Input
+      value={currentAddress}
       type='email'
-      placeholder='Vastaanottaan sähköpostiosoite...'
+      placeholder='Vastaanottajan sähköpostiosoite...'
       onChange={updateCurrentAddress}
       required
     />
@@ -226,11 +186,12 @@ function EmailInput() {
 }
 
 function AmountInput() {
-  const { updateAmount } = useSendContext();
+  const { updateAmount, currentAmount } = useSendContext();
   const { account, isPending } = useAccount();
   const balance = isPending ? 0 : account.balance_in_cents;
   return (
     <Input
+      value={currentAmount}
       onInput={updateAmount}
       name='amt'
       type='number'
@@ -267,18 +228,6 @@ function ManualInputStep() {
 
       <ErrorMessages />
       <div className='flex w-full gap-2'>
-        <Button
-          fullWidth
-          type='button'
-          variant='outlined'
-          rounded
-          onClick={() => updateStep(0)}>
-          <ArrowLeft
-            color='var(--color-primary)'
-            size='1rem'
-          />
-          Takaisin
-        </Button>
         <LoaderButton
           loading={loading}
           disabled={!currentAddress?.length || loading}

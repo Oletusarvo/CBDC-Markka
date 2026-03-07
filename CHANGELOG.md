@@ -8,6 +8,7 @@
 
 - All api-calls the app can make are now in the ApiInterface-class.
 - Updated the previous log to contain the icons on all buttons as a change.
+- Send and Receive screens.
 
 ## [2.0.0] - 04-03-2026
 
