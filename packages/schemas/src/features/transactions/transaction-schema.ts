@@ -1,7 +1,7 @@
 import z from 'zod';
 
 export const transactionSchema = z.object({
-  email: z.email().trim(),
+  recipient_id: z.uuid().trim(),
   amt: z.coerce
     .number()
     .positive()

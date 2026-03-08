@@ -35,7 +35,7 @@ export function OverviewLayout() {
 
             <WalletContainer />
           </div>
-          <div className='w-full flex flex-col flex-1 bg-slate-100 overflow-y-scroll p-4 gap-2 rounded-t-2xl max-h-full'>
+          <div className='w-full flex flex-col flex-1 bg-slate-100 overflow-y-scroll p-4 rounded-t-2xl max-h-full'>
             <TransactionHistory />
           </div>
 

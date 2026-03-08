@@ -39,7 +39,7 @@ export function AccountProvider({ children }: React.PropsWithChildren) {
   const createTransaction = async (data: any) => {
     const res = await apiInterface.createTransaction({
       amt: data.amt,
-      email: data.email.trim(),
+      recipient_id: data.recipient_id,
       message: data.message,
     });
 

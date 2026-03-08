@@ -38,7 +38,7 @@ export function SendScreen() {
       const data = Object.fromEntries(new FormData(e.currentTarget));
       const res = await createTransaction({
         amt: currentAmount,
-        email: currentAddress,
+        recipient_id: currentAddress,
         message: data.message,
       } as any);
 
@@ -130,39 +130,6 @@ export function SendScreen() {
   );
 }
 
-function ChooseSendMethod() {
-  const { updateStep } = useSendContext();
-  return (
-    <div className='flex flex-col gap-2 w-full'>
-      <Button
-        type='button'
-        fullWidth
-        rounded
-        shadow
-        onClick={() => updateStep(1)}>
-        <QrCode
-          color='white'
-          size='1rem'
-        />{' '}
-        Skannaa QR-koodi
-      </Button>
-      <Button
-        type='button'
-        fullWidth
-        rounded
-        shadow
-        variant='outlined'
-        onClick={() => updateStep(3)}>
-        <AtSign
-          color='var(--color-primary)'
-          size='1rem'
-        />
-        Kirjoita osoite
-      </Button>
-    </div>
-  );
-}
-
 function QRCodeReadStep({ onScan }: { onScan: (data) => void }) {
   const { updateStep } = useSendContext();
 
@@ -178,8 +145,7 @@ function EmailInput() {
   return (
     <Input
       value={currentAddress}
-      type='email'
-      placeholder='Vastaanottajan sähköpostiosoite...'
+      placeholder='Vastaanottajan tunnus...'
       onChange={updateCurrentAddress}
       required
     />
@@ -253,6 +219,8 @@ function ErrorMessages() {
     <ErrorMessage>Saldosi ei riitä!</ErrorMessage>
   ) : status === 'transaction:invalid-recipient' ? (
     <ErrorMessage>Virheellinen vastaanottaja!</ErrorMessage>
+  ) : status === 'transaction:self-transaction' ? (
+    <ErrorMessage>Samalle tilille ei voi lähettää!</ErrorMessage>
   ) : status !== 'idle' && status !== 'loading' ? (
     <ErrorMessage>Jotakin meni pieleen!</ErrorMessage>
   ) : null;

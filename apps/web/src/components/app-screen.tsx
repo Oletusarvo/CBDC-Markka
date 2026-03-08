@@ -8,7 +8,7 @@ export type AppScreenProps = React.PropsWithChildren & {
 
 export function AppScreen({ title, onClose, children }: AppScreenProps) {
   return (
-    <div className='absolute top-0 left-0 z-20 w-full h-full bg-white animate-scale-in'>
+    <div className='fixed top-0 left-0 z-20 w-full h-full bg-white animate-scale-in'>
       <div className='flex p-4 w-full items-center gap-2'>
         <Button
           onClick={onClose}

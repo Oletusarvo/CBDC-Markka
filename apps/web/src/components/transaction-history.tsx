@@ -72,7 +72,7 @@ function Transaction({ data }: { data: TTransaction }) {
   const amtString = received ? `+ ₥${amt}` : `- ₥${amt}`;
   return (
     <div
-      className='bg-white rounded-md shadow-md py-2 px-4 flex w-full gap-4 items-center cursor-pointer'
+      className='bg-white py-2 px-4 flex w-full gap-4 items-center cursor-pointer border-b border-slate-200'
       onClick={() => navigate('transaction/' + data.id)}>
       {received ? <ArrowDownCircle color='green' /> : <ArrowUpCircle color='red' />}
       <div className='flex flex-col'>
