@@ -26,9 +26,11 @@ export function LoginScreen() {
         setTimeout(() => {
           navigate('/auth/overview');
         }, 700);
-      } else {
+      } else if (res.status !== 503) {
         const err = await res.json();
         setStatus(err.error);
+      } else {
+        throw new Error('Received response 503');
       }
     } catch (err) {
       console.log(err.message);

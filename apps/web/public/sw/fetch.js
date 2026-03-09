@@ -6,8 +6,12 @@ self.addEventListener('fetch', event => {
 
 async function handleFetch(req) {
   const url = new URL(req.url);
-  if (url.pathname.startsWith('/api/auth/session') || url.pathname.startsWith('/api/accounts')) {
-    return fetchWithCacheFallback(req, 5000);
+  if (
+    url.pathname.startsWith('/api/auth/session') ||
+    url.pathname.startsWith('/api/accounts') ||
+    url.pathname.startsWith('/api/currencies/circulation')
+  ) {
+    return fetchWithCacheFallback(req, 3500);
   }
 
   return fetch(req);
