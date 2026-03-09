@@ -34,6 +34,7 @@ export function AccountProvider({ children }: React.PropsWithChildren) {
     },
 
     refetchInterval: 20000,
+    retryDelay: 15000,
   });
 
   const createTransaction = async (data: any) => {
