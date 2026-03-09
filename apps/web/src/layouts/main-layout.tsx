@@ -80,11 +80,28 @@ export function MainLayout() {
       <section className='w-full py-16 bg-gray-900 text-white px-4'>
         <h2 className='font-semibold text-xl mb-4'>Mikä on CBDC-Markka?</h2>
         <p className='text-gray-200'>
-          Tämä on digitaalinen valuutta, jossa raha ei ole pelkkä numero tietokannassa.
-          Perinteisessä tilimallissa saldo on vain arvo, esim: 1000. Järjestelmä päivittää numeroa
-          ylös ja alas, mutta itse rahalla ei ole yksilöllistä olemassaoloa. Tässä järjestelmässä
-          raha mallinnetaan yksittäisinä digitaalisina seteleinä — olioina, joilla on oma
-          identiteetti ja omistaja.
+          <strong>Digitaalinen markka.</strong> Yksinkertainen tapa lähettää ja vastaanottaa rahaa
+          verkossa. Valuuttamme perustuu Suomen markkaan, tuttuun ja selkeään rahayksikköön.
+          Maksaminen on nopeaa: skannaa QR-koodi, syötä summa ja vahvista maksu. Kaikki maksut
+          näkyvät selkeästä tapahtumahistoriasta.
+          <br />
+          <br /> Järjestelmä on <strong>keskitetty</strong>, jotta maksut pysyvät nopeina ja
+          yksinkertaisina käyttää. Digitaalisia markkoja tulee olemaan kierrossa{' '}
+          <strong>enintään 100 miljoonaa</strong>, eikä määrää kasvateta tämän rajan yli.
+          Tarvittaessa valuutan tarkkuutta voidaan sen sijaan kasvattaa – valuutta alkaa{' '}
+          <strong>kahden desimaalin tarkkuudella</strong>, jota voidaan lisätä tarpeen mukaan.
+          Jokainen uusi tili avataan 20 markan aloitussaldolla, kunnes 100 miljoonan raja on
+          saavutettu.
+          <br />
+          <br />
+          Monet nykyiset valuutat perustuvat jatkuvaan rahan luomiseen, mikä voi heikentää niiden
+          arvoa ajan myötä. Tämän valuutan perusajatus on päinvastainen: rajallinen määrä rahaa voi
+          auttaa{' '}
+          <strong>säilyttämään ostovoiman – ja pitkällä aikavälillä jopa vahvistamaan sitä.</strong>
+          <br />
+          <br />
+          Projekti on kokeilu, joka tuo markan digitaaliseen aikaan ja tutkii, millainen voisi olla
+          yksinkertainen suomalainen digitaalinen valuutta.
         </p>
       </section>
 

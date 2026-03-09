@@ -6,7 +6,7 @@ self.addEventListener('fetch', event => {
 
 async function handleFetch(req) {
   const url = new URL(req.url);
-  if (url.pathname.startsWith('/api/auth/session')) {
+  if (url.pathname.startsWith('/api/auth/session') || url.pathname.startsWith('/api/accounts')) {
     //Race to fetch the session from the network, or cache if the network request times out.
     return fetchWithCacheFallback(req, 5000);
   }

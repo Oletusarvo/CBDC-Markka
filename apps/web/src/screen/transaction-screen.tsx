@@ -86,12 +86,12 @@ export function TransactionScreen() {
         <AmountDisplay />
         <div className='flex flex-col w-full'>
           <span className='text-xs text-slate-500'>Viesti</span>
-          <span>{transaction.message || 'Ei viestiä.'}</span>
+          <span>{transaction?.message || 'Ei viestiä.'}</span>
         </div>
 
         <div className='flex flex-col w-full'>
           <span className='text-xs text-slate-500'>Päivämäärä</span>
-          <span>{new Date(transaction.timestamp).toLocaleDateString('fi')}</span>
+          <span>{new Date(transaction?.timestamp).toLocaleDateString('fi')}</span>
         </div>
 
         <div className='flex flex-col w-full'>

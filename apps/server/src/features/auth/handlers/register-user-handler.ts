@@ -7,7 +7,7 @@ import { hashPassword } from '../../../utils/password';
 import { tablenames } from '../../../tablenames';
 import { userSchema } from '@cbdc-markka/schemas';
 
-const MAX_SUPPLY_IN_CENTS = 110_000_000_000;
+const MAX_SUPPLY_IN_CENTS = 10_000_000_000;
 
 export const registerUserHandler = createHandler(
   async (req: ExpressRequest<z.infer<typeof userSchema>>, res) => {

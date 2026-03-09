@@ -1,9 +1,8 @@
-## [2.1.0] - 07-03-2026
+## [2.1.0] - 09-03-2026
 
 ### Added
 
-- React Native mobile project.
-- Caching for the user's session, used when the network doesn't respond fast enough.
+- Caching for the user's session and account, used when the network doesn't respond fast enough.
 - Functionality to copy to clipboard the senders/recipient's ID on the transaction screen.
 
 ### Changed
@@ -13,6 +12,7 @@
 - Send and Receive screens.
 - Money is now sent by the account id instead of the users email.
 - The transaction screen appearance.
+- Currency introduction text.
 
 ## [2.0.0] - 04-03-2026
 
