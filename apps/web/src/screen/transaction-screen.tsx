@@ -51,13 +51,11 @@ export function TransactionScreen() {
     return (
       <div className={containerClassName}>
         <Symbol />
-        <div className='flex flex-col gap-2'>
-          <div className='flex flex-col'>
-            <span className='text-xs text-slate-500'>
-              {isReceived ? transaction?.from : transaction?.to}
-            </span>
-            <span>{isReceived ? transaction?.from_email : transaction?.to_email}</span>
-          </div>
+        <div className='flex flex-col'>
+          <span className='text-xs text-slate-500'>
+            {isReceived ? transaction?.from : transaction?.to}
+          </span>
+          <span>{isReceived ? transaction?.from_email : transaction?.to_email}</span>
 
           <Amount />
         </div>
