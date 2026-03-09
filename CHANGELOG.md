@@ -3,12 +3,16 @@
 ### Added
 
 - React Native mobile project.
+- Caching for the user's session, used when the network doesn't respond fast enough.
+- Functionality to copy to clipboard the senders/recipient's ID on the transaction screen.
 
 ### Changed
 
 - All api-calls the app can make are now in the ApiInterface-class.
 - Updated the previous log to contain the icons on all buttons as a change.
 - Send and Receive screens.
+- Money is now sent by the account id instead of the users email.
+- The transaction screen appearance.
 
 ## [2.0.0] - 04-03-2026
 

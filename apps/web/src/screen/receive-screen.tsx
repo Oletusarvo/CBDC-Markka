@@ -60,6 +60,7 @@ export function ReceiveScreen() {
             value={`mrk:${account?.id}:${amount ? amount * 100 : 'null'}`}
             size={150}
           />
+          {amount && <span className='text-xl font-semibold'>₥{Number(amount).toFixed(2)}</span>}
           <div className='flex flex-col w-full items-center gap-2'>
             <div className='flex flex-col items-center'>
               <h3 className='font-semibold'>{session?.user.email}</h3>
@@ -91,8 +92,6 @@ export function ReceiveScreen() {
               )}
             </Button>
           </div>
-
-          {amount && <span className='text-xl font-semibold'>₥{Number(amount).toFixed(2)}</span>}
         </div>
       </div>
     </AppScreen>

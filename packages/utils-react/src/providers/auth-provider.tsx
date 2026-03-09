@@ -33,7 +33,7 @@ function AuthProvider({ children }: React.PropsWithChildren) {
       }
       return null;
     },
-    retryDelay: 3000,
+    retryDelay: 15000,
   });
 
   const status = session ? 'authenticated' : sessionPending ? 'loading' : 'unauthenticated';

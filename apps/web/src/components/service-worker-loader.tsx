@@ -10,7 +10,7 @@ export function ServiceWorkerLoader() {
       // Register the service worker when the component mounts
       window.addEventListener('load', () => {
         navigator.serviceWorker
-          .register('/service-worker.js') // Register the service worker located in public/
+          .register('/service-worker.js', { type: 'module' }) // Register the service worker located in public/
           .then(registration => {
             console.log('Service Worker registered with scope:', registration.scope);
           })
