@@ -8,8 +8,10 @@ import { useState } from 'react';
 import { AppScreen } from '../components/app-screen';
 import QrScanner from 'qr-scanner';
 import { Button } from '../components/button';
-import { Check, Pencil } from 'lucide-react';
+import { Check, CurrencyIcon, DollarSign, Pencil } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useClassName } from '../hooks/use-class-name';
+import { appConfig } from '../app-config';
 
 export function ReceiveScreen() {
   const { session } = useSession();
@@ -42,9 +44,9 @@ export function ReceiveScreen() {
         <div className='flex flex-col gap-2 w-full'>
           <label className='font-semibold text-sm'>Anna määrä (vaihtoehtoinen)</label>
           <Input
+            iconComponent={props => <div {...props}>{appConfig.currencySymbol}</div>}
             fontSize={18}
             fontWeight={600}
-            max={account?.balance_in_cents}
             onChange={e => {
               setAmount(e.target?.valueAsNumber || null);
             }}
@@ -60,7 +62,12 @@ export function ReceiveScreen() {
             value={`mrk:${account?.id}:${amount ? amount * 100 : 'null'}`}
             size={150}
           />
-          {amount && <span className='text-xl font-semibold'>₥{Number(amount).toFixed(2)}</span>}
+          {amount && (
+            <div className='text-xl font-semibold flex items-center'>
+              {appConfig.currencySymbol}
+              <span>{Number(amount).toFixed(2)}</span>
+            </div>
+          )}
           <div className='flex flex-col w-full items-center gap-2'>
             <div className='flex flex-col items-center'>
               <h3 className='font-semibold'>{session?.user.email}</h3>

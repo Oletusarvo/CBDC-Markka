@@ -1,9 +1,10 @@
-## [2.1.0] - 09-03-2026
+## [2.1.0] - 10-03-2026
 
 ### Added
 
 - Caching for the user's session and account, used when the network doesn't respond fast enough.
 - Functionality to copy to clipboard the senders/recipient's ID on the transaction screen.
+- Optional icons for inputs.
 
 ### Changed
 

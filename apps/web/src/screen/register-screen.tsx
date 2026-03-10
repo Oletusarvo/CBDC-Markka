@@ -5,7 +5,7 @@ import { Button, LoaderButton } from '../components/button';
 import { useState } from 'react';
 import { ErrorMessage } from '../components/helper-message';
 import { useApi } from '@cbdc-markka/utils-react';
-import { ArrowLeft, Plus, UserPlus } from 'lucide-react';
+import { ArrowLeft, AtSign, Lock, Plus, UserPlus } from 'lucide-react';
 
 export function RegisterScreen() {
   const { apiInterface } = useApi();
@@ -46,6 +46,7 @@ export function RegisterScreen() {
         onSubmit={handleRegister}>
         <div className='flex flex-col w-full'>
           <Input
+            iconComponent={AtSign}
             type='email'
             name='email'
             required
@@ -57,6 +58,7 @@ export function RegisterScreen() {
         </div>
 
         <Input
+          iconComponent={Lock}
           type='password'
           name='password1'
           required
@@ -65,6 +67,7 @@ export function RegisterScreen() {
         />
         <div className='flex flex-col w-full'>
           <Input
+            iconComponent={Lock}
             type='password'
             name='password2'
             required

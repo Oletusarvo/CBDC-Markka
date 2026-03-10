@@ -6,7 +6,7 @@ import { Button, LoaderButton } from '../components/button';
 import { useState } from 'react';
 import { ErrorMessage } from '../components/helper-message';
 import { useSession } from '@cbdc-markka/utils-react';
-import { ArrowLeft, LogIn } from 'lucide-react';
+import { ArrowLeft, AtSign, Lock, LogIn } from 'lucide-react';
 
 export function LoginScreen() {
   const navigate = useNavigate();
@@ -48,6 +48,8 @@ export function LoginScreen() {
         className='flex flex-col gap-2 w-full'
         onSubmit={handleLogin}>
         <Input
+          iconComponent={AtSign}
+          fullWidth
           name='email'
           type='email'
           required
@@ -55,6 +57,8 @@ export function LoginScreen() {
         />
         <div className='flex flex-col w-full'>
           <Input
+            iconComponent={Lock}
+            fullWidth
             name='password'
             type='password'
             required
@@ -89,7 +93,7 @@ export function LoginScreen() {
               color='white'
               size='1rem'
             />
-            Kirjaudu Sisään
+            Kirjaudu
           </LoaderButton>
         </div>
 

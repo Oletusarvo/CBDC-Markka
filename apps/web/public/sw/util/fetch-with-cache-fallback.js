@@ -6,6 +6,8 @@ import { CACHE_NAME } from '../cache.js';
  */
 export async function fetchWithCacheFallback(req, timeout = 5000) {
   const cache = await caches.open(CACHE_NAME);
+  const cachedResponse = await cache.match(req);
+
   const networkPromise = fetch(req).then(res => {
     cache.put(req, res.clone());
     return res;
@@ -16,9 +18,12 @@ export async function fetchWithCacheFallback(req, timeout = 5000) {
   });
 
   try {
+    if (!cachedResponse) {
+      return await networkPromise;
+    }
+
     return await Promise.race([networkPromise, timeoutPromise]);
   } catch (err) {
-    const cachedResponse = await cache.match(req);
     return cachedResponse || new Response('Service unavailable', { status: 503 });
   }
 }

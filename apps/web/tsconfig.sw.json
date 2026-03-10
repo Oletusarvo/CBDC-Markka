@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["ES2020", "WebWorker", "DOM"],
+    "outDir": "./public",
+    "rootDir": "./service-worker",
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node"
+  },
+  "include": ["./service-worker"]
+}

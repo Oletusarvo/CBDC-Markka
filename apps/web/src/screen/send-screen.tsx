@@ -1,16 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import { Modal } from '../components/modal';
 import { Button, LoaderButton } from '../components/button';
-import { ArrowLeft, AtSign, Check, QrCode, Send, XCircle } from 'lucide-react';
-import { useReducer, useRef, useState } from 'react';
+import { Check, CurrencyIcon, User } from 'lucide-react';
+import { useState } from 'react';
 import { Input } from '../components/input';
 
 import { ErrorMessage } from '../components/helper-message';
-import { setupContext, useAccount, useApi, useTokens } from '@cbdc-markka/utils-react';
+import { setupContext, useAccount } from '@cbdc-markka/utils-react';
 import QRScanner from '../components/qr-scanner';
-import { Spinner } from '../components/spinner';
 import { AppScreen } from '../components/app-screen';
 import { TabButton } from '../components/tab-button';
+import { appConfig } from '../app-config';
+import { CurrencyAmountInput, CurrencySymbol } from '../components/currency';
 
 const [SendContext, useSendContext] = setupContext<{
   status: string;
@@ -144,6 +144,7 @@ function EmailInput() {
   const { updateCurrentAddress, currentAddress } = useSendContext();
   return (
     <Input
+      iconComponent={User}
       value={currentAddress}
       placeholder='Vastaanottajan tunnus...'
       onChange={updateCurrentAddress}
@@ -154,19 +155,13 @@ function EmailInput() {
 
 function AmountInput() {
   const { updateAmount, currentAmount } = useSendContext();
-  const { account, isPending } = useAccount();
-  const balance = isPending ? 0 : account.balance_in_cents;
+  const { account } = useAccount();
+  const balance = account ? account.balance_in_cents / 100 : 0.01;
   return (
-    <Input
+    <CurrencyAmountInput
       value={currentAmount}
       onInput={updateAmount}
-      name='amt'
-      type='number'
-      step={0.01}
-      min={0.01}
-      max={balance / 100}
-      placeholder='Määrä...'
-      required
+      max={balance}
     />
   );
 }
