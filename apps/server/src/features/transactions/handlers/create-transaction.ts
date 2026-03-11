@@ -6,6 +6,7 @@ import { AuthenticatedExpressRequest } from '../../../types/express';
 import { createHandler } from '../../../utils/create-handler';
 import { getAccountHandler } from '../../accounts/handlers/get-account-handler';
 import z from 'zod';
+import { signAccountState, verifyAccountSignature } from '../../accounts/util/signature';
 
 /**Transfers money between two accounts. */
 export const createTransaction = createHandler(
@@ -13,17 +14,37 @@ export const createTransaction = createHandler(
     const session = req.session;
     const senderAccount = await db(tablenames.accounts)
       .where({ user_id: session.user.id })
-      .select('balance_in_cents', 'id')
+      .select(
+        'id',
+        'user_id',
+        db.raw('CAST(balance_in_cents AS BIGINT) as balance_in_cents'),
+        db.raw('CAST(nonce AS BIGINT) as nonce'),
+        'signature',
+      )
       .first();
 
     const receiverAccount = await db(tablenames.accounts)
       .where({
         id: req.data.recipient_id,
       })
-      .select('id')
+      .select(
+        'id',
+        'user_id',
+        db.raw('CAST(balance_in_cents AS BIGINT) as balance_in_cents'),
+        db.raw('CAST(nonce AS BIGINT) as nonce'),
+        'signature',
+      )
       .first();
 
-    console.log(req.data.recipient_id, receiverAccount);
+    //Make sure both accounts states are valid.
+    const signaturesValid =
+      verifyAccountSignature(senderAccount) && verifyAccountSignature(receiverAccount);
+
+    if (!signaturesValid) {
+      return res.status(409).json({
+        error: 'transaction:signature-invalid',
+      });
+    }
 
     //Convert to cents.
     const amt_in_cents = Math.round(req.data.amt * 100);
@@ -54,15 +75,29 @@ export const createTransaction = createHandler(
         message: req.data.message,
       });
 
-      await trx(tablenames.accounts)
+      const [newSenderAccountState] = await trx(tablenames.accounts)
         .where({ id: senderAccount.id })
         .decrement('balance_in_cents', amt_in_cents)
-        .increment('nonce', 1);
+        .increment('nonce', 1)
+        .returning('*');
 
-      await trx(tablenames.accounts)
+      const [newReceiverAccountState] = await trx(tablenames.accounts)
         .where({ id: receiverAccount.id })
         .increment('balance_in_cents', amt_in_cents)
-        .increment('nonce', 1);
+        .increment('nonce', 1)
+        .returning('*');
+
+      await trx(tablenames.accounts)
+        .where({ id: newSenderAccountState.id })
+        .update({
+          signature: signAccountState(newSenderAccountState),
+        });
+
+      await trx(tablenames.accounts)
+        .where({ id: newReceiverAccountState.id })
+        .update({
+          signature: signAccountState(newReceiverAccountState),
+        });
     });
 
     return await getAccountHandler(req, res);

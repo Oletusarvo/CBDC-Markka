@@ -216,6 +216,8 @@ function ErrorMessages() {
     <ErrorMessage>Virheellinen vastaanottaja!</ErrorMessage>
   ) : status === 'transaction:self-transaction' ? (
     <ErrorMessage>Samalle tilille ei voi lähettää!</ErrorMessage>
+  ) : status === 'transaction:signature-invalid' ? (
+    <ErrorMessage>Jomman kumman osapuolen tilin digitaalinen allekirjoitus ei täsmää!</ErrorMessage>
   ) : status !== 'idle' && status !== 'loading' ? (
     <ErrorMessage>Jotakin meni pieleen!</ErrorMessage>
   ) : null;
