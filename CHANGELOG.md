@@ -2,7 +2,7 @@
 
 ### Added
 
-- Caching for the user's session and account, used when the network doesn't respond fast enough.
+- Caching for the user's session and account, used when the server doesn't respond fast enough.
 - Functionality to copy to clipboard the senders/recipient's ID on the transaction screen.
 - Optional icons for inputs.
 
