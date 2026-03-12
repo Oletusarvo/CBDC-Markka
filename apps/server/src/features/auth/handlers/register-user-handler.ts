@@ -6,6 +6,7 @@ import { db } from '../../../db-config';
 import { hashPassword } from '../../../utils/password';
 import { tablenames } from '../../../tablenames';
 import { userSchema } from '@cbdc-markka/schemas';
+import { signAccountState } from '../../accounts/util/signature';
 
 const MAX_SUPPLY_IN_CENTS = 10_000_000_000;
 
@@ -25,12 +26,19 @@ export const registerUserHandler = createHandler(
         .sum('balance_in_cents as total')
         .first();
 
-      await trx(tablenames.accounts)
+      const [newAccountData] = await trx(tablenames.accounts)
         .insert({
           user_id: user.id,
           balance_in_cents: currentSupplyInCents.total + mint < MAX_SUPPLY_IN_CENTS ? mint : 0,
         })
-        .returning('id');
+        .returning('*');
+
+      //Sign the new account.
+      await trx(tablenames.accounts)
+        .where({ id: newAccountData.id })
+        .update({
+          signature: signAccountState(newAccountData),
+        });
     });
     return res.status(200).end();
   },
