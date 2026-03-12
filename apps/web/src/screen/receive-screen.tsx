@@ -66,7 +66,12 @@ export function ReceiveScreen() {
           {amount && (
             <div className='text-xl font-semibold flex items-center'>
               <CurrencySymbol size='var(--text-xl)' />
-              <div>{Number(amount).toFixed(2)}</div>
+              <div>
+                {Number(amount).toLocaleString('fi', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </div>
             </div>
           )}
           <div className='flex flex-col w-full items-center gap-2'>

@@ -39,7 +39,11 @@ export function TransactionScreen() {
       return (
         <div className={textClassName}>
           {' '}
-          <CurrencySymbol /> {Number(transaction?.amount_in_cents / 100).toFixed(2)}
+          <CurrencySymbol />{' '}
+          {Number(transaction?.amount_in_cents / 100).toLocaleString('fi', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
         </div>
       );
     };

@@ -84,7 +84,13 @@ function Transaction({ data }: { data: TTransaction }) {
           <span>{amtString}</span>
           <div className='flex items-center gap-1'>
             <CurrencySymbol size='var(--text-sm)' />
-            <span>{amt}</span>
+            <span>
+              {' '}
+              {Number(amt).toLocaleString('fi', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
           </div>
         </div>
 

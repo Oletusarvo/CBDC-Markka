@@ -78,7 +78,14 @@ function WalletContainer() {
       <h3 className='text-white text-sm'>Tilin Saldo</h3>
       <h2 className='text-white font-semibold text-3xl font-mono flex gap-2 items-center'>
         <CurrencySymbol strokeWidth={4} />
-        {isPending ? <Spinner /> : Number(currentBalance).toFixed(2)}
+        {isPending ? (
+          <Spinner />
+        ) : (
+          Number(currentBalance).toLocaleString('fi', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        )}
       </h2>
     </div>
   );

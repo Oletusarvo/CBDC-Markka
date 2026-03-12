@@ -134,7 +134,14 @@ function CirculationDisplay() {
       <span className='text-sm'>Kierrossa</span>
       <div className='font-mono text-lg flex items-center'>
         <CurrencySymbol size='var(--text-lg)' />
-        {isPending ? <Spinner /> : currentCirculation.toFixed(2)}
+        {isPending ? (
+          <Spinner />
+        ) : (
+          Number(currentCirculation).toLocaleString('fi', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        )}
       </div>
     </div>
   );
