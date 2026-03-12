@@ -13,7 +13,7 @@ import {
   TransactionsProvider,
   useAccount,
 } from '@cbdc-markka/utils-react';
-import { Currency } from '../components/currency';
+import { Currency, CurrencySymbol } from '../components/currency';
 
 export function OverviewLayout() {
   const navigate = useNavigate();
@@ -76,8 +76,9 @@ function WalletContainer() {
   return (
     <div className='px-8 py-16 w-full flex flex-col items-center'>
       <h3 className='text-white text-sm'>Tilin Saldo</h3>
-      <h2 className='text-white font-semibold text-3xl font-mono'>
-        ₥ {isPending ? <Spinner /> : Number(currentBalance).toFixed(2)}
+      <h2 className='text-white font-semibold text-3xl font-mono flex gap-2 items-center'>
+        <CurrencySymbol strokeWidth={4} />
+        {isPending ? <Spinner /> : Number(currentBalance).toFixed(2)}
       </h2>
     </div>
   );

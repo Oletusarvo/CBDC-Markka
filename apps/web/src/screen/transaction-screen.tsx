@@ -8,6 +8,7 @@ import { ArrowDownCircle, ArrowUpCircle, Check, ContainerIcon, Pencil } from 'lu
 import { useClassName } from '../hooks/use-class-name';
 import { Button } from '../components/button';
 import { useState } from 'react';
+import { CurrencySymbol } from '../components/currency';
 
 export function TransactionScreen() {
   const navigate = useNavigate();
@@ -32,14 +33,14 @@ export function TransactionScreen() {
   const AmountDisplay = () => {
     const Amount = () => {
       const textClassName = useClassName(
-        'text-2xl',
+        'text-2xl flex items-center',
         isReceived ? 'text-green-600' : 'text-red-600',
       );
       return (
-        <span className={textClassName}>
+        <div className={textClassName}>
           {' '}
-          ₥{Number(transaction?.amount_in_cents / 100).toFixed(2)}
-        </span>
+          <CurrencySymbol /> {Number(transaction?.amount_in_cents / 100).toFixed(2)}
+        </div>
       );
     };
 

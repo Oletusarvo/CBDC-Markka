@@ -11,7 +11,8 @@ import { Button } from '../components/button';
 import { Check, CurrencyIcon, DollarSign, Pencil } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useClassName } from '../hooks/use-class-name';
-import { appConfig } from '../app-config';
+import { appConfig } from '../util/app-config';
+import { CurrencySymbol } from '../components/currency';
 
 export function ReceiveScreen() {
   const { session } = useSession();
@@ -44,7 +45,7 @@ export function ReceiveScreen() {
         <div className='flex flex-col gap-2 w-full'>
           <label className='font-semibold text-sm'>Anna määrä (vaihtoehtoinen)</label>
           <Input
-            iconComponent={props => <div {...props}>{appConfig.currencySymbol}</div>}
+            iconComponent={CurrencySymbol}
             fontSize={18}
             fontWeight={600}
             onChange={e => {
@@ -64,8 +65,8 @@ export function ReceiveScreen() {
           />
           {amount && (
             <div className='text-xl font-semibold flex items-center'>
-              {appConfig.currencySymbol}
-              <span>{Number(amount).toFixed(2)}</span>
+              <CurrencySymbol size='var(--text-xl)' />
+              <div>{Number(amount).toFixed(2)}</div>
             </div>
           )}
           <div className='flex flex-col w-full items-center gap-2'>

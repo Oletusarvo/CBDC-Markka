@@ -7,8 +7,6 @@ import { transactionsRouter } from './src/features/transactions/transactions-rou
 import { accountsRouter } from './src/features/accounts/accounts-router';
 import { currenciesRouter } from './src/features/currencies/currencies-router';
 
-console.log(process.env.PRIVATE_KEY);
-
 const app = express();
 const allowedOrigins = [
   'http://10.146.16.92:5173',

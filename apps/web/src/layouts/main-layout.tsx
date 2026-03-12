@@ -9,6 +9,7 @@ import { LoadingScreen } from '../screen/loading-screen';
 import { useSession } from '@cbdc-markka/utils-react';
 import { apiInterface } from '../util/api-interface';
 import { LogIn, User, UserPlus } from 'lucide-react';
+import { CurrencySymbol } from '../components/currency';
 
 export function MainLayout() {
   const { status } = useSession();
@@ -131,9 +132,10 @@ function CirculationDisplay() {
   return (
     <div className='flex flex-col w-full items-center mb-4'>
       <span className='text-sm'>Kierrossa</span>
-      <span className='font-mono text-lg'>
-        ₥{isPending ? <Spinner /> : currentCirculation.toFixed(2)}
-      </span>
+      <div className='font-mono text-lg flex items-center'>
+        <CurrencySymbol size='var(--text-lg)' />
+        {isPending ? <Spinner /> : currentCirculation.toFixed(2)}
+      </div>
     </div>
   );
 }

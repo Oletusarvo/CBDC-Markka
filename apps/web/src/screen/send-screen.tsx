@@ -9,7 +9,7 @@ import { setupContext, useAccount } from '@cbdc-markka/utils-react';
 import QRScanner from '../components/qr-scanner';
 import { AppScreen } from '../components/app-screen';
 import { TabButton } from '../components/tab-button';
-import { appConfig } from '../app-config';
+import { appConfig } from '../util/app-config';
 import { CurrencyAmountInput, CurrencySymbol } from '../components/currency';
 
 const [SendContext, useSendContext] = setupContext<{
