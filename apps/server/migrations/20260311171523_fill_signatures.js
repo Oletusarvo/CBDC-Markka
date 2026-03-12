@@ -8,7 +8,13 @@ const crypto = require('crypto');
 exports.up = function (knex) {
   return new Promise(async (resolve, reject) => {
     try {
-      const privateKey = process.env.PRIVATE_KEY;
+      const privateKeyBase64 = process.env.PRIVATE_KEY;
+      const privateKeyBuffer = Buffer.from(privateKeyBase64, 'base64');
+      const privateKey = crypto.createPrivateKey({
+        key: privateKeyBuffer,
+        type: 'pkcs8',
+        format: 'der',
+      });
 
       const accs = await knex('account').select('id', 'user_id', 'balance_in_cents', 'nonce');
       await knex.transaction(async trx => {
