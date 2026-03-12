@@ -90,7 +90,6 @@ export const createTransaction = createHandler(
       const [newReceiverAccountState] = await trx(tablenames.accounts)
         .where({ id: receiverAccount.id })
         .increment('balance_in_cents', amt_in_cents)
-        .increment('nonce', 1)
         .returning('*');
 
       await trx(tablenames.accounts)
