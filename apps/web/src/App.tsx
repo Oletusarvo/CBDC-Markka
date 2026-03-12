@@ -16,10 +16,12 @@ import { LoadingScreen } from './screen/loading-screen';
 import { ApiProvider, AuthProvider, QueryProvider } from '@cbdc-markka/utils-react';
 import { apiInterface } from './util/api-interface';
 import { Toaster } from 'react-hot-toast';
+import { WindowResizeManager } from './managers/window-resize-manager';
 
 export function App() {
   return (
     <>
+      <WindowResizeManager />
       <ApiProvider apiInterface={apiInterface}>
         <QueryProvider>
           <HashRouter>

@@ -36,6 +36,12 @@ export const createTransaction = createHandler(
       )
       .first();
 
+    if (req.data.nonce != senderAccount.nonce) {
+      return res.status(409).json({
+        error: 'transaction:sequence-invalid',
+      });
+    }
+
     //Make sure both accounts states are valid.
     const signaturesValid =
       verifyAccountSignature(senderAccount) && verifyAccountSignature(receiverAccount);

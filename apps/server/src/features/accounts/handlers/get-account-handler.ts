@@ -9,7 +9,7 @@ export const getAccountHandler = createHandler(async (req: AuthenticatedExpressR
   const acc = await db('account')
     .where({ user_id: session.user.id })
     .groupBy('account.id')
-    .select('account.balance_in_cents', 'account.id')
+    .select('account.balance_in_cents', 'account.id', 'account.nonce')
     .first();
 
   if (!acc) {

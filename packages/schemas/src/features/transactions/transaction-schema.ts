@@ -8,5 +8,6 @@ export const transactionSchema = z.object({
     .refine(val => val > 0, {
       error: 'amt cannot be zero!',
     }),
+  nonce: z.coerce.bigint(),
   message: z.string().trim().optional(),
 });

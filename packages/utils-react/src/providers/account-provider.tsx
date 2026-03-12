@@ -8,6 +8,7 @@ const [AccountContext, useAccount] = setupContext<{
   account: {
     balance_in_cents: number;
     id: string;
+    nonce: string;
     transactions: any[];
   };
   isPending: boolean;
@@ -41,6 +42,7 @@ export function AccountProvider({ children }: React.PropsWithChildren) {
     const res = await apiInterface.createTransaction({
       amt: data.amt,
       recipient_id: data.recipient_id,
+      nonce: data.nonce,
       message: data.message,
     });
 

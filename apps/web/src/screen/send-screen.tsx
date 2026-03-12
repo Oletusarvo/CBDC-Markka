@@ -22,16 +22,18 @@ const [SendContext, useSendContext] = setupContext<{
 }>('SendContext');
 
 export function SendScreen() {
-  const { createTransaction } = useAccount();
+  const { createTransaction, account } = useAccount();
   const navigate = useNavigate();
   const [status, setStatus] = useState('idle');
   const [currentAddress, setCurrentAddress] = useState('');
   const [currentAmount, setCurrentAmount] = useState(0.01);
+
   const [step, setStep] = useState(0);
 
   const cancel = () => navigate('/auth/overview');
 
   const handleSubmit = async (e: any) => {
+    if (!account) return;
     e.preventDefault();
     setStatus('loading');
     try {
@@ -39,6 +41,7 @@ export function SendScreen() {
       const res = await createTransaction({
         amt: currentAmount,
         recipient_id: currentAddress,
+        nonce: account.nonce,
         message: data.message,
       } as any);
 
@@ -144,6 +147,7 @@ function EmailInput() {
   const { updateCurrentAddress, currentAddress } = useSendContext();
   return (
     <Input
+      fullWidth
       iconComponent={User}
       value={currentAddress}
       placeholder='Vastaanottajan tunnus...'
@@ -218,6 +222,8 @@ function ErrorMessages() {
     <ErrorMessage>Samalle tilille ei voi lähettää!</ErrorMessage>
   ) : status === 'transaction:signature-invalid' ? (
     <ErrorMessage>Jomman kumman osapuolen tilin digitaalinen allekirjoitus ei täsmää!</ErrorMessage>
+  ) : status === 'transaction:sequence-invalid' ? (
+    <ErrorMessage>Tilisiirron järjestysvirhe! Ole hyvä ja yritä uudelleen.</ErrorMessage>
   ) : status !== 'idle' && status !== 'loading' ? (
     <ErrorMessage>Jotakin meni pieleen!</ErrorMessage>
   ) : null;
