@@ -8,7 +8,7 @@ import { LoadingScreen } from '../screen/loading-screen';
 
 import { useSession } from '@cbdc-markka/utils-react';
 import { apiInterface } from '../util/api-interface';
-import { LogIn, User, UserPlus } from 'lucide-react';
+import { LogIn, TriangleAlert, User, UserPlus } from 'lucide-react';
 import { CurrencySymbol } from '../components/currency';
 
 export function MainLayout() {
@@ -27,8 +27,9 @@ export function MainLayout() {
           id='index-image'
         />
         <div className='flex flex-col items-center w-full'>
-          <h1 className='text-2xl font-semibold text-primary'>CBDC Markka</h1>
-          <p className='text-center text-sm'>Suomen markan inspiroima digitaaliraha.</p>
+          <h1 className='text-2xl font-semibold text-primary'>E-Markka</h1>
+          <p className='text-center'>Suomen markan inspiroima digitaaliraha.</p>
+
           <div className='flex w-full gap-2 mt-8 xs:flex-col sm:flex-row'>
             {status === 'unauthenticated' ? (
               <>
@@ -75,11 +76,16 @@ export function MainLayout() {
               </Button>
             )}
           </div>
+          <div className='text-sm text-orange-800 mt-4 font-semibold p-2 rounded-lg border-yellow-500/40 bg-yellow-500/20 flex gap-2 items-center'>
+            <TriangleAlert size='1rem' />
+            E-Markka ei ole laillinen maksuväline!
+          </div>
         </div>
       </section>
 
       <section className='w-full py-16 bg-gray-900 text-white px-4'>
-        <h2 className='font-semibold text-xl mb-4'>Mikä on CBDC-Markka?</h2>
+        <h2 className='font-semibold text-xl mb-4'>Mikä on E-Markka?</h2>
+
         <p className='text-gray-200'>
           <strong>Digitaalinen markka.</strong> Yksinkertainen tapa lähettää ja vastaanottaa rahaa
           verkossa. Valuuttamme perustuu Suomen markkaan, tuttuun ja selkeään rahayksikköön.

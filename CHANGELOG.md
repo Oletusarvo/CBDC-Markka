@@ -3,6 +3,7 @@
 ### Added
 
 - Currency symbol
+- Legal tender notice on index-page.
 
 ### Changed
 
