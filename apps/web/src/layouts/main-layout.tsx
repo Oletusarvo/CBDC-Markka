@@ -29,7 +29,10 @@ export function MainLayout() {
         <div className='flex flex-col items-center w-full'>
           <h1 className='text-2xl font-semibold text-primary'>E-Markka</h1>
           <p className='text-center'>Suomen markan inspiroima digitaaliraha.</p>
-
+          <div className='text-sm text-orange-800 mt-4 font-semibold p-2 rounded-lg border-yellow-500/40 bg-yellow-500/20 flex gap-2 items-center'>
+            <TriangleAlert size='1rem' />
+            E-Markka ei ole laillinen maksuväline!
+          </div>
           <div className='flex w-full gap-2 mt-8 xs:flex-col sm:flex-row'>
             {status === 'unauthenticated' ? (
               <>
@@ -75,10 +78,6 @@ export function MainLayout() {
                 Näytä Tilisi
               </Button>
             )}
-          </div>
-          <div className='text-sm text-orange-800 mt-4 font-semibold p-2 rounded-lg border-yellow-500/40 bg-yellow-500/20 flex gap-2 items-center'>
-            <TriangleAlert size='1rem' />
-            E-Markka ei ole laillinen maksuväline!
           </div>
         </div>
       </section>
