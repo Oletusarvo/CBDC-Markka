@@ -133,7 +133,7 @@ function CirculationDisplay() {
     <div className='flex flex-col w-full items-center mb-4'>
       <span className='text-sm'>Kierrossa</span>
       <div className='font-mono text-lg flex items-center'>
-        <CurrencySymbol size='var(--text-lg)' />
+        <CurrencySymbol size='1rem' />
         {isPending ? (
           <Spinner />
         ) : (

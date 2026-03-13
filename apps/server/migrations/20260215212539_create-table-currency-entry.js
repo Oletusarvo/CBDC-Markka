@@ -26,5 +26,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schema.dropTable('currency_object');
+  return knex.schema.dropTableIfExists('currency_object');
 };

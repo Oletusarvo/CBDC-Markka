@@ -64,8 +64,11 @@ export function ReceiveScreen() {
             size={150}
           />
           {amount && (
-            <div className='text-xl font-semibold flex items-center'>
-              <CurrencySymbol size='var(--text-xl)' />
+            <div className='text-xl font-semibold flex items-baseline'>
+              <CurrencySymbol
+                size={14}
+                strokeWidth={0.9}
+              />
               <div>
                 {Number(amount).toLocaleString('fi', {
                   minimumFractionDigits: 2,

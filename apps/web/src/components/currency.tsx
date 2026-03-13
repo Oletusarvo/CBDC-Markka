@@ -9,13 +9,14 @@ export function Currency({ value }: { value: number | string }) {
 export function CurrencySymbol({
   size = 24,
   color = 'currentColor',
-  strokeWidth = 2,
+  strokeWidth = '0.529167',
   ...props
 }: {
   size?: number | string;
   color?: string;
-  strokeWidth?: number;
+  strokeWidth?: number | string;
 }) {
+  const pathStrokeWidth = strokeWidth;
   return (
     <svg
       width={size}
@@ -29,15 +30,15 @@ export function CurrencySymbol({
       {...props}>
       <path
         d='M0.80191201,5.5603853 V0.78789233 L2.8564109,2.1319199 4.8057629,0.78789233 V5.5603853'
-        strokeWidth='0.529167'
+        strokeWidth={pathStrokeWidth}
       />
       <path
         d='M3.9647276,3.4313696 H5.5990285'
-        strokeWidth='0.529167'
+        strokeWidth={pathStrokeWidth}
       />
       <path
         d='M3.9792323,4.4352036 H5.5990285'
-        strokeWidth='0.529167'
+        strokeWidth={pathStrokeWidth}
       />
     </svg>
   );

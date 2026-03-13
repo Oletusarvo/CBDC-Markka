@@ -1,8 +1,12 @@
-## [3.0.0] - 12-03-2026
+## [3.0.0] - 13-03-2026
 
 ### Added
 
 - Currency symbol
+
+### Changed
+
+- Transaction error messages to have the same word order.
 
 ## [2.1.0] - 12-03-2026
 

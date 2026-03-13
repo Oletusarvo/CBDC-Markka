@@ -20,8 +20,8 @@ export function OverviewLayout() {
 
   return (
     <AccountProvider>
-      <div className='flex flex-col w-full flex-1 bg-primary rounded-t-2xl max-h-full'>
-        <div className='w-full bg-primary flex flex-col relative'>
+      <div className='flex flex-col w-full flex-1 bg-linear-to-b from-primary to-indigo-400 max-h-full'>
+        <div className='w-full flex flex-col relative'>
           <div className='w-full flex items-center justify-end absolute p-2'>
             <Button
               circular
@@ -76,8 +76,11 @@ function WalletContainer() {
   return (
     <div className='px-8 py-16 w-full flex flex-col items-center'>
       <h3 className='text-white text-sm'>Tilin Saldo</h3>
-      <h2 className='text-white font-semibold text-3xl font-mono flex gap-2 items-center'>
-        <CurrencySymbol strokeWidth={4} />
+      <h2 className='text-white font-semibold text-3xl font-mono flex gap-2 items-baseline'>
+        <CurrencySymbol
+          strokeWidth={0.9}
+          size='1.2rem'
+        />
         {isPending ? (
           <Spinner />
         ) : (

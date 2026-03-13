@@ -33,13 +33,13 @@ export function TransactionScreen() {
   const AmountDisplay = () => {
     const Amount = () => {
       const textClassName = useClassName(
-        'text-2xl flex items-center',
+        'text-2xl flex items-baseline',
         isReceived ? 'text-green-600' : 'text-red-600',
       );
       return (
         <div className={textClassName}>
           {' '}
-          <CurrencySymbol />{' '}
+          <CurrencySymbol size='1rem' />{' '}
           {Number(transaction?.amount_in_cents / 100).toLocaleString('fi', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,

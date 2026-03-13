@@ -214,9 +214,9 @@ function ManualInputStep() {
 function ErrorMessages() {
   const { status } = useSendContext();
 
-  return status === 'transaction:insufficient-funds' ? (
+  return status === 'transaction:funds-insufficient' ? (
     <ErrorMessage>Saldosi ei riitä!</ErrorMessage>
-  ) : status === 'transaction:invalid-recipient' ? (
+  ) : status === 'transaction:recipient-invalid' ? (
     <ErrorMessage>Virheellinen vastaanottaja!</ErrorMessage>
   ) : status === 'transaction:self-transaction' ? (
     <ErrorMessage>Samalle tilille ei voi lähettää!</ErrorMessage>

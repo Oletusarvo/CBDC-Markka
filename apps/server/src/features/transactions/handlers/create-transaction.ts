@@ -61,7 +61,7 @@ export const createTransaction = createHandler(
       });
     } else if (!receiverAccount) {
       return res.status(404).json({
-        error: 'transaction:invalid-recipient',
+        error: 'transaction:recipient-invalid',
       });
     } else if (senderAccount.id === receiverAccount.id) {
       return res.status(409).json({
@@ -69,7 +69,7 @@ export const createTransaction = createHandler(
       });
     } else if (amt_in_cents > senderAccount.balance_in_cents) {
       return res.status(409).json({
-        error: 'transaction:insufficient-funds',
+        error: 'transaction:funds-insufficient',
       });
     }
 
