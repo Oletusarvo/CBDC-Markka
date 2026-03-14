@@ -11,7 +11,7 @@ export function HomeScreen() {
   const navigate = useNavigate();
   const { status } = useSession();
   return (
-    <main className='flex flex-col flex-1 antialiased max-h-full overflow-y-scroll'>
+    <main className='flex flex-col flex-1 antialiased overflow-y-scroll'>
       <section className='w-full px-4 py-32 flex items-center relative flex-1'>
         <div
           className='absolute top-0 left-0 w-full h-full opacity-15 grayscale-100'
