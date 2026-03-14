@@ -17,7 +17,7 @@ export function AppScreen({ headerShown = true, children, ...props }: AppScreenP
   const { title, onClose } = headerShown ? props : ({ title: null, onClose: null } as any);
 
   return (
-    <div className='z-20 w-full flex-1 bg-white animate-scale-in h-full'>
+    <div className='z-20 w-full flex-1 bg-white animate-scale-in h-full flex flex-col'>
       {headerShown && (
         <div className='flex p-4 w-full items-center gap-2'>
           <Button

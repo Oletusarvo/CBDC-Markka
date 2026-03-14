@@ -8,9 +8,9 @@
   flex-flow: column;
   font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   width: 100%;
-  height: 100dvh;
-  max-height: 100dvh;
+  height: calc(var(--vh) * 100);
   background-color: var(--color-gray-100);
+  overflow: hidden;
 }
 
 a {

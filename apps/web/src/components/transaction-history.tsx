@@ -75,7 +75,7 @@ function Transaction({ data }: { data: TTransaction }) {
   const amt = (data.amount_in_cents / 100) * (received ? 1 : -1);
 
   const amountClassName = useClassName(
-    received ? 'text-green-400' : 'text-slate-600',
+    received ? 'text-green-600' : 'text-slate-600',
     'font-mono flex gap-2 items-center text-sm',
   );
 
@@ -84,7 +84,7 @@ function Transaction({ data }: { data: TTransaction }) {
       className='bg-white py-4 px-4 flex w-full gap-4 items-center cursor-pointer border-b border-slate-200 justify-between'
       onClick={() => navigate('/auth/transaction/' + data.id)}>
       <div className='flex items-center gap-4'>
-        {received ? <ArrowDown color='green' /> : <ArrowUp color='red' />}
+        {received ? <ArrowDown className='text-green-600' /> : <ArrowUp className='text-red-600' />}
         <div className='flex flex-col'>
           <span className='text-xs'>{new Date(data.timestamp).toLocaleDateString('fi')}</span>
           <span className='text-xs text-slate-500'>
