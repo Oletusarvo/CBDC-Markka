@@ -29,7 +29,7 @@ export function OverviewBottomNav() {
 
 function NavButton({ icon: Icon, onClick = null, selected = false }) {
   const containerClassname = useClassName(
-    'rounded-full p-2 flex items-center justify-center transition-colors delay-100 cursor-pointer',
+    'rounded-full p-2 flex items-center justify-center transition-colors delay-50 cursor-pointer',
     selected ? 'bg-gray-900 text-white' : 'bg-transparent text-gray-900',
   );
   return (
