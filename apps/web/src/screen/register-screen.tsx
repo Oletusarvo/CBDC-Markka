@@ -46,6 +46,7 @@ export function RegisterScreen() {
         onSubmit={handleRegister}>
         <div className='flex flex-col w-full'>
           <Input
+            fullWidth
             iconComponent={AtSign}
             type='email'
             name='email'
@@ -58,6 +59,7 @@ export function RegisterScreen() {
         </div>
 
         <Input
+          fullWidth
           iconComponent={Lock}
           type='password'
           name='password1'
@@ -67,6 +69,7 @@ export function RegisterScreen() {
         />
         <div className='flex flex-col w-full'>
           <Input
+            fullWidth
             iconComponent={Lock}
             type='password'
             name='password2'
