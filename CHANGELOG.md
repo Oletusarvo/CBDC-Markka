@@ -1,8 +1,10 @@
-## [4.0.0] - 14-03-2026
+## [4.0.0] - 15-03-2026
 
 ### Added
 
 - A bottom navigation bar.
+- A credit-card-like visualization of the account on the send screen.
+- Icons on the manual input and qr code scan tab-buttons.
 
 ### Changed
 

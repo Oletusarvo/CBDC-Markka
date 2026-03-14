@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button, LoaderButton } from '../components/button';
-import { Check, CurrencyIcon, User } from 'lucide-react';
+import { Check, CurrencyIcon, Pencil, QrCode, User } from 'lucide-react';
 import { useState } from 'react';
 import { Input } from '../components/input';
 
@@ -81,7 +81,7 @@ export function SendScreen() {
         updateAmount,
         updateStep,
       }}>
-      <AppScreen headerShown={false}>
+      <AppScreen title='Lähetä Rahaa'>
         <form
           className='flex flex-col w-full gap-2 p-4 flex-1 h-full'
           onSubmit={handleSubmit}>
@@ -92,6 +92,7 @@ export function SendScreen() {
                 onClick={() => setStep(0)}
                 fullWidth
                 variant='ghost'>
+                <Pencil size='1rem' />
                 Tietojen Täyttö
               </Button>
             </TabButton>
@@ -102,6 +103,7 @@ export function SendScreen() {
                 onClick={() => setStep(1)}
                 fullWidth
                 variant='ghost'>
+                <QrCode size='1rem' />
                 Skannaa QR-Koodi
               </Button>
             </TabButton>
@@ -183,11 +185,28 @@ function MessageInput() {
 }
 
 function ManualInputStep() {
-  const { status, updateStep, currentAddress } = useSendContext();
+  const { account } = useAccount();
+  const { status, updateStep, currentAddress, currentAmount } = useSendContext();
   const loading = status === 'loading';
 
   return (
     <>
+      <div className='rounded-2xl shadow-lg bg-linear-to-br from-primary to-blue-600 w-full h-[170px] p-4 flex flex-col relative overflow-hidden animate-slide-right'>
+        <div className='bg-index z-0 grayscale absolute top-0 left-0 opacity-30 w-full h-full bg-cover bg-center' />
+        <div className='flex flex-col text-white gap-1 z-10'>
+          <span className='text-xs text-white'>{account?.id}</span>
+          <span className='text-2xl'>
+            {account?.balance_in_cents / 100} <span className='text-lg'>mk</span>
+          </span>
+        </div>
+
+        <div className='flex justify-end mt-auto w-full'>
+          <div className='flex relative'>
+            <div className='rounded-full bg-purple-300/50 w-8 aspect-square' />
+            <div className='rounded-full bg-white/50 w-8 aspect-square -translate-x-4' />
+          </div>
+        </div>
+      </div>
       <EmailInput />
       <AmountInput />
       <MessageInput />

@@ -8,6 +8,8 @@
 @theme {
   --animate-slide-up: SlideUp 0.2s ease-out;
   --animate-scale-in: ScaleIn 0.2s ease-out;
+  --animate-slide-right: SlideUp 0.2s ease-out;
   --color-primary: var(--primary);
+  --background-image-index: url('/bg-image.jpg');
   --breakpoint-xs: 360px;
 }

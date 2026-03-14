@@ -35,7 +35,7 @@ export function ReceiveScreen() {
     }
   };
   return (
-    <AppScreen headerShown={false}>
+    <AppScreen title='Vastaanota Rahaa'>
       <main className='flex flex-col gap-8 items-center px-4 justify-center flex-1'>
         <p className='text-slate-500 text-sm text-center'>
           Jaa tämä qr-koodi rahan lähettäjän kanssa. Saat maksun välittömästi.

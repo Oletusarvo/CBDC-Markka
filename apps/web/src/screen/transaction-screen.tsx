@@ -44,7 +44,7 @@ export function TransactionScreen() {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
             signDisplay: 'always',
-          })}
+          })}{' '}
           mk
         </div>
       );

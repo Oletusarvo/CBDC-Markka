@@ -9,7 +9,7 @@ export type AppScreenProps = React.PropsWithChildren &
     | {
         title: string;
         headerShown: true;
-        onClose: () => void;
+        onClose?: () => void;
       }
   );
 
@@ -20,13 +20,17 @@ export function AppScreen({ headerShown = true, children, ...props }: AppScreenP
     <div className='z-20 w-full flex-1 bg-white animate-scale-in h-full flex flex-col'>
       {headerShown && (
         <div className='flex p-4 w-full items-center gap-2'>
-          <Button
-            onClick={onClose}
-            variant='ghost'
-            circular>
-            <ChevronLeft />
-          </Button>
-          <h2 className='font-semibold text-lg'>{title}</h2>
+          {onClose && (
+            <Button
+              compact
+              onClick={onClose}
+              variant='ghost'
+              circular>
+              <ChevronLeft />
+            </Button>
+          )}
+
+          <h2 className='font-semibold text-slate-500'>{title}</h2>
         </div>
       )}
 

@@ -95,14 +95,13 @@ function Transaction({ data }: { data: TTransaction }) {
       <div className={amountClassName}>
         <div className='flex items-baseline'>
           <span>
-            {' '}
             {Number(amt).toLocaleString('fi', {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
               signDisplay: 'always',
-            })}
+            })}{' '}
+            mk
           </span>
-          <span>mk</span>
         </div>
       </div>
     </div>
