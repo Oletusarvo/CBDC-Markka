@@ -9,7 +9,7 @@ export function WindowResizeManager() {
 
     // On page load and resize:
     function setVh() {
-      let vh = window.innerHeight * 0.01;
+      let vh = window.innerHeight;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     }
 
