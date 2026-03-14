@@ -13,9 +13,9 @@ export function HomeScreen() {
   return (
     <main className='flex flex-col flex-1 antialiased'>
       <section className='w-full px-4 py-32 flex items-center relative flex-1'>
-        <img
+        <div
           className='absolute top-0 left-0 w-full h-full opacity-15 grayscale-100'
-          src={'/bg-image.jpg'}
+          id='index-image'
         />
         <div className='flex flex-col items-center w-full z-10'>
           <div className='w-full flex flex-col items-center gap-2'>
