@@ -1,22 +1,27 @@
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { HashRouter, Outlet, Route, Routes } from 'react-router-dom';
 import { AuthLayout } from './layouts/auth-layout';
-import { OverviewLayout } from './layouts/overview-layout';
-import { SendScreen } from './screen/send-screen';
-import { ReceiveScreen } from './screen/receive-screen';
-import { LoginScreen } from './screen/login-screen';
-import { MainLayout } from './layouts/main-layout';
-import { RegisterScreen } from './screen/register-screen';
 import { Suspense } from 'react';
-import { Spinner } from './components/spinner';
-import { LogoutScreen } from './screen/logout-screen';
-import { TransactionScreen } from './screen/transaction-screen';
 import { ServiceWorkerLoader } from './components/service-worker-loader';
-import { TokenScreen } from './screen/token-screen';
 import { LoadingScreen } from './screen/loading-screen';
-import { ApiProvider, AuthProvider, QueryProvider } from '@cbdc-markka/utils-react';
+import {
+  AccountProvider,
+  ApiProvider,
+  AuthProvider,
+  QueryProvider,
+} from '@cbdc-markka/utils-react';
 import { apiInterface } from './util/api-interface';
 import { Toaster } from 'react-hot-toast';
 import { WindowResizeManager } from './managers/window-resize-manager';
+import { HomeLayout } from './layouts/home-layout';
+import { HomeScreen } from './screen/home-screen';
+import { LoginScreen } from './screen/login-screen';
+import { RegisterScreen } from './screen/register-screen';
+import { OverviewBottomNav } from './components/overview-bottom-nav';
+import { OverviewScreen } from './screen/overview-screen';
+import { SendScreen } from './screen/send-screen';
+import { ReceiveScreen } from './screen/receive-screen';
+import { LogoutScreen } from './screen/logout-screen';
+import { TransactionScreen } from './screen/transaction-screen';
 
 export function App() {
   return (
@@ -30,7 +35,12 @@ export function App() {
                 <Routes>
                   <Route
                     path='/'
-                    element={<MainLayout></MainLayout>}>
+                    element={
+                      <>
+                        <HomeScreen />
+                        <Outlet />
+                      </>
+                    }>
                     <Route
                       path='login'
                       element={<LoginScreen />}
@@ -40,13 +50,31 @@ export function App() {
                       element={<RegisterScreen />}
                     />
                   </Route>
-
                   <Route
                     path='/auth'
-                    element={<AuthLayout />}>
+                    element={
+                      <AccountProvider>
+                        <Outlet />
+                      </AccountProvider>
+                    }>
                     <Route
-                      path='overview'
-                      element={<OverviewLayout />}>
+                      path='transaction/:id'
+                      element={<TransactionScreen />}
+                    />
+                    <Route
+                      element={
+                        <>
+                          <div className='flex-1 max-h-full overflow-y-scroll'>
+                            <Outlet />
+                          </div>
+
+                          <OverviewBottomNav />
+                        </>
+                      }>
+                      <Route
+                        path='overview'
+                        element={<OverviewScreen />}
+                      />
                       <Route
                         path='send'
                         element={<SendScreen />}
@@ -55,23 +83,12 @@ export function App() {
                         path='receive'
                         element={<ReceiveScreen />}
                       />
+
                       <Route
-                        path='transaction/:id'
-                        element={<TransactionScreen />}
-                      />
-                      <Route
-                        path='token/:id'
-                        element={<TokenScreen />}
+                        path='logout'
+                        element={<LogoutScreen />}
                       />
                     </Route>
-                    <Route
-                      path='logout'
-                      element={<LogoutScreen />}
-                    />
-                    <Route
-                      path='transactions'
-                      element={null}
-                    />
                   </Route>
                 </Routes>
               </AuthProvider>

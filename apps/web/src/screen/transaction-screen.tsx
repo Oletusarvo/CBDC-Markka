@@ -16,7 +16,7 @@ export function TransactionScreen() {
   const { id } = useParams();
   const [status, setStatus] = useState('uncopied');
 
-  const transaction = !isPending ? account.transactions.find(t => t.id === id) : null;
+  const transaction = account?.transactions.find(t => t.id === id);
   const isReceived = transaction?.to === account?.id;
 
   const Symbol = () => {
@@ -33,17 +33,19 @@ export function TransactionScreen() {
   const AmountDisplay = () => {
     const Amount = () => {
       const textClassName = useClassName(
-        'text-2xl flex items-baseline',
+        'text-xl flex items-baseline',
         isReceived ? 'text-green-600' : 'text-red-600',
       );
+
+      const amt = transaction?.amount_in_cents / 100 || 0;
       return (
         <div className={textClassName}>
-          {' '}
-          <CurrencySymbol size='1rem' />{' '}
-          {Number(transaction?.amount_in_cents / 100).toLocaleString('fi', {
+          {Number(isReceived ? amt : -amt).toLocaleString('fi', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
+            signDisplay: 'always',
           })}
+          mk
         </div>
       );
     };
@@ -85,11 +87,15 @@ export function TransactionScreen() {
     }
   };
 
+  if (isPending) {
+    return <Spinner />;
+  }
+
   return (
     <AppScreen
       title='Tapahtuma'
       onClose={() => navigate('/auth/overview')}>
-      <div className='flex flex-col w-full gap-4 items-center'>
+      <main className='flex flex-col w-full gap-4 items-center px-4'>
         <AmountDisplay />
         <div className='flex flex-col w-full'>
           <span className='text-xs text-slate-500'>Viesti</span>
@@ -131,7 +137,7 @@ export function TransactionScreen() {
               ? 'Kopioi Lähettäjän ID'
               : 'Kopioi vastaanottajan ID'}
         </Button>
-      </div>
+      </main>
     </AppScreen>
   );
 }

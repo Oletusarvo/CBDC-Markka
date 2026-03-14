@@ -1,39 +1,33 @@
-import { Link, Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { LogIn, TriangleAlert, User, UserPlus } from 'lucide-react';
 import { Button } from '../components/button';
-import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import { CurrencySymbol } from '../components/currency';
 import { useAnimatedNumber } from '../hooks/use-animated-number';
 import { Spinner } from '../components/spinner';
+import { useApi, useSession } from '@cbdc-markka/utils-react';
+import { useQuery } from '@tanstack/react-query';
 
-import { LoadingScreen } from '../screen/loading-screen';
-
-import { useSession } from '@cbdc-markka/utils-react';
-import { apiInterface } from '../util/api-interface';
-import { LogIn, TriangleAlert, User, UserPlus } from 'lucide-react';
-import { CurrencySymbol } from '../components/currency';
-
-export function MainLayout() {
-  const { status } = useSession();
+export function HomeScreen() {
   const navigate = useNavigate();
-
-  if (status === 'loading') {
-    return <LoadingScreen />;
-  }
-
+  const { status } = useSession();
   return (
-    <div className='flex flex-col flex-1 antialiased'>
+    <main className='flex flex-col flex-1 antialiased'>
       <section className='w-full px-4 py-32 flex items-center relative flex-1'>
-        <div
-          className='absolute top-0 left-0 w-full h-full opacity-15 -z-10'
-          id='index-image'
+        <img
+          className='absolute top-0 left-0 w-full h-full opacity-15 grayscale-100'
+          src={'/bg-image.jpg'}
         />
-        <div className='flex flex-col items-center w-full'>
-          <h1 className='text-2xl font-semibold text-primary'>E-Markka</h1>
-          <p className='text-center'>Suomen markan inspiroima digitaaliraha.</p>
-          <div className='text-sm text-orange-800 mt-4 font-semibold p-2 rounded-lg border-yellow-500/40 bg-yellow-500/20 flex gap-2 items-center'>
-            <TriangleAlert size='1rem' />
-            E-Markka ei ole laillinen maksuväline!
+        <div className='flex flex-col items-center w-full z-10'>
+          <div className='w-full flex flex-col items-center gap-2'>
+            <h1 className='text-2xl font-semibold text-primary'>E-Markka</h1>
+            <p className='text-center'>Suomen markan inspiroima digitaaliraha.</p>
+            <div className='text-sm text-orange-800 font-semibold p-2 rounded-lg border-yellow-500/40 bg-yellow-500/20 flex gap-2 items-center'>
+              <TriangleAlert size='1rem' />
+              E-Markka ei ole laillinen maksuväline!
+            </div>
           </div>
-          <div className='flex w-full gap-2 mt-8 xs:flex-col sm:flex-row'>
+
+          <div className='flex w-full gap-2 mt-10 xs:flex-col sm:flex-row'>
             {status === 'unauthenticated' ? (
               <>
                 <Button
@@ -114,13 +108,12 @@ export function MainLayout() {
       <footer className='flex w-full py-16 px-4 bg-primary text-white'>
         <CirculationDisplay />
       </footer>
-
-      <Outlet />
-    </div>
+    </main>
   );
 }
 
 function CirculationDisplay() {
+  const { apiInterface } = useApi();
   const { data, isPending } = useQuery({
     queryKey: ['circulation'],
     queryFn: async () => {

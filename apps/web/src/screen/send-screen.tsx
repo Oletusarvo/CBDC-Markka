@@ -85,7 +85,7 @@ export function SendScreen() {
         title='Lähetä Rahaa'
         onClose={cancel}>
         <form
-          className='flex flex-col w-full gap-2'
+          className='flex flex-col w-full gap-2 px-4 flex-1 h-full'
           onSubmit={handleSubmit}>
           <div className='flex w-full'>
             <TabButton selected={step === 0}>
@@ -108,25 +108,27 @@ export function SendScreen() {
               </Button>
             </TabButton>
           </div>
-          {step === 0 ? (
-            <ManualInputStep />
-          ) : (
-            <QRCodeReadStep
-              onScan={data => {
-                const [protocol, address, amount] = data.split(':');
-                if (protocol !== 'mrk') {
-                  return;
-                }
+          <div className='flex w-full flex-1 items-center flex-col gap-2'>
+            {step === 0 ? (
+              <ManualInputStep />
+            ) : (
+              <QRCodeReadStep
+                onScan={data => {
+                  const [protocol, address, amount] = data.split(':');
+                  if (protocol !== 'mrk') {
+                    return;
+                  }
 
-                if (amount && amount !== 'null') {
-                  setCurrentAmount(parseInt(amount) / 100);
-                }
+                  if (amount && amount !== 'null') {
+                    setCurrentAmount(parseInt(amount) / 100);
+                  }
 
-                setCurrentAddress(address);
-                setStep(0);
-              }}
-            />
-          )}
+                  setCurrentAddress(address);
+                  setStep(0);
+                }}
+              />
+            )}
+          </div>
         </form>
       </AppScreen>
     </SendContext.Provider>

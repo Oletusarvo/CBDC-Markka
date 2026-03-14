@@ -1,6 +1,9 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, Route } from 'react-router-dom';
 import { LoadingScreen } from '../screen/loading-screen';
 import { useSession } from '@cbdc-markka/utils-react';
+import { WalletLayout } from './wallet-layout';
+import { TransactionScreen } from '../screen/transaction-screen';
+import { LogoutScreen } from '../screen/logout-screen';
 
 export function AuthLayout() {
   const { status = 'loading' } = useSession();
@@ -12,10 +15,20 @@ export function AuthLayout() {
   }
 
   return (
-    <div className='flex flex-col w-full h-full max-h-full'>
-      <main className='flex flex-col w-full flex-1 overflow-y-scroll max-h-full'>
-        <Outlet />
-      </main>
-    </div>
+    <Route
+      path='/auth'
+      element={<Outlet />}>
+      <WalletLayout />
+
+      <Route
+        path='transaction/:id'
+        element={<TransactionScreen />}
+      />
+
+      <Route
+        path='logout'
+        element={<LogoutScreen />}
+      />
+    </Route>
   );
 }

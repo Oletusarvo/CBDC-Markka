@@ -1,3 +1,17 @@
+## [4.0.0] - 14-03-2026
+
+### Added
+
+- A bottom navigation bar.
+
+### Changed
+
+- Rearranged the routes.
+- Changed the currency symbol to "mk" everywhere but the main wallet balance- and the circulation display.
+- The appearance of transaction cards.
+- The color of sent money on the transaction cards.
+- The arrangement of the wallet balance display and logout button.
+
 ## [3.0.0] - 13-03-2026
 
 ### Added

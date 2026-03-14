@@ -38,7 +38,7 @@ export function ReceiveScreen() {
     <AppScreen
       title='Vastaanota Rahaa'
       onClose={() => navigate('/auth/overview')}>
-      <div className='flex flex-col gap-8 items-center'>
+      <main className='flex flex-col gap-8 items-center px-4'>
         <p className='text-slate-500 text-sm text-center'>
           Jaa tämä qr-koodi rahan lähettäjän kanssa. Saat maksun välittömästi.
         </p>
@@ -65,16 +65,13 @@ export function ReceiveScreen() {
           />
           {amount && (
             <div className='text-xl font-semibold flex items-baseline'>
-              <CurrencySymbol
-                size={14}
-                strokeWidth={0.9}
-              />
               <div>
                 {Number(amount).toLocaleString('fi', {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}
               </div>
+              <span>mk</span>
             </div>
           )}
           <div className='flex flex-col w-full items-center gap-2'>
@@ -109,7 +106,7 @@ export function ReceiveScreen() {
             </Button>
           </div>
         </div>
-      </div>
+      </main>
     </AppScreen>
   );
 }

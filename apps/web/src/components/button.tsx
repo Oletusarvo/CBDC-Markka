@@ -4,6 +4,7 @@ import { useClassName } from '../hooks/use-class-name';
 type ButtonProps = React.ComponentProps<'button'> & {
   variant?: 'contained' | 'outlined' | 'ghost';
   color?: 'primary' | 'primary-pretty' | 'white' | 'success';
+  compact?: boolean;
   fullWidth?: boolean;
   shadow?: boolean;
   rounded?: boolean;
@@ -16,12 +17,14 @@ export function Button({
   fullWidth,
   shadow,
   rounded,
+  compact,
   circular,
   color = 'primary',
   ...props
 }: ButtonProps) {
   const className = useClassName(
     'button',
+    compact ? 'p-2' : 'px-4 py-2',
     `--${variant}`,
     `--${color}`,
     fullWidth ? 'w-full' : '',
