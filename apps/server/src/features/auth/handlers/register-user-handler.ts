@@ -9,7 +9,7 @@ import { userSchema } from '@cbdc-markka/schemas';
 import { signAccountState } from '../../accounts/util/signature';
 import { Core } from '@cbdc-markka/core';
 
-const MAX_SUPPLY_IN_CENTS = Core.COIN * 100_000_000;
+const MAX_SUPPLY_IN_CENTS = Core.COIN * 100_000_000_000;
 
 export const registerUserHandler = createHandler(
   async (req: ExpressRequest<z.infer<typeof userSchema>>, res) => {
