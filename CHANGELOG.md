@@ -9,7 +9,6 @@
 
 ### Changed
 
-- Increased the marks divisibility to 10000 (ten thousand) penni, to avoid problems later.
 - App name to e-MRK.
 
 ## [4.0.0] - 15-03-2026

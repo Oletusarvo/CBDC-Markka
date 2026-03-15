@@ -1,9 +1,9 @@
 export abstract class Core {
-  static readonly COIN = 10_000;
+  static readonly COIN = 100;
   static amountToString(amount: number, signDisplay: 'always' | 'never' = 'never') {
     return Number(amount).toLocaleString('fi', {
-      maximumFractionDigits: 4,
-      minimumFractionDigits: 4,
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
       signDisplay,
     });
   }
