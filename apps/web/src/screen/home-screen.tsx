@@ -6,6 +6,7 @@ import { useAnimatedNumber } from '../hooks/use-animated-number';
 import { Spinner } from '../components/spinner';
 import { useApi, useSession } from '@cbdc-markka/utils-react';
 import { useQuery } from '@tanstack/react-query';
+import { Core } from '@cbdc-markka/core';
 
 export function HomeScreen() {
   const navigate = useNavigate();
@@ -125,21 +126,14 @@ function CirculationDisplay() {
     refetchInterval: 30000,
   });
 
-  const currentCirculation = useAnimatedNumber(!isPending ? data.circulation / 100 : 0);
+  const currentCirculation = useAnimatedNumber(!isPending ? data.circulation / Core.COIN : 0);
 
   return (
     <div className='flex flex-col w-full items-center mb-4'>
       <span className='text-sm'>Kierrossa</span>
       <div className='font-mono text-lg flex items-center'>
         <CurrencySymbol size='1rem' />
-        {isPending ? (
-          <Spinner />
-        ) : (
-          Number(currentCirculation).toLocaleString('fi', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        )}
+        {isPending ? <Spinner /> : Core.amountToString(currentCirculation)}
       </div>
     </div>
   );
