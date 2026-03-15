@@ -1,3 +1,14 @@
+## [5.0.0] - 15-03-2026
+
+### Added
+
+- The static Core-class containing the global fractions a single mark is divided into, and methods to convert cents to whole marks, and string representations.
+- Migration utility functions for creating signatures, and updating the signatures of accounts.
+
+### Changed
+
+- Increased the marks divisibility to 10000 (ten thousand) penni, to avoid problems later.
+
 ## [4.0.0] - 15-03-2026
 
 ### Added

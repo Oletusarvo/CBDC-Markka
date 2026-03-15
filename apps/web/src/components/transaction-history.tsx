@@ -6,6 +6,7 @@ import { ArrowDown, ArrowDownCircle, ArrowUp, ArrowUpCircle } from 'lucide-react
 import { useNavigate } from 'react-router-dom';
 import { useAccount, useTransactions } from '@cbdc-markka/utils-react';
 import { CurrencySymbol } from './currency';
+import { Core } from '@cbdc-markka/core';
 
 type TTransaction = {
   id: string;
@@ -72,7 +73,7 @@ function Transaction({ data }: { data: TTransaction }) {
   const { account } = useAccount();
   const navigate = useNavigate();
   const received = data.to === account?.id;
-  const amt = (data.amount_in_cents / 100) * (received ? 1 : -1);
+  const amt = Core.convertCurrencyAmount(data.amount_in_cents || 0) * (received ? 1 : -1);
 
   const amountClassName = useClassName(
     received ? 'text-green-600' : 'text-slate-600',
@@ -94,14 +95,7 @@ function Transaction({ data }: { data: TTransaction }) {
       </div>
       <div className={amountClassName}>
         <div className='flex items-baseline'>
-          <span>
-            {Number(amt).toLocaleString('fi', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-              signDisplay: 'always',
-            })}{' '}
-            mk
-          </span>
+          <span>{Core.amountToString(amt, 'always')} mk</span>
         </div>
       </div>
     </div>

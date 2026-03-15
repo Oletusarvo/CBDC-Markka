@@ -1,9 +1,17 @@
 import crypto from 'crypto';
 
 export function verifyAccountSignature(data: Record<string, any>) {
-  const { signature, ...rest } = data;
+  const { signature, id, user_id, balance_in_cents, nonce } = data;
   const signatureBuffer = Buffer.from(signature, 'base64');
-  const dataBuffer = Buffer.from(JSON.stringify(rest), 'utf-8');
+  const dataBuffer = Buffer.from(
+    JSON.stringify({
+      id,
+      user_id,
+      balance_in_cents,
+      nonce,
+    }),
+    'utf-8',
+  );
   const keyBase64 = process.env.PUBLIC_KEY;
   const keyBuffer = Buffer.from(keyBase64, 'base64');
   const key = crypto.createPublicKey({

@@ -1,6 +1,7 @@
 import { useAccount } from '@cbdc-markka/utils-react';
 import { appConfig } from '../util/app-config';
 import { Input } from './input';
+import { Core } from '@cbdc-markka/core';
 
 export function Currency({ value }: { value: number | string }) {
   return `${appConfig.currencySymbol} ${value}`;
@@ -45,6 +46,7 @@ export function CurrencySymbol({
 }
 
 export function CurrencyAmountInput({ value, onInput, max }) {
+  const step = 1 / Core.COIN;
   return (
     <Input
       fontWeight={600}
@@ -54,8 +56,8 @@ export function CurrencyAmountInput({ value, onInput, max }) {
       onInput={onInput}
       name='amt'
       type='number'
-      step={0.01}
-      min={0.01}
+      step={step}
+      min={step}
       max={max}
       placeholder='Määrä...'
       required

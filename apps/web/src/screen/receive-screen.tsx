@@ -13,6 +13,7 @@ import toast from 'react-hot-toast';
 import { useClassName } from '../hooks/use-class-name';
 import { appConfig } from '../util/app-config';
 import { CurrencySymbol } from '../components/currency';
+import { Core } from '@cbdc-markka/core';
 
 export function ReceiveScreen() {
   const { session } = useSession();
@@ -40,35 +41,17 @@ export function ReceiveScreen() {
         <p className='text-slate-500 text-sm text-center'>
           Jaa tämä qr-koodi rahan lähettäjän kanssa. Saat maksun välittömästi.
         </p>
-        <div className='flex flex-col gap-2 w-full'>
-          <label className='font-semibold text-sm'>Anna määrä (vaihtoehtoinen)</label>
-          <Input
-            iconComponent={CurrencySymbol}
-            fontSize={18}
-            fontWeight={600}
-            onChange={e => {
-              setAmount(e.target?.valueAsNumber || null);
-            }}
-            type='number'
-            min={0.01}
-            step={0.01}
-            placeholder='Kirjoita määrä...'
-            fullWidth
-          />
-        </div>
+
         <div className='flex flex-col w-full gap-4 items-center'>
           <QRCodeSVG
-            value={`mrk:${account?.id}:${amount ? amount * 100 : 'null'}`}
+            value={`mrk:${account?.id}:${amount ? Core.convertCurrencyAmount(amount) : 'null'}`}
             size={150}
           />
           {amount && (
-            <div className='text-xl font-semibold flex items-baseline'>
-              <div>
-                {Number(amount).toLocaleString('fi', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </div>
+            <div
+              className='text-xl font-semibold flex items-baseline'
+              hidden>
+              <div>{Core.amountToString(amount)}</div>
               <span>mk</span>
             </div>
           )}
@@ -103,6 +86,14 @@ export function ReceiveScreen() {
               )}
             </Button>
           </div>
+          <input
+            onChange={e => setAmount(e.target.valueAsNumber)}
+            placeholder='Määrä (vaihtoehtoinen)'
+            type='number'
+            min={0.01}
+            step={0.01}
+            className='w-full text-center outline-0 text-lg font-semibold'
+          />
         </div>
       </main>
     </AppScreen>

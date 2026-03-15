@@ -8,7 +8,7 @@ import { ArrowDownCircle, ArrowUpCircle, Check, ContainerIcon, Pencil } from 'lu
 import { useClassName } from '../hooks/use-class-name';
 import { Button } from '../components/button';
 import { useState } from 'react';
-import { CurrencySymbol } from '../components/currency';
+import { Core } from '@cbdc-markka/core';
 
 export function TransactionScreen() {
   const navigate = useNavigate();
@@ -37,15 +37,10 @@ export function TransactionScreen() {
         isReceived ? 'text-green-600' : 'text-red-600',
       );
 
-      const amt = transaction?.amount_in_cents / 100 || 0;
+      const amt = Core.convertCurrencyAmount(transaction?.amount_in_cents || 0);
       return (
         <div className={textClassName}>
-          {Number(isReceived ? amt : -amt).toLocaleString('fi', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-            signDisplay: 'always',
-          })}{' '}
-          mk
+          {Core.amountToString(isReceived ? amt : -amt, 'always')} mk
         </div>
       );
     };

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/button';
 import { LogOut, Settings } from 'lucide-react';
 import { AppScreen } from '../components/app-screen';
+import { Core } from '@cbdc-markka/core';
 
 export function OverviewScreen() {
   const navigate = useNavigate();
@@ -37,24 +38,18 @@ export function OverviewScreen() {
 
 function WalletContainer() {
   const { account, isPending } = useAccount();
-  const currentBalance = useAnimatedNumber(account ? account.balance_in_cents / 100 : 0);
+  const convertedBalance = Core.convertCurrencyAmount(account?.balance_in_cents || 0);
+  const currentBalance = useAnimatedNumber(convertedBalance);
 
   return (
     <div className='flex flex-col'>
       <h3 className='text-white text-sm'>Tilin Saldo</h3>
-      <h2 className='text-white text-3xl font-mono flex gap-2 items-baseline'>
+      <h2 className='text-white text-3xl font-mono flex gap-1 items-baseline'>
         <CurrencySymbol
           strokeWidth={0.9}
           size='1.2rem'
         />
-        {isPending ? (
-          <Spinner />
-        ) : (
-          Number(currentBalance).toLocaleString('fi', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        )}
+        {isPending ? <Spinner /> : Core.amountToString(currentBalance)}
       </h2>
     </div>
   );

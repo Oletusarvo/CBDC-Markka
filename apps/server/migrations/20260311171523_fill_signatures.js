@@ -1,5 +1,5 @@
 require('dotenv').config();
-const crypto = require('crypto');
+const createSignature = require('../migration-utils/create-signature');
 
 /**
  * @param { import("knex").Knex } knex
@@ -8,23 +8,12 @@ const crypto = require('crypto');
 exports.up = function (knex) {
   return new Promise(async (resolve, reject) => {
     try {
-      const privateKeyBase64 = process.env.PRIVATE_KEY;
-      const privateKeyBuffer = Buffer.from(privateKeyBase64, 'base64');
-      const privateKey = crypto.createPrivateKey({
-        key: privateKeyBuffer,
-        type: 'pkcs8',
-        format: 'der',
-      });
-
       const accs = await knex('account').select('id', 'user_id', 'balance_in_cents', 'nonce');
       await knex.transaction(async trx => {
         for (const acc of accs) {
-          const accBuffer = Buffer.from(JSON.stringify(acc), 'utf-8');
-          const sig = crypto.sign(null, accBuffer, privateKey);
-
           await trx('account')
             .where({ id: acc.id })
-            .update({ signature: sig.toString('base64') });
+            .update({ signature: createSignature(acc) });
         }
       });
 

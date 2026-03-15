@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cbdc-markka/core": "1.0.0",
     "@cbdc-markka/schemas": "1.0.0",
     "@cbdc-markka/utils-api": "1.0.0",
     "@cbdc-markka/utils-react": "1.0.0",

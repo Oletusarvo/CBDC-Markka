@@ -11,6 +11,7 @@ import { AppScreen } from '../components/app-screen';
 import { TabButton } from '../components/tab-button';
 import { appConfig } from '../util/app-config';
 import { CurrencyAmountInput, CurrencySymbol } from '../components/currency';
+import { Core } from '@cbdc-markka/core';
 
 const [SendContext, useSendContext] = setupContext<{
   status: string;
@@ -26,7 +27,7 @@ export function SendScreen() {
   const navigate = useNavigate();
   const [status, setStatus] = useState('idle');
   const [currentAddress, setCurrentAddress] = useState('');
-  const [currentAmount, setCurrentAmount] = useState(0.01);
+  const [currentAmount, setCurrentAmount] = useState(1 / Core.COIN);
 
   const [step, setStep] = useState(0);
 
@@ -162,7 +163,7 @@ function EmailInput() {
 function AmountInput() {
   const { updateAmount, currentAmount } = useSendContext();
   const { account } = useAccount();
-  const balance = account ? account.balance_in_cents / 100 : 0.01;
+  const balance = Core.convertCurrencyAmount(account?.balance_in_cents || 1);
   return (
     <CurrencyAmountInput
       value={currentAmount}
@@ -188,7 +189,7 @@ function ManualInputStep() {
   const { account } = useAccount();
   const { status, updateStep, currentAddress, currentAmount } = useSendContext();
   const loading = status === 'loading';
-
+  const convertedAmount = Core.convertCurrencyAmount(account?.balance_in_cents || 0);
   return (
     <>
       <div className='rounded-2xl shadow-lg bg-linear-to-br from-primary to-blue-600 w-full h-[170px] p-4 flex flex-col relative overflow-hidden animate-slide-right'>
@@ -196,7 +197,7 @@ function ManualInputStep() {
         <div className='flex flex-col text-white gap-1 z-10'>
           <span className='text-xs text-white'>{account?.id}</span>
           <span className='text-2xl'>
-            {account?.balance_in_cents / 100} <span className='text-lg'>mk</span>
+            {Core.amountToString(convertedAmount)} <span className='text-lg'>mk</span>
           </span>
         </div>
 

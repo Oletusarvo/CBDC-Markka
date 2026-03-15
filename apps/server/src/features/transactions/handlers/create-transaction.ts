@@ -7,6 +7,7 @@ import { createHandler } from '../../../utils/create-handler';
 import { getAccountHandler } from '../../accounts/handlers/get-account-handler';
 import z from 'zod';
 import { signAccountState, verifyAccountSignature } from '../../accounts/util/signature';
+import { Core } from '@cbdc-markka/core';
 
 /**Transfers money between two accounts. */
 export const createTransaction = createHandler(
@@ -53,7 +54,7 @@ export const createTransaction = createHandler(
     }
 
     //Convert to cents.
-    const amt_in_cents = Math.round(req.data.amt * 100);
+    const amt_in_cents = Math.round(req.data.amt * Core.COIN);
 
     if (!senderAccount) {
       return res.status(404).json({

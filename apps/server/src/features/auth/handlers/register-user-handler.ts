@@ -7,8 +7,9 @@ import { hashPassword } from '../../../utils/password';
 import { tablenames } from '../../../tablenames';
 import { userSchema } from '@cbdc-markka/schemas';
 import { signAccountState } from '../../accounts/util/signature';
+import { Core } from '@cbdc-markka/core';
 
-const MAX_SUPPLY_IN_CENTS = 10_000_000_000;
+const MAX_SUPPLY_IN_CENTS = Core.COIN * 100_000_000;
 
 export const registerUserHandler = createHandler(
   async (req: ExpressRequest<z.infer<typeof userSchema>>, res) => {
@@ -21,7 +22,7 @@ export const registerUserHandler = createHandler(
         })
         .returning('id');
 
-      const mint = 2000;
+      const mint = Core.COIN * 20;
       const currentSupplyInCents = await trx(tablenames.accounts)
         .sum('balance_in_cents as total')
         .first();

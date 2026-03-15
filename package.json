@@ -1,11 +1,11 @@
 {
   "name": "cbdc-markka",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start:server": "npm run start -w @cbdc-markka/server",
-    "build:packages": "npm run build -w @cbdc-markka/schemas && npm run build -w @cbdc-markka/utils-api && npm run build -w @cbdc-markka/utils-react",
+    "build:packages": "npm run build -w @cbdc-markka/core && npm run build -w @cbdc-markka/schemas && npm run build -w @cbdc-markka/utils-api && npm run build -w @cbdc-markka/utils-react",
     "build:server": "npm run build -w @cbdc-markka/server",
     "build:web": "npm run build -w @cbdc-markka/web",
     "dev:server": "npm run dev -w @cbdc-markka/server",
