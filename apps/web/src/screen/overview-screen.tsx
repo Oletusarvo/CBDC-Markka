@@ -39,7 +39,7 @@ export function OverviewScreen() {
 function WalletContainer() {
   const { account, isPending } = useAccount();
   const convertedBalance = Core.convertCurrencyAmount(account?.balance_in_cents || 0);
-  const currentBalance = useAnimatedNumber(convertedBalance);
+  //const currentBalance = useAnimatedNumber(convertedBalance);
 
   return (
     <div className='flex flex-col'>
@@ -49,7 +49,7 @@ function WalletContainer() {
           strokeWidth={0.9}
           size='1.2rem'
         />
-        {isPending ? <Spinner /> : Core.amountToString(currentBalance)}
+        {isPending ? <Spinner /> : Core.amountToString(convertedBalance)}
       </h2>
     </div>
   );
