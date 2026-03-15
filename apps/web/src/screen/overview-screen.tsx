@@ -6,16 +6,16 @@ import { useAnimatedNumber } from '../hooks/use-animated-number';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/button';
 import { LogOut, Settings } from 'lucide-react';
-import { AppScreen } from '../components/app-screen';
+import { AppScreen, DividedAppScreen } from '../components/app-screen';
 import { Core } from '@cbdc-markka/core';
 
 export function OverviewScreen() {
   const navigate = useNavigate();
 
   return (
-    <AppScreen headerShown={false}>
-      <main className='flex flex-col w-full bg-linear-to-b from-primary to-indigo-500 flex-1 grow-0 max-h-full h-full'>
-        <div className='w-full flex py-12 px-4 items-center justify-between'>
+    <DividedAppScreen
+      headerContent={
+        <>
           <WalletContainer />
           <div className='flex items-center gap-2'>
             <Button
@@ -27,12 +27,10 @@ export function OverviewScreen() {
               <LogOut color='white' />
             </Button>
           </div>
-        </div>
-        <div className='w-full flex-1 flex-col flex bg-white overflow-y-scroll rounded-t-2xl'>
-          <TransactionHistory />
-        </div>
-      </main>
-    </AppScreen>
+        </>
+      }>
+      <TransactionHistory />
+    </DividedAppScreen>
   );
 }
 

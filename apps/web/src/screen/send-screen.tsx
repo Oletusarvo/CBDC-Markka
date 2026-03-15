@@ -7,11 +7,12 @@ import { Input } from '../components/input';
 import { ErrorMessage } from '../components/helper-message';
 import { setupContext, useAccount } from '@cbdc-markka/utils-react';
 import QRScanner from '../components/qr-scanner';
-import { AppScreen } from '../components/app-screen';
+import { AppScreen, DividedAppScreen } from '../components/app-screen';
 import { TabButton } from '../components/tab-button';
 import { appConfig } from '../util/app-config';
 import { CurrencyAmountInput, CurrencySymbol } from '../components/currency';
 import { Core } from '@cbdc-markka/core';
+import { NavButton } from '../components/overview-bottom-nav';
 
 const [SendContext, useSendContext] = setupContext<{
   status: string;
@@ -82,34 +83,28 @@ export function SendScreen() {
         updateAmount,
         updateStep,
       }}>
-      <AppScreen title='Lähetä Rahaa'>
+      <DividedAppScreen
+        headerContent={
+          <>
+            <h2 className='text-white font-semibold text-xl'>Lähetä Rahaa</h2>
+            <div className='flex items-center gap-2'>
+              <NavButton
+                variant='white'
+                selected={step === 0}
+                onClick={() => setStep(0)}
+                icon={Pencil}></NavButton>
+              <NavButton
+                variant='white'
+                selected={step === 1}
+                onClick={() => setStep(1)}
+                icon={QrCode}></NavButton>
+            </div>
+          </>
+        }>
         <form
           className='flex flex-col w-full gap-2 p-4 flex-1 h-full'
           onSubmit={handleSubmit}>
-          <div className='flex w-full'>
-            <TabButton selected={step === 0}>
-              <Button
-                type='button'
-                onClick={() => setStep(0)}
-                fullWidth
-                variant='ghost'>
-                <Pencil size='1rem' />
-                Tietojen Täyttö
-              </Button>
-            </TabButton>
-
-            <TabButton selected={step === 1}>
-              <Button
-                type='button'
-                onClick={() => setStep(1)}
-                fullWidth
-                variant='ghost'>
-                <QrCode size='1rem' />
-                Skannaa QR-Koodi
-              </Button>
-            </TabButton>
-          </div>
-          <div className='flex w-full flex-1 items-center justify-center flex-col gap-2'>
+          <div className='flex w-full flex-1 items-center justify-center flex-col gap-2 h-full'>
             {step === 0 ? (
               <ManualInputStep />
             ) : (
@@ -131,7 +126,7 @@ export function SendScreen() {
             )}
           </div>
         </form>
-      </AppScreen>
+      </DividedAppScreen>
     </SendContext.Provider>
   );
 }
@@ -192,7 +187,7 @@ function ManualInputStep() {
   const convertedAmount = Core.convertCurrencyAmount(account?.balance_in_cents || 0);
   return (
     <>
-      <div className='rounded-2xl shadow-lg bg-linear-to-br from-primary to-blue-600 w-full h-[170px] p-4 flex flex-col relative overflow-hidden animate-slide-right'>
+      <div className='rounded-2xl shadow-lg bg-linear-to-br from-primary to-blue-600 w-full h-[170px] p-4 flex flex-col relative overflow-hidden'>
         <div className='bg-index z-0 grayscale absolute top-0 left-0 opacity-30 w-full h-full bg-cover bg-center' />
         <div className='flex flex-col text-white gap-1 z-10'>
           <span className='text-xs text-white'>{account?.id}</span>

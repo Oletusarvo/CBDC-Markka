@@ -1,4 +1,4 @@
-## [5.0.0] - 15-03-2026
+## [5.0.0] - 16-03-2026
 
 ### Added
 
@@ -10,6 +10,10 @@
 ### Changed
 
 - App name to e-MRK.
+- Send-screen appearance.
+- Receive-screen appearance.
+- AppScreen-component details, like the default background color, to slate-50
+- Added white background to inputs.
 
 ## [4.0.0] - 15-03-2026
 

@@ -1,18 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { Modal } from '../components/modal';
 import { QRCodeSVG } from 'qrcode.react';
-import { Spinner } from '../components/spinner';
 import { useAccount, useSession } from '@cbdc-markka/utils-react';
-import { Input } from '../components/input';
 import { useState } from 'react';
 import { AppScreen } from '../components/app-screen';
-import QrScanner from 'qr-scanner';
 import { Button } from '../components/button';
-import { Check, CurrencyIcon, DollarSign, Pencil } from 'lucide-react';
+import { Check, Pencil } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useClassName } from '../hooks/use-class-name';
-import { appConfig } from '../util/app-config';
-import { CurrencySymbol } from '../components/currency';
 import { Core } from '@cbdc-markka/core';
 
 export function ReceiveScreen() {
@@ -36,23 +29,31 @@ export function ReceiveScreen() {
     }
   };
   return (
-    <AppScreen title='Vastaanota Rahaa'>
-      <main className='flex flex-col gap-8 items-center px-4 justify-center flex-1'>
+    <AppScreen headerShown={false}>
+      <main className='flex flex-col gap-4 items-center px-4 justify-center flex-1'>
+        <h2 className='text-xl font-semibold'>Vastaanota rahaa</h2>
         <p className='text-slate-500 text-sm text-center'>
           Jaa tämä qr-koodi rahan lähettäjän kanssa. Saat maksun välittömästi.
         </p>
 
         <div className='flex flex-col w-full gap-4 items-center'>
-          <QRCodeSVG
-            value={`mrk:${account?.id}:${amount ? amount * Core.COIN : 'null'}`}
-            size={150}
-          />
-          {amount ? (
-            <div className='text-xl font-semibold flex items-baseline'>
-              <div>{Core.amountToString(amount)}</div>
-              <span>mk</span>
-            </div>
-          ) : null}
+          <div className='bg-white p-4 rounded-xl shadow-md relative flex items-center justify-center'>
+            {amount ? (
+              <div className='absolute bg-white rounded-md p-2 border-2 border-black/50'>
+                <div className='text-xs font-semibold flex items-baseline'>
+                  <div>{Core.amountToString(amount)}</div>
+                  <span>mk</span>
+                </div>
+              </div>
+            ) : null}
+
+            <QRCodeSVG
+              value={`mrk:${account?.id}:${amount ? amount * Core.COIN : 'null'}`}
+              size={150}
+              level='H'
+            />
+          </div>
+
           <div className='flex flex-col w-full items-center gap-2'>
             <div className='flex flex-col items-center'>
               <h3 className='font-semibold'>{session?.user.email}</h3>

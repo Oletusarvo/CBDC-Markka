@@ -2,6 +2,7 @@
 .textarea {
   color: var(--color-slate-500);
   outline: none;
+  background-color: white;
 }
 
 .textarea {

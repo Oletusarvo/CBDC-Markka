@@ -90,7 +90,7 @@ export function TransactionScreen() {
     <AppScreen
       title='Tapahtuma'
       onClose={() => navigate('/auth/overview')}>
-      <main className='flex flex-col w-full gap-4 items-center px-4'>
+      <main className='flex flex-col w-full gap-4 items-center px-4 bg-white flex-1'>
         <AmountDisplay />
         <div className='flex flex-col w-full'>
           <span className='text-xs text-slate-500'>Viesti</span>
