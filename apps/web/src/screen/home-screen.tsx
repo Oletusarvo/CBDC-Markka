@@ -88,11 +88,9 @@ export function HomeScreen() {
           <br />
           <br /> Järjestelmä on <strong>keskitetty</strong>, jotta maksut pysyvät nopeina ja
           yksinkertaisina käyttää. Digitaalisia markkoja tulee olemaan kierrossa{' '}
-          <strong>enintään 100 miljoonaa</strong>, eikä määrää kasvateta tämän rajan yli.
-          Tarvittaessa valuutan tarkkuutta voidaan sen sijaan kasvattaa – valuutta alkaa{' '}
-          <strong>kahden desimaalin tarkkuudella</strong>, jota voidaan lisätä tarpeen mukaan.
-          Jokainen uusi tili avataan 20 markan aloitussaldolla, kunnes 100 miljoonan raja on
-          saavutettu.
+          <strong>rajallinen määrä</strong>, eikä määrää kasvateta tämän rajan yli. Tarkkaa rajaa ei
+          olla vielä määritelty. Jokainen uusi tili avataan 20 markan aloitussaldolla, kunnes raja
+          on saavutettu.
           <br />
           <br />
           Monet nykyiset valuutat perustuvat jatkuvaan rahan luomiseen, mikä voi heikentää niiden
