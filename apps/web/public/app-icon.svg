@@ -1,37 +1,119 @@
-<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
-  <g fill="#3730A3">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-    <!-- Outer coin ring -->
-    <circle cx="128" cy="128" r="108" fill="none" stroke="#3730A3" stroke-width="16"/>
-
-    <!-- Stylized M -->
-    <path d="
-      M72 168
-      L72 88
-      L104 132
-      L128 100
-      L152 132
-      L184 88
-      L184 168
-      L160 168
-      L160 124
-      L128 160
-      L96 124
-      L96 168
-      Z
-    "/>
-
-    <!-- Circuit nodes -->
-    <circle cx="128" cy="40" r="8"/>
-    <circle cx="216" cy="128" r="8"/>
-    <circle cx="128" cy="216" r="8"/>
-    <circle cx="40" cy="128" r="8"/>
-
-    <!-- Circuit lines -->
-    <rect x="124" y="48" width="8" height="32"/>
-    <rect x="176" y="124" width="32" height="8"/>
-    <rect x="124" y="176" width="8" height="32"/>
-    <rect x="48" y="124" width="32" height="8"/>
-
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 135.46666 135.46666"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="e-mrk-symbol.svg"
+   inkscape:export-filename="D:\app-projects\cbdc-markka\apps\web\public\app-icon.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="true"
+     showguides="true"
+     inkscape:zoom="1.384186"
+     inkscape:rotation="-1"
+     inkscape:cx="307.40304"
+     inkscape:cy="271.62773"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2">
+    <inkscape:grid
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.26458332"
+       spacingy="0.26458332"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+    <sodipodi:guide
+       position="39.737481,116.27373"
+       orientation="1,0"
+       id="guide1"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="92.720789,136.27763"
+       orientation="1,0"
+       id="guide2"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="84.611099,110.59694"
+       orientation="0,-1"
+       id="guide3"
+       inkscape:locked="false" />
+    <inkscape:page
+       x="0"
+       y="0"
+       width="135.46666"
+       height="135.46666"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="bg-square"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#4f46e5;fill-opacity:1;stroke-width:3.30631"
+       id="rect1"
+       width="142.5347"
+       height="143.87253"
+       x="-3.0997062"
+       y="-3.9423168"
+       inkscape:label="rect1" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="icon"
+     style="display:inline">
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:10;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none"
+       d="M 40.795652,109.81553 V 68.139866 25.259233 L 67.216793,49.128577 94.725091,25.259233 v 84.556297"
+       id="path3"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:10;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none"
+       d="M 60.008732,87.229428 H 90.813727"
+       id="path4"
+       sodipodi:nodetypes="cc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="e-symbol">
+    <path
+       id="path1"
+       style="baseline-shift:baseline;display:inline;overflow:visible;opacity:1;vector-effect:none;fill:#ffffff;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+       d="m 67.732296,11.349694 c -31.081038,0 -56.382602,25.301564 -56.382602,56.382602 0,31.081038 25.301564,56.384674 56.382602,56.384674 26.139251,0 48.192044,-17.89695 54.543954,-42.075987 h -10.39523 c -6.01089,18.642967 -23.468381,32.076077 -44.148724,32.076077 -24.223576,0 -44.023451,-18.430481 -46.186842,-42.075983 h 82.628546 9.74721 10.03246 c 0.10808,-1.422355 0.1633,-2.859316 0.1633,-4.308781 0,-31.081038 -25.303636,-56.382602 -56.384674,-56.382602 z m 0,9.999906 c 23.749277,0 43.248194,17.714482 46.041634,40.691571 H 21.692732 C 24.485916,39.064082 43.983019,21.3496 67.732296,21.3496 Z" />
   </g>
 </svg>
