@@ -85,11 +85,12 @@ export function ReceiveScreen() {
             </Button>
           </div>
           <input
+            value={amount}
             onChange={e => {
               const value = e.target.value;
               if (typeof value === 'string') {
                 const decimals = value.split('.').at(1);
-                if (decimals && decimals.length > 4) return;
+                if (decimals && decimals.length > 2) return;
               }
 
               setAmount(e.target.valueAsNumber);
