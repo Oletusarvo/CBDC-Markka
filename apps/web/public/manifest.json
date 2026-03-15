@@ -1,10 +1,10 @@
 {
-  "short_name": "CBDC Markka",
-  "name": "Markan uudelleenherääminen digitaalisessa muodossa.",
+  "short_name": "e-MRK",
+  "name": "e-Markka",
   "display": "standalone",
   "start_url": "/",
-  "background_color": "#0b2547",
-  "theme_color": "blue",
+  "background_color": "#4F46E5",
+  "theme_color": "#4F46E5",
   "orientation": "portrait",
 
   "icons": [
