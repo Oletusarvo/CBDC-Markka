@@ -44,17 +44,15 @@ export function ReceiveScreen() {
 
         <div className='flex flex-col w-full gap-4 items-center'>
           <QRCodeSVG
-            value={`mrk:${account?.id}:${amount ? Core.convertCurrencyAmount(amount) : 'null'}`}
+            value={`mrk:${account?.id}:${amount ? amount * Core.COIN : 'null'}`}
             size={150}
           />
-          {amount && (
-            <div
-              className='text-xl font-semibold flex items-baseline'
-              hidden>
+          {amount ? (
+            <div className='text-xl font-semibold flex items-baseline'>
               <div>{Core.amountToString(amount)}</div>
               <span>mk</span>
             </div>
-          )}
+          ) : null}
           <div className='flex flex-col w-full items-center gap-2'>
             <div className='flex flex-col items-center'>
               <h3 className='font-semibold'>{session?.user.email}</h3>
@@ -87,11 +85,19 @@ export function ReceiveScreen() {
             </Button>
           </div>
           <input
-            onChange={e => setAmount(e.target.valueAsNumber)}
+            onChange={e => {
+              const value = e.target.value;
+              if (typeof value === 'string') {
+                const decimals = value.split('.').at(1);
+                if (decimals && decimals.length > 4) return;
+              }
+
+              setAmount(e.target.valueAsNumber);
+            }}
             placeholder='Määrä (vaihtoehtoinen)'
             type='number'
-            min={0.01}
-            step={0.01}
+            min={1 / Core.COIN}
+            step={1 / Core.COIN}
             className='w-full text-center outline-0 text-lg font-semibold'
           />
         </div>

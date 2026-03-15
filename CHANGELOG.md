@@ -4,6 +4,7 @@
 
 - The static Core-class containing the global fractions a single mark is divided into, and methods to convert cents to whole marks, and string representations.
 - Migration utility functions for creating signatures, and updating the signatures of accounts.
+- Guard against excess decimals on the receive screen amount input.
 
 ### Changed
 

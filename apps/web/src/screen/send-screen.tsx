@@ -115,13 +115,13 @@ export function SendScreen() {
             ) : (
               <QRCodeReadStep
                 onScan={data => {
-                  const [protocol, address, amount] = data.split(':');
+                  const [protocol, address, amountInCents] = data.split(':');
                   if (protocol !== 'mrk') {
                     return;
                   }
 
-                  if (amount && amount !== 'null') {
-                    setCurrentAmount(parseInt(amount) / 100);
+                  if (amountInCents && amountInCents !== 'null') {
+                    setCurrentAmount(Core.convertCurrencyAmount(amountInCents));
                   }
 
                   setCurrentAddress(address);
