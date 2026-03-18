@@ -7,11 +7,8 @@
    viewBox="0 0 135.46666 135.46666"
    version="1.1"
    id="svg1"
+   sodipodi:docname="app-icon.svg"
    inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
-   sodipodi:docname="e-mrk-symbol.svg"
-   inkscape:export-filename="D:\app-projects\cbdc-markka\apps\web\public\app-icon.svg"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,92 +22,44 @@
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#505050"
-     inkscape:document-units="px"
-     showgrid="true"
-     showguides="true"
-     inkscape:zoom="1.384186"
-     inkscape:rotation="-1"
-     inkscape:cx="307.40304"
-     inkscape:cy="271.62773"
+     inkscape:zoom="1.5761719"
+     inkscape:cx="302.94919"
+     inkscape:cy="262.97893"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer2">
-    <inkscape:grid
-       id="grid1"
-       units="px"
-       originx="0"
-       originy="0"
-       spacingx="0.26458332"
-       spacingy="0.26458332"
-       empcolor="#0099e5"
-       empopacity="0.30196078"
-       color="#0099e5"
-       opacity="0.14901961"
-       empspacing="5"
-       enabled="true"
-       visible="true" />
-    <sodipodi:guide
-       position="39.737481,116.27373"
-       orientation="1,0"
-       id="guide1"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="92.720789,136.27763"
-       orientation="1,0"
-       id="guide2"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="84.611099,110.59694"
-       orientation="0,-1"
-       id="guide3"
-       inkscape:locked="false" />
-    <inkscape:page
-       x="0"
-       y="0"
-       width="135.46666"
-       height="135.46666"
-       id="page2"
-       margin="0"
-       bleed="0" />
-  </sodipodi:namedview>
+     inkscape:current-layer="svg1" />
   <defs
      id="defs1" />
   <g
-     inkscape:label="bg-square"
-     inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     inkscape:label="background"
+     sodipodi:insensitive="true">
     <rect
-       style="fill:#4f46e5;fill-opacity:1;stroke-width:3.30631"
+       style="display:inline;fill:#4f46e5;fill-opacity:1;stroke-width:6.23719"
        id="rect1"
-       width="142.5347"
-       height="143.87253"
-       x="-3.0997062"
-       y="-3.9423168"
-       inkscape:label="rect1" />
+       width="135.46666"
+       height="135.46666"
+       x="0"
+       y="0" />
   </g>
   <g
-     inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="icon"
      style="display:inline">
     <path
-       style="display:inline;fill:none;stroke:#ffffff;stroke-width:10;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none"
-       d="M 40.795652,109.81553 V 68.139866 25.259233 L 67.216793,49.128577 94.725091,25.259233 v 84.556297"
-       id="path3"
-       sodipodi:nodetypes="cccccc" />
+       style="baseline-shift:baseline;display:inline;overflow:visible;opacity:1;vector-effect:none;fill:#ffffff;stroke-linecap:round;stroke-linejoin:bevel;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+       d="M 91.447266,21.482422 67.283203,42.451172 44.148437,21.548828 35.794922,25.259766 v 42.880859 41.675785 a 5,5 0 0 0 5,5 5,5 0 0 0 5,-5 V 68.140625 36.513672 l 18.070312,16.324219 6.628907,0.06641 19.230468,-16.6875 v 73.599609 a 5,5 0 0 0 5,5 5,5 0 0 0 5,-5 V 25.259766 Z"
+       id="path3" />
     <path
-       style="display:inline;fill:none;stroke:#ffffff;stroke-width:10;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none"
-       d="M 60.008732,87.229428 H 90.813727"
-       id="path4"
-       sodipodi:nodetypes="cc" />
+       style="baseline-shift:baseline;display:inline;overflow:visible;opacity:1;vector-effect:none;fill:#ffffff;stroke-linecap:square;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+       d="m 56.083984,82.300781 v 9.857422 h 4.929688 29.93164 4.929688 v -9.857422 h -4.929688 -29.93164 z"
+       id="path4" />
   </g>
   <g
-     inkscape:groupmode="layer"
      id="layer3"
-     inkscape:label="e-symbol">
+     style="display:inline">
     <path
        id="path1"
        style="baseline-shift:baseline;display:inline;overflow:visible;opacity:1;vector-effect:none;fill:#ffffff;enable-background:accumulate;stop-color:#000000;stop-opacity:1"

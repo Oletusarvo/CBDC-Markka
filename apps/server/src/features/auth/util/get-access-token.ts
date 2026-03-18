@@ -8,6 +8,7 @@ export function getAccessToken(req: ExpressRequest) {
   if (!token) {
     //Access token not present as a cookie. Check authorization header.
     token = req.headers.authorization?.split(' ').at(1);
+   
   }
   return token;
 }

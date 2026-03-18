@@ -15,7 +15,7 @@ export function OverviewScreen() {
   return (
     <DividedAppScreen
       headerContent={
-        <>
+        <div className='relative flex items-center justify-between w-full overflow-hidden'>
           <WalletContainer />
           <div className='flex items-center gap-2'>
             <Button
@@ -27,7 +27,7 @@ export function OverviewScreen() {
               <LogOut color='white' />
             </Button>
           </div>
-        </>
+        </div>
       }>
       <TransactionHistory />
     </DividedAppScreen>

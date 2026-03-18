@@ -1,8 +1,9 @@
-## [5.0.0] - 16-03-2026
+## [5.0.0] - 18-03-2026
 
 ### Added
 
 - New icon.
+- favicon.ico
 - The static Core-class containing the global fractions a single mark is divided into, and methods to convert cents to whole marks, and string representations.
 - Migration utility functions for creating signatures, and updating the signatures of accounts.
 - Guard against excess decimals on the receive screen amount input.
