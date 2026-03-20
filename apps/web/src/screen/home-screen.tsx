@@ -7,6 +7,7 @@ import { Spinner } from '../components/spinner';
 import { useApi, useSession } from '@cbdc-markka/utils-react';
 import { useQuery } from '@tanstack/react-query';
 import { Core } from '@cbdc-markka/core';
+import { WarningMessage } from '../components/helper-message';
 
 export function HomeScreen() {
   const navigate = useNavigate();
@@ -20,12 +21,9 @@ export function HomeScreen() {
         />
         <div className='flex flex-col items-center w-full z-10'>
           <div className='w-full flex flex-col items-center gap-2'>
-            <h1 className='text-2xl font-semibold text-primary'>E-Markka</h1>
+            <h1 className='text-2xl font-semibold text-primary'>e-Markka</h1>
             <p className='text-center'>Suomen markan inspiroima digitaaliraha.</p>
-            <div className='text-sm text-orange-800 font-semibold p-2 rounded-lg border-yellow-500/40 bg-yellow-500/20 flex gap-2 items-center'>
-              <TriangleAlert size='1rem' />
-              E-Markka ei ole laillinen maksuväline!
-            </div>
+            <WarningMessage>e-Markka ei ole laillinen maksuväline!</WarningMessage>
           </div>
 
           <div className='flex w-full gap-2 mt-10 xs:flex-col sm:flex-row'>
@@ -88,9 +86,8 @@ export function HomeScreen() {
           <br />
           <br /> Järjestelmä on <strong>keskitetty</strong>, jotta maksut pysyvät nopeina ja
           yksinkertaisina käyttää. Digitaalisia markkoja tulee olemaan kierrossa{' '}
-          <strong>rajallinen määrä</strong>, eikä määrää kasvateta tämän rajan yli. Tarkkaa rajaa ei
-          olla vielä määritelty. Jokainen uusi tili avataan 20 markan aloitussaldolla, kunnes raja
-          on saavutettu.
+          <strong>50 miljardia</strong>, eikä määrää kasvateta tämän rajan yli. Jokainen uusi tili
+          avataan 20 markan aloitussaldolla, kunnes raja on saavutettu.
           <br />
           <br />
           Monet nykyiset valuutat perustuvat jatkuvaan rahan luomiseen, mikä voi heikentää niiden

@@ -9,6 +9,7 @@ export class ApiInterface {
     return {
       ...config,
       headers: {
+        ...config.headers,
         'Content-Type': 'application/json',
       },
     };

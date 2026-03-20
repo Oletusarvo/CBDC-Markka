@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { useClassName } from '../hooks/use-class-name';
+import { AtSign, Lock } from 'lucide-react';
 
 type InputProps = React.ComponentProps<'input'> & {
   fullWidth?: boolean;
@@ -15,7 +16,11 @@ export function Input({
   iconComponent: IconComponent,
   ...props
 }: InputProps) {
-  const className = useClassName('input pl-12 pr-4 py-4', fullWidth ? 'w-full' : '');
+  const className = useClassName(
+    'input pr-4 py-4',
+    IconComponent ? 'pl-12' : 'pl-4',
+    fullWidth ? 'w-full' : '',
+  );
   return (
     <div className='w-full flex items-center border border-slate-200 rounded-md relative overflow-hidden'>
       {IconComponent && (
@@ -34,5 +39,39 @@ export function Input({
         className={className}
       />
     </div>
+  );
+}
+
+export type DerivedInputProps = Omit<InputProps, 'name' | 'type' | 'required' | 'iconComponent'>;
+
+export function EmailInput(props: DerivedInputProps) {
+  return (
+    <Input
+      {...props}
+      iconComponent={AtSign}
+      fullWidth
+      name='email'
+      type='email'
+      required
+      placeholder='Sähköpostiosoitteesi...'
+    />
+  );
+}
+
+export function PasswordInput({
+  variant,
+  ...props
+}: DerivedInputProps & { variant?: 'primary' | 'secondary' }) {
+  return (
+    <Input
+      {...props}
+      iconComponent={Lock}
+      fullWidth
+      name={
+        variant === 'primary' ? 'password1' : variant === 'secondary' ? 'password2' : 'password'
+      }
+      type='password'
+      required
+    />
   );
 }

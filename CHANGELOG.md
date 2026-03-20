@@ -1,3 +1,15 @@
+## [6.0.0] - 20-03-2026
+
+### Added
+
+- Supply-table on the database, from which funds are drawn into new accounts.
+- The HelperMessage-component, and variants.
+- Email verification on registration.
+
+### Changed
+
+- Dropped account signatures.
+
 ## [5.0.0] - 18-03-2026
 
 ### Added

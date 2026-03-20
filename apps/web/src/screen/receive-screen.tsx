@@ -100,7 +100,7 @@ export function ReceiveScreen() {
             type='number'
             min={1 / Core.COIN}
             step={1 / Core.COIN}
-            className='w-full text-center outline-0 text-lg font-semibold'
+            className='w-full text-center outline-0 text-lg font-semibold border-b border-slate-300'
           />
         </div>
       </main>

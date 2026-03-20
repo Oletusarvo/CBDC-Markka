@@ -6,7 +6,7 @@
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-flow: column;
-  font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   width: 100%;
   height: calc(var(--vh) * 100);
   background-color: var(--color-gray-100);
