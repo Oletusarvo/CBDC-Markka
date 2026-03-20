@@ -19,7 +19,31 @@ import { createHandler, createMiddleware } from '../../utils/create-handler';
 
 const router = getRouter();
 
-router.post('/register', createBodyParser(userSchema), registerUserHandler);
+router.post(
+  '/register',
+  createMiddleware(async (req, res, next) => {
+    const token = req.body.token;
+    const schema = token
+      ? z.object({
+          token: z.jwt(),
+          password1: passwordSchema,
+          password2: passwordSchema,
+        })
+      : z.object({
+          email: emailSchema,
+        });
+    const parser = createBodyParser(schema);
+    return await parser(req, res, next);
+  }),
+  createHandler(async (req, res) => {
+    const token = req.data.token;
+    return token
+      ? //User registers with token, proceed to create data.
+        await registerUserWithTokenHandler(req, res)
+      : //User is sending their email address only; send them a registration token.
+        await createRegistrationTokenHandler(req, res);
+  }),
+);
 
 router.post('/login', createBodyParser(loginCredentialsSchema), loginHandler);
 router.get('/session', checkAuth(), getSessionHandler);

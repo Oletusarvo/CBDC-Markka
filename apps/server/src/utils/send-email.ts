@@ -1,3 +1,4 @@
+import { loadEnvVariable } from './load-env-variable';
 
 require('dotenv').config();
 /**Sends an email using the configured transport-object in the nodemailer.config file.*/
@@ -10,22 +11,28 @@ export async function sendEmail({
   subject: string;
   html: string;
 }) {
+  const serviceEmail = loadEnvVariable('SERVICE_EMAIL', false) || 'localhost';
   const body = JSON.stringify({
-    sender: { email: process.env.SERVICE_EMAIL, name: 'e-Markka App' },
+    sender: { email: serviceEmail, name: 'e-Markka App' },
     to: [{ email: to }],
     subject,
     htmlContent: html,
   });
+  const apiKey = loadEnvVariable('EMAIL_API_KEY');
 
-  return await fetch(
+  const res = await fetch(
     'https://api.brevo.com/v3/smtp/email',
 
     {
+      method: 'POST',
       body,
       headers: {
-        'api-key': process.env.EMAIL_API_KEY.trim(),
+        'api-key': apiKey.trim(),
         'Content-Type': 'application/json',
       },
     },
   );
+
+  console.log(res.status, res.statusText);
+  return res;
 }

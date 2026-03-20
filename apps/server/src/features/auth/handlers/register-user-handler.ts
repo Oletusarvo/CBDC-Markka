@@ -9,8 +9,6 @@ import { userSchema } from '@cbdc-markka/schemas';
 import { signAccountState } from '../../accounts/util/signature';
 import { Core } from '@cbdc-markka/core';
 
-const MAX_SUPPLY_IN_CENTS = Core.COIN * 100_000_000_000;
-
 export const registerUserHandler = createHandler(
   async (req: ExpressRequest<z.infer<typeof userSchema>>, res) => {
     const credentials = req.data;
@@ -23,23 +21,16 @@ export const registerUserHandler = createHandler(
         .returning('id');
 
       const mint = Core.COIN * 20;
-      const currentSupplyInCents = await trx(tablenames.accounts)
-        .sum('balance_in_cents as total')
-        .first();
+      const supplyRowsAffected = await trx('supply')
+        .where('unreleased_supply', '>=', mint)
+        .decrement('unreleased_supply', mint)
+        .forUpdate()
+        .limit(1);
 
-      const [newAccountData] = await trx(tablenames.accounts)
-        .insert({
-          user_id: user.id,
-          balance_in_cents: currentSupplyInCents.total + mint < MAX_SUPPLY_IN_CENTS ? mint : 0,
-        })
-        .returning('*');
-
-      //Sign the new account.
-      await trx(tablenames.accounts)
-        .where({ id: newAccountData.id })
-        .update({
-          signature: signAccountState(newAccountData),
-        });
+      await trx(tablenames.accounts).insert({
+        user_id: user.id,
+        balance_in_cents: supplyRowsAffected == 1 ? mint : 0,
+      });
     });
     return res.status(200).end();
   },

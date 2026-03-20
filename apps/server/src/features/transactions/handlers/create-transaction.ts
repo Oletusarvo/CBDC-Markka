@@ -6,7 +6,6 @@ import { AuthenticatedExpressRequest } from '../../../types/express';
 import { createHandler } from '../../../utils/create-handler';
 import { getAccountHandler } from '../../accounts/handlers/get-account-handler';
 import z from 'zod';
-import { signAccountState, verifyAccountSignature } from '../../accounts/util/signature';
 import { Core } from '@cbdc-markka/core';
 
 /**Transfers money between two accounts. */
@@ -20,7 +19,6 @@ export const createTransaction = createHandler(
         'user_id',
         db.raw('CAST(balance_in_cents AS BIGINT) as balance_in_cents'),
         db.raw('CAST(nonce AS BIGINT) as nonce'),
-        'signature',
       )
       .first();
 
@@ -33,23 +31,12 @@ export const createTransaction = createHandler(
         'user_id',
         db.raw('CAST(balance_in_cents AS BIGINT) as balance_in_cents'),
         db.raw('CAST(nonce AS BIGINT) as nonce'),
-        'signature',
       )
       .first();
 
     if (req.data.nonce != senderAccount.nonce) {
       return res.status(409).json({
         error: 'transaction:sequence-invalid',
-      });
-    }
-
-    //Make sure both accounts states are valid.
-    const signaturesValid =
-      verifyAccountSignature(senderAccount) && verifyAccountSignature(receiverAccount);
-
-    if (!signaturesValid) {
-      return res.status(409).json({
-        error: 'transaction:signature-invalid',
       });
     }
 
@@ -82,28 +69,14 @@ export const createTransaction = createHandler(
         message: req.data.message,
       });
 
-      const [newSenderAccountState] = await trx(tablenames.accounts)
+      await trx(tablenames.accounts)
         .where({ id: senderAccount.id })
         .decrement('balance_in_cents', amt_in_cents)
-        .increment('nonce', 1)
-        .returning('*');
+        .increment('nonce', 1);
 
-      const [newReceiverAccountState] = await trx(tablenames.accounts)
+      await trx(tablenames.accounts)
         .where({ id: receiverAccount.id })
-        .increment('balance_in_cents', amt_in_cents)
-        .returning('*');
-
-      await trx(tablenames.accounts)
-        .where({ id: newSenderAccountState.id })
-        .update({
-          signature: signAccountState(newSenderAccountState),
-        });
-
-      await trx(tablenames.accounts)
-        .where({ id: newReceiverAccountState.id })
-        .update({
-          signature: signAccountState(newReceiverAccountState),
-        });
+        .increment('balance_in_cents', amt_in_cents);
     });
 
     return await getAccountHandler(req, res);
