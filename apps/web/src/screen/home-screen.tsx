@@ -21,7 +21,11 @@ export function HomeScreen() {
         />
         <div className='flex flex-col items-center w-full z-10'>
           <div className='w-full flex flex-col items-center gap-2'>
-            <h1 className='text-2xl font-semibold text-primary'>e-Markka</h1>
+            <img
+              src='/app-icon.svg'
+              className='w-24 h-24 rounded-lg shadow-md shadow-cyan-500'
+            />
+            <h1 className='text-4xl font-semibold text-primary'>e-Markka</h1>
             <p className='text-center'>Suomen markan inspiroima digitaaliraha.</p>
             <WarningMessage>e-Markka ei ole laillinen maksuväline!</WarningMessage>
           </div>
@@ -40,7 +44,7 @@ export function HomeScreen() {
                     color='white'
                     size='1rem'
                   />
-                  Luo Tili
+                  <span>Luo Tili</span>
                 </Button>
                 <Button
                   onClick={() => navigate('/login')}
@@ -76,7 +80,7 @@ export function HomeScreen() {
       </section>
 
       <section className='w-full py-16 bg-gray-900 text-white px-4'>
-        <h2 className='font-semibold text-xl mb-4'>Mikä on E-Markka?</h2>
+        <h2 className='font-semibold text-xl mb-4'>Mikä on e-Markka?</h2>
 
         <p className='text-gray-200'>
           <strong>Digitaalinen markka.</strong> Yksinkertainen tapa lähettää ja vastaanottaa rahaa
@@ -85,15 +89,18 @@ export function HomeScreen() {
           näkyvät selkeästä tapahtumahistoriasta.
           <br />
           <br /> Järjestelmä on <strong>keskitetty</strong>, jotta maksut pysyvät nopeina ja
-          yksinkertaisina käyttää. Digitaalisia markkoja tulee olemaan kierrossa{' '}
-          <strong>50 miljardia</strong>, eikä määrää kasvateta tämän rajan yli. Jokainen uusi tili
-          avataan 20 markan aloitussaldolla, kunnes raja on saavutettu.
+          yksinkertaisina käyttää.
           <br />
           <br />
           Monet nykyiset valuutat perustuvat jatkuvaan rahan luomiseen, mikä voi heikentää niiden
           arvoa ajan myötä. Tämän valuutan perusajatus on päinvastainen: rajallinen määrä rahaa voi
           auttaa{' '}
-          <strong>säilyttämään ostovoiman – ja pitkällä aikavälillä jopa vahvistamaan sitä.</strong>
+          <strong>
+            säilyttämään ostovoiman – ja pitkällä aikavälillä jopa vahvistamaan sitä.
+          </strong>{' '}
+          Digitaalisia markkoja tulee olemaan kierrossa <strong>50 miljardia</strong>, eikä määrää
+          kasvateta tämän rajan yli. Jokainen uusi tili avataan 20 markan aloitussaldolla, kunnes
+          raja on saavutettu.
           <br />
           <br />
           Projekti on kokeilu, joka tuo markan digitaaliseen aikaan ja tutkii, millainen voisi olla

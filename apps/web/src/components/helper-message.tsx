@@ -13,12 +13,12 @@ export function HelperMessage({ children, type, fullWidth }: HelperMessageProps)
     'flex items-center py-2 px-4 gap-4 border rounded-md text-sm',
     fullWidth ? 'w-full' : '',
     type === 'success'
-      ? 'text-green-600 bg-green-500/10 border-green-500/20'
+      ? 'text-green-600 bg-green-100 border-green-200'
       : type === 'error'
-        ? 'text-red-600 bg-red-500/10 border-red-500/20'
+        ? 'text-red-600 bg-red-100 border-red-200'
         : type === 'warning'
-          ? 'text-yellow-700 bg-yellow-600/10 border-yellow-600/20'
-          : 'text-slate-700 bg-slate-600/10 border-slate-600/20',
+          ? 'text-yellow-700 bg-yellow-100 border-yellow-200'
+          : 'text-slate-700 bg-slate-100 border-slate-200',
   );
 
   return (

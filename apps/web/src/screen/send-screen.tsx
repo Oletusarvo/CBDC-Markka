@@ -207,7 +207,6 @@ function ManualInputStep() {
       <AmountInput />
       <MessageInput />
 
-      <ErrorMessages />
       <div className='flex w-full gap-2'>
         <LoaderButton
           loading={loading}
@@ -222,6 +221,7 @@ function ManualInputStep() {
           Lähetä
         </LoaderButton>
       </div>
+      <ErrorMessages />
     </>
   );
 }

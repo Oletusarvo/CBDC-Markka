@@ -14,6 +14,7 @@ export const createTransaction = createHandler(
     const session = req.session;
     const senderAccount = await db(tablenames.accounts)
       .where({ user_id: session.user.id })
+      .forUpdate()
       .select(
         'id',
         'user_id',
@@ -26,6 +27,7 @@ export const createTransaction = createHandler(
       .where({
         id: req.data.recipient_id,
       })
+      .forUpdate()
       .select(
         'id',
         'user_id',

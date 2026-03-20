@@ -24,6 +24,10 @@ a {
   background-position-x: -50px;
 }
 
+#app-main-heading {
+  font-family: Playfair;
+}
+
 .token-value {
   font-family: Playfair;
 }

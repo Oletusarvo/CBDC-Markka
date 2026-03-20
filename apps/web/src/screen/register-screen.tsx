@@ -49,11 +49,6 @@ function StepOne() {
         type='submit'>
         Lähetä Vahvistusviesti
       </LoaderButton>
-      <Link
-        to='/login'
-        className='w-full text-center mt-4'>
-        Onko sinulla jo tili? Klikkaa tähän.
-      </Link>
       {status === 'auth:email-taken' ? (
         <ErrorMessage>Annettu sähköpostiosoite on käytössä!</ErrorMessage>
       ) : status === 'success' ? (
@@ -61,6 +56,11 @@ function StepOne() {
       ) : status === 'error' ? (
         <ErrorMessage>Jotain meni pieleen!</ErrorMessage>
       ) : null}
+      <Link
+        to='/login'
+        className='w-full text-center mt-4'>
+        Onko sinulla jo tili? Klikkaa tähän.
+      </Link>
     </Form>
   );
 }
@@ -82,6 +82,7 @@ function StepTwo() {
         placeholder='Toista salasana...'
       />
       <LoaderButton
+        rounded
         loading={loading}
         type='submit'
         variant='contained'

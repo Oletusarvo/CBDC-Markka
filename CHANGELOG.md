@@ -5,10 +5,13 @@
 - Supply-table on the database, from which funds are drawn into new accounts.
 - The HelperMessage-component, and variants.
 - Email verification on registration.
+- App logo onto the landing page.
 
 ### Changed
 
 - Dropped account signatures.
+- Colors of HelperMessage-components.
+- The location of the ErrorMessage rendered on the send-screen.
 
 ## [5.0.0] - 18-03-2026
 
