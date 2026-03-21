@@ -51,6 +51,8 @@ function StepOne() {
       </LoaderButton>
       {status === 'auth:email-taken' ? (
         <ErrorMessage>Annettu sähköpostiosoite on käytössä!</ErrorMessage>
+      ) : status === 'auth:unsupported-domain' ? (
+        <ErrorMessage>Tuemme ainoastaan gmail-tilejä!</ErrorMessage>
       ) : status === 'success' ? (
         <SuccessMessage>Linkki lähetetty!</SuccessMessage>
       ) : status === 'error' ? (

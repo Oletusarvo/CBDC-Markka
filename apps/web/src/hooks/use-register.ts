@@ -15,9 +15,15 @@ export function useRegisterStepOne() {
           success: true,
         };
       } else {
+        const err = res.status !== 500 ? await res.json() : null;
+
+        const error = err ? err.properties?.email?.errors.at(0) : null;
+
         return {
           success: false,
-          error: await res.text(),
+          error: JSON.stringify({
+            error,
+          }),
         };
       }
     },

@@ -6,6 +6,7 @@
 - The HelperMessage-component, and variants.
 - Email verification on registration.
 - App logo onto the landing page.
+- Error message when trying to register non-gmail emails.
 
 ### Changed
 

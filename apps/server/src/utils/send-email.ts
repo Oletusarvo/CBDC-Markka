@@ -11,7 +11,7 @@ export async function sendEmail({
   subject: string;
   html: string;
 }) {
-  const serviceEmail = loadEnvVariable('SERVICE_EMAIL', false) || 'localhost';
+  const serviceEmail = loadEnvVariable('SERVICE_EMAIL', true);
   const body = JSON.stringify({
     sender: { email: serviceEmail, name: 'e-Markka App' },
     to: [{ email: to }],
