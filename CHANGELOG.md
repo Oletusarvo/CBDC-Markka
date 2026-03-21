@@ -13,6 +13,12 @@
 - Colors of HelperMessage-components.
 - The location of the ErrorMessage rendered on the send-screen.
 - Updated back-end currency precision to 100 million.
+- Made the aneds of inputs and buttons fully rounded.
+- Made sure the send-button is disabled after sending money succeeds.
+
+### Fixed
+
+- The "Something went wrong" message flashing briefly when a transaction succeeds.
 
 ## [5.0.0] - 18-03-2026
 

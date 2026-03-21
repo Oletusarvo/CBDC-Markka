@@ -49,7 +49,6 @@ export function CurrencyAmountInput({ value, onInput, max }) {
   const min = (1 / Core.COIN) * 1_000_000;
   return (
     <Input
-      fontWeight={600}
       iconComponent={CurrencySymbol}
       fullWidth
       value={value}

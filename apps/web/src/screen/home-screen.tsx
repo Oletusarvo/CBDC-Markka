@@ -98,9 +98,8 @@ export function HomeScreen() {
           <strong>
             säilyttämään ostovoiman – ja pitkällä aikavälillä jopa vahvistamaan sitä.
           </strong>{' '}
-          Digitaalisia markkoja tulee olemaan kierrossa <strong>50 miljardia</strong>, eikä määrää
-          kasvateta tämän rajan yli. Jokainen uusi tili avataan 20 markan aloitussaldolla, kunnes
-          raja on saavutettu.
+          Digitaalisia markkoja tulee olemaan kierrossa <strong>1 miljardi</strong>, eikä määrää
+          kasvateta tämän rajan yli.
           <br />
           <br />
           Projekti on kokeilu, joka tuo markan digitaaliseen aikaan ja tutkii, millainen voisi olla

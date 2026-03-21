@@ -29,7 +29,7 @@ export function Button({
     `--${color}`,
     fullWidth ? 'w-full' : '',
     shadow ? 'shadow-md' : '',
-    rounded ? 'rounded-md' : '',
+    rounded ? 'rounded-[100px]' : '',
     circular ? 'rounded-full aspect-square' : '',
   );
   return (

@@ -4,7 +4,7 @@ import { Check, CurrencyIcon, Pencil, QrCode, User } from 'lucide-react';
 import { useState } from 'react';
 import { Input } from '../components/input';
 
-import { ErrorMessage } from '../components/helper-message';
+import { ErrorMessage, SuccessMessage } from '../components/helper-message';
 import { setupContext, useAccount } from '@cbdc-markka/utils-react';
 import QRScanner from '../components/qr-scanner';
 import { AppScreen, DividedAppScreen } from '../components/app-screen';
@@ -210,7 +210,7 @@ function ManualInputStep() {
       <div className='flex w-full gap-2'>
         <LoaderButton
           loading={loading}
-          disabled={!currentAddress?.length || loading}
+          disabled={!currentAddress?.length || loading || status === 'success'}
           rounded
           type='submit'
           fullWidth>
@@ -239,7 +239,7 @@ function ErrorMessages() {
     <ErrorMessage>Jomman kumman osapuolen tilin digitaalinen allekirjoitus ei täsmää!</ErrorMessage>
   ) : status === 'transaction:sequence-invalid' ? (
     <ErrorMessage>Tilisiirron järjestysvirhe! Ole hyvä ja yritä uudelleen.</ErrorMessage>
-  ) : status !== 'idle' && status !== 'loading' ? (
+  ) : status !== 'success' && status !== 'idle' && status !== 'loading' ? (
     <ErrorMessage>Jotakin meni pieleen!</ErrorMessage>
   ) : null;
 }

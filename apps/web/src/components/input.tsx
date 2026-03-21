@@ -17,12 +17,12 @@ export function Input({
   ...props
 }: InputProps) {
   const className = useClassName(
-    'input pr-4 py-4',
+    'input pr-4 py-2',
     IconComponent ? 'pl-12' : 'pl-4',
     fullWidth ? 'w-full' : '',
   );
   return (
-    <div className='w-full flex items-center border border-slate-200 rounded-md relative overflow-hidden'>
+    <div className='w-full flex items-center border border-slate-200 rounded-[100px] relative overflow-hidden'>
       {IconComponent && (
         <IconComponent
           className='text-slate-500 absolute left-4'
