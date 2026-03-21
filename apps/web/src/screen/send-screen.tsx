@@ -28,7 +28,7 @@ export function SendScreen() {
   const navigate = useNavigate();
   const [status, setStatus] = useState('idle');
   const [currentAddress, setCurrentAddress] = useState('');
-  const [currentAmount, setCurrentAmount] = useState(1 / Core.COIN);
+  const [currentAmount, setCurrentAmount] = useState((1 / Core.COIN) * 1_000000);
 
   const [step, setStep] = useState(0);
 

@@ -1,4 +1,4 @@
-## [6.0.0] - 20-03-2026
+## [6.0.0] - 21-03-2026
 
 ### Added
 
@@ -12,6 +12,7 @@
 - Dropped account signatures.
 - Colors of HelperMessage-components.
 - The location of the ErrorMessage rendered on the send-screen.
+- Updated back-end currency precision to 100 million.
 
 ## [5.0.0] - 18-03-2026
 

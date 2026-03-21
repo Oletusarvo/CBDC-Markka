@@ -46,7 +46,7 @@ export function CurrencySymbol({
 }
 
 export function CurrencyAmountInput({ value, onInput, max }) {
-  const step = 1 / Core.COIN;
+  const min = (1 / Core.COIN) * 1_000_000;
   return (
     <Input
       fontWeight={600}
@@ -56,8 +56,8 @@ export function CurrencyAmountInput({ value, onInput, max }) {
       onInput={onInput}
       name='amt'
       type='number'
-      step={step}
-      min={step}
+      step={min}
+      min={min}
       max={max}
       placeholder='Määrä...'
       required

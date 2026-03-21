@@ -3,10 +3,8 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex('supply').update({
-    unreleased_supply: knex.raw(
-      '(100 * 50000000000) - (select sum(balance_in_cents) from account)',
-    ),
+  return knex('account').update({
+    balance_in_cents: knex.raw('balance_in_cents * 1000000::bigint'),
   });
 };
 
@@ -15,5 +13,7 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex('supply').update({ unreleased_supply: 0 });
+  return knex('account').update({
+    balance_in_cents: knex.raw('balance_in_cents / 1000000::bigint'),
+  });
 };
