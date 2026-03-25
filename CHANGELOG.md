@@ -1,4 +1,4 @@
-## [6.0.0] - 21-03-2026
+## [6.0.0] - 25-03-2026
 
 ### Added
 
@@ -7,6 +7,7 @@
 - Email verification on registration.
 - App logo onto the landing page.
 - Error message when trying to register non-gmail emails.
+- Display SessionLoadingScreen when navigating to the auth-section, and the users session has not loaded yet.
 
 ### Changed
 

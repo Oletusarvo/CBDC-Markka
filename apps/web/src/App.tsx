@@ -2,7 +2,7 @@ import { HashRouter, Outlet, Route, Routes } from 'react-router-dom';
 import { AuthLayout } from './layouts/auth-layout';
 import { Suspense } from 'react';
 import { ServiceWorkerLoader } from './components/service-worker-loader';
-import { LoadingScreen } from './screen/loading-screen';
+import { SessionLoadingScreen } from './screen/session-loading-screen';
 import {
   AccountProvider,
   ApiProvider,
@@ -30,7 +30,7 @@ export function App() {
       <ApiProvider apiInterface={apiInterface}>
         <QueryProvider>
           <HashRouter>
-            <Suspense fallback={<LoadingScreen />}>
+            <Suspense fallback={<SessionLoadingScreen />}>
               <AuthProvider>
                 <Routes>
                   <Route
@@ -52,11 +52,7 @@ export function App() {
                   </Route>
                   <Route
                     path='/auth'
-                    element={
-                      <AccountProvider>
-                        <Outlet />
-                      </AccountProvider>
-                    }>
+                    element={<AuthLayout />}>
                     <Route
                       path='transaction/:id'
                       element={<TransactionScreen />}
