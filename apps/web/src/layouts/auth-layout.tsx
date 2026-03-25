@@ -4,6 +4,7 @@ import { AccountProvider, useSession } from '@cbdc-markka/utils-react';
 
 export function AuthLayout() {
   const { status } = useSession();
+  //const status: any = 'loading';
 
   if (status === 'unauthenticated') {
     return <Navigate to='/login' />;
