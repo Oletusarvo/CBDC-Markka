@@ -45,10 +45,11 @@ export function CurrencySymbol({
   );
 }
 
-export function CurrencyAmountInput({ value, onInput, max }) {
-  const min = (1 / Core.COIN) * 1_000_000;
+export function CurrencyAmountInput({ value, onInput, max, defaultValue }) {
+  const min = 1 / Core.COIN;
   return (
     <Input
+      defaultValue={defaultValue}
       iconComponent={CurrencySymbol}
       fullWidth
       value={value}

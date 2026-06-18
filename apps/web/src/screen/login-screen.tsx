@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Modal } from '../components/modal';
 import { EmailInput, Input, PasswordInput } from '../components/input';
 import { Button, LoaderButton } from '../components/button';
@@ -10,6 +10,8 @@ import { useLogin } from '../hooks/use-login';
 export function LoginScreen() {
   const navigate = useNavigate();
   const { submit, status, loading } = useLogin();
+  const [searchParams] = useSearchParams();
+
   return (
     <Modal
       title='Kirjaudu Sisään'

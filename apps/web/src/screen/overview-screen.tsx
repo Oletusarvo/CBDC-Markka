@@ -5,7 +5,7 @@ import { TransactionHistory } from '../components/transaction-history';
 import { useAnimatedNumber } from '../hooks/use-animated-number';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/button';
-import { LogOut, Settings } from 'lucide-react';
+import { Cog, LogOut, Settings } from 'lucide-react';
 import { AppScreen, DividedAppScreen } from '../components/app-screen';
 import { Core } from '@cbdc-markka/core';
 

@@ -22,6 +22,7 @@ import { SendScreen } from './screen/send-screen';
 import { ReceiveScreen } from './screen/receive-screen';
 import { LogoutScreen } from './screen/logout-screen';
 import { TransactionScreen } from './screen/transaction-screen';
+import { SettingsScreen } from './screen/settings-screen';
 
 const RouterComponent = BrowserRouter;
 
@@ -81,12 +82,11 @@ export function App() {
                         path='receive'
                         element={<ReceiveScreen />}
                       />
-
-                      <Route
-                        path='logout'
-                        element={<LogoutScreen />}
-                      />
                     </Route>
+                    <Route
+                      path='logout'
+                      element={<LogoutScreen />}
+                    />
                   </Route>
                 </Routes>
               </AuthProvider>

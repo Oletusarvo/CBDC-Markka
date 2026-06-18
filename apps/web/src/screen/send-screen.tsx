@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, LoaderButton } from '../components/button';
 import { Check, CurrencyIcon, Pencil, QrCode, User } from 'lucide-react';
 import { useState } from 'react';
@@ -13,6 +13,7 @@ import { appConfig } from '../util/app-config';
 import { CurrencyAmountInput, CurrencySymbol } from '../components/currency';
 import { Core } from '@cbdc-markka/core';
 import { NavButton } from '../components/overview-bottom-nav';
+import { useSubmit } from '../hooks/use-submit';
 
 const [SendContext, useSendContext] = setupContext<{
   status: string;
@@ -27,12 +28,20 @@ export function SendScreen() {
   const { createTransaction, account } = useAccount();
   const navigate = useNavigate();
   const [status, setStatus] = useState('idle');
-  const [currentAddress, setCurrentAddress] = useState('');
-  const [currentAmount, setCurrentAmount] = useState((1 / Core.COIN) * 1_000000);
+  const [queryParams] = useSearchParams();
+  const callbackUrl = queryParams.get('callback_url');
+  const defaultAmount = Number(queryParams.get('amount')) / Core.COIN;
+  const defaultRecipient = queryParams.get('recipient_id');
+
+  const [currentAddress, setCurrentAddress] = useState(defaultRecipient || '');
+  const [currentAmount, setCurrentAmount] = useState(defaultAmount / Core.COIN || 1 / Core.COIN);
 
   const [step, setStep] = useState(0);
 
-  const cancel = () => navigate('/auth/overview');
+  const cancel = () => {
+    const url = callbackUrl || '/auth/overview';
+    navigate(url);
+  };
 
   const handleSubmit = async (e: any) => {
     if (!account) return;
@@ -141,10 +150,11 @@ function QRCodeReadStep({ onScan }: { onScan: (data) => void }) {
   );
 }
 
-function EmailInput() {
+function EmailInput({ defaultValue }: React.ComponentProps<typeof Input>) {
   const { updateCurrentAddress, currentAddress } = useSendContext();
   return (
     <Input
+      defaultValue={defaultValue}
       fullWidth
       iconComponent={User}
       value={currentAddress}
@@ -155,12 +165,13 @@ function EmailInput() {
   );
 }
 
-function AmountInput() {
+function AmountInput({ defaultValue }: React.ComponentProps<typeof Input>) {
   const { updateAmount, currentAmount } = useSendContext();
   const { account } = useAccount();
   const balance = Core.convertCurrencyAmount(account?.balance_in_cents || 1);
   return (
     <CurrencyAmountInput
+      defaultValue={defaultValue}
       value={currentAmount}
       onInput={updateAmount}
       max={balance}
@@ -180,11 +191,14 @@ function MessageInput() {
   );
 }
 
+/**Renders the screen for sending money. Will grab the amount and recipient address from the query parameters if they are present. */
 function ManualInputStep() {
   const { account } = useAccount();
   const { status, updateStep, currentAddress, currentAmount } = useSendContext();
+
   const loading = status === 'loading';
-  const convertedAmount = Core.convertCurrencyAmount(account?.balance_in_cents || 0);
+  const convertedBalance = Core.convertCurrencyAmount(account?.balance_in_cents || 0);
+
   return (
     <>
       <div className='rounded-2xl shadow-lg bg-linear-to-br from-primary to-blue-600 w-full h-[170px] p-4 flex flex-col relative overflow-hidden'>
@@ -192,7 +206,7 @@ function ManualInputStep() {
         <div className='flex flex-col text-white gap-1 z-10'>
           <span className='text-xs text-white'>{account?.id}</span>
           <span className='text-2xl'>
-            {Core.amountToString(convertedAmount)} <span className='text-lg'>mk</span>
+            {Core.amountToString(convertedBalance)} <span className='text-lg'>mk</span>
           </span>
         </div>
 

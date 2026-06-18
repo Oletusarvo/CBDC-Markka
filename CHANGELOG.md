@@ -1,3 +1,10 @@
+## [7.0.1] - 18-06-2026
+
+### Fixed
+
+- The amount input on the send-screen not incrementing when the controls are pressed.
+- Incorrect minimum value for the currency-input.
+
 ## [7.0.0] - 18-06-2026
 
 ### Changed

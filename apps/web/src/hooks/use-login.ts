@@ -1,10 +1,12 @@
 import { useSession } from '@cbdc-markka/utils-react';
 import { useSubmit } from './use-submit';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export function useLogin() {
   const navigate = useNavigate();
   const { signin } = useSession();
+  const [searchParams] = useSearchParams();
+  const callbackUrl = searchParams.get('callback_url');
   const { submit, loading, status } = useSubmit({
     fetchFn: async e => {
       const credentials = Object.fromEntries(new FormData(e.currentTarget));
@@ -21,7 +23,10 @@ export function useLogin() {
         };
       }
     },
-    onSuccess: () => navigate('/auth/overview'),
+    onSuccess: () => {
+      const navigateUrl = callbackUrl || '/auth/overview';
+      navigate(navigateUrl);
+    },
   });
   return { submit, loading, status };
 }
