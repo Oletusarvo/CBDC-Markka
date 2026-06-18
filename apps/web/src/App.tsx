@@ -1,4 +1,4 @@
-import { HashRouter, Outlet, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Outlet, Route, Routes } from 'react-router-dom';
 import { AuthLayout } from './layouts/auth-layout';
 import { Suspense } from 'react';
 import { ServiceWorkerLoader } from './components/service-worker-loader';
@@ -23,13 +23,15 @@ import { ReceiveScreen } from './screen/receive-screen';
 import { LogoutScreen } from './screen/logout-screen';
 import { TransactionScreen } from './screen/transaction-screen';
 
+const RouterComponent = BrowserRouter;
+
 export function App() {
   return (
     <>
       <WindowResizeManager />
       <ApiProvider apiInterface={apiInterface}>
         <QueryProvider>
-          <HashRouter>
+          <RouterComponent>
             <Suspense fallback={<SessionLoadingScreen />}>
               <AuthProvider>
                 <Routes>
@@ -89,7 +91,7 @@ export function App() {
                 </Routes>
               </AuthProvider>
             </Suspense>
-          </HashRouter>
+          </RouterComponent>
         </QueryProvider>
         <ServiceWorkerLoader />
       </ApiProvider>

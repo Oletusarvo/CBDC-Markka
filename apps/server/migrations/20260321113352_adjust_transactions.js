@@ -4,7 +4,7 @@
  */
 exports.up = function (knex) {
   return knex('transaction').update({
-    amount_in_cents: knex.raw('amount_in_cents * 1000000::bigint'),
+    amount_in_cents: knex.raw('amount_in_cents * 1::bigint'),
   });
 };
 
@@ -14,6 +14,6 @@ exports.up = function (knex) {
  */
 exports.down = function (knex) {
   return knex('transaction').update({
-    amount_in_cents: knex.raw('amount_in_cents / 1000000::bigint'),
+    amount_in_cents: knex.raw('amount_in_cents / 1::bigint'),
   });
 };

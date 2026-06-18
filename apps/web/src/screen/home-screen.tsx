@@ -98,8 +98,9 @@ export function HomeScreen() {
           <strong>
             säilyttämään ostovoiman – ja pitkällä aikavälillä jopa vahvistamaan sitä.
           </strong>{' '}
-          Digitaalisia markkoja tulee olemaan kierrossa <strong>1 miljardi</strong>, eikä määrää
-          kasvateta tämän rajan yli.
+          Digitaalisia markkoja tulee olemaan kierrossa <strong>21 trilioonaa</strong>, eikä määrää
+          kasvateta tämän rajan yli. Raja on sama kuin Bitcoinin 21 miljoonan raja, kun otetaan
+          huomioon e-markan jako 100 (sata) penniin.
           <br />
           <br />
           Projekti on kokeilu, joka tuo markan digitaaliseen aikaan ja tutkii, millainen voisi olla

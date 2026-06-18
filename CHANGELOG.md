@@ -1,3 +1,10 @@
+## [7.0.0] - 18-04-2026
+
+### Changed
+
+- Replaced the HashRouter with the BrowserRouter.
+- Changed the precision of the currency from 100,000,000 to 100, and the circulation cap to 21,000,000,000,000.
+
 ## [6.0.0] - 25-03-2026
 
 ### Added
