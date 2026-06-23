@@ -5,6 +5,7 @@ import { LoaderButton } from '../components/button';
 import { ErrorMessage, SuccessMessage } from '../components/helper-message';
 import { setupContext } from '@cbdc-markka/utils-react';
 import { useRegisterStepOne, useRegisterStepTwo } from '../hooks/use-register';
+import { Form } from '../components/form';
 
 const [RegisterContext, useRegisterContext] = setupContext<{}>('RegisterContext');
 export function RegisterScreen() {
@@ -19,16 +20,6 @@ export function RegisterScreen() {
       onClose={() => navigate('/')}>
       {token ? <StepTwo /> : <StepOne />}
     </Modal>
-  );
-}
-
-function Form({ children, ...props }: React.ComponentProps<'form'>) {
-  return (
-    <form
-      {...props}
-      className='flex gap-2 flex-col w-full'>
-      {children}
-    </form>
   );
 }
 
@@ -60,7 +51,7 @@ function StepOne() {
       ) : null}
       <Link
         to='/login'
-        className='w-full text-center mt-4'>
+        className='w-full text-center mt-4 link'>
         Onko sinulla jo tili? Klikkaa tähän.
       </Link>
     </Form>
@@ -72,9 +63,7 @@ function StepTwo() {
   const { submit, status, loading } = useRegisterStepTwo();
 
   return (
-    <Form
-      className='w-full flex gap-2 flex-col'
-      onSubmit={submit}>
+    <Form onSubmit={submit}>
       <PasswordInput
         variant='primary'
         placeholder='Luo salasana...'

@@ -1,3 +1,14 @@
+## [7.1.0] - 23-06-2026
+
+### Added
+
+- Password reset feature.
+- Deposit sessions.
+
+### Changed
+
+- Transaction screen appearance.
+
 ## [7.0.1] - 18-06-2026
 
 ### Fixed

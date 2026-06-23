@@ -23,6 +23,8 @@ import { ReceiveScreen } from './screen/receive-screen';
 import { LogoutScreen } from './screen/logout-screen';
 import { TransactionScreen } from './screen/transaction-screen';
 import { SettingsScreen } from './screen/settings-screen';
+import { PaymentSessionScreen } from './screen/payment-session-screen';
+import { ResetPasswordScreen } from './screen/reset-password-screen';
 
 const RouterComponent = BrowserRouter;
 
@@ -51,6 +53,10 @@ export function App() {
                     <Route
                       path='register'
                       element={<RegisterScreen />}
+                    />
+                    <Route
+                      path='reset-password'
+                      element={<ResetPasswordScreen />}
                     />
                   </Route>
                   <Route
@@ -86,6 +92,10 @@ export function App() {
                     <Route
                       path='logout'
                       element={<LogoutScreen />}
+                    />
+                    <Route
+                      path='payment-session/:id'
+                      element={<PaymentSessionScreen />}
                     />
                   </Route>
                 </Routes>

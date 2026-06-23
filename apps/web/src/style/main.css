@@ -13,7 +13,7 @@
   overflow: hidden;
 }
 
-a {
+.link {
   font-size: var(--text-sm);
   color: var(--color-primary);
 }

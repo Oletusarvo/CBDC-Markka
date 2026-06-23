@@ -3,9 +3,9 @@ import { AuthenticatedExpressRequest, ExpressRequest, ExpressResponse } from './
 
 export type THandler<Req extends ExpressRequest | AuthenticatedExpressRequest = ExpressRequest> = (
   req: Req,
-  res: ExpressResponse
-) => Promise<ExpressResponse>;
+  res: ExpressResponse,
+) => Promise<void | ExpressResponse>;
 
 export type TMiddlewareHandler<
-  Req extends ExpressRequest | AuthenticatedExpressRequest = ExpressRequest
+  Req extends ExpressRequest | AuthenticatedExpressRequest = ExpressRequest,
 > = (req: Req, res: ExpressResponse, next: NextFunction) => Promise<void | ExpressResponse>;

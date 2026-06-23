@@ -78,4 +78,27 @@ export class ApiInterface {
       credentials: 'include',
     });
   }
+  /**Returns a payment session by its id. */
+  public async getPaymentSession(id: string) {
+    return await fetch(this.withApi('payment-session', id), {
+      credentials: 'include',
+      method: 'GET',
+    });
+  }
+
+  /**Resets the users password. */
+  public async resetPassword(payload: {
+    token?: string;
+    password1?: string;
+    password2?: string;
+    email?: string;
+  }) {
+    return await fetch(
+      this.withApi('auth/reset-password'),
+      this.asJson({
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+    );
+  }
 }

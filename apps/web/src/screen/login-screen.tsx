@@ -6,6 +6,7 @@ import { Button, LoaderButton } from '../components/button';
 import { ErrorMessage, SuccessMessage } from '../components/helper-message';
 import { ArrowLeft, LogIn } from 'lucide-react';
 import { useLogin } from '../hooks/use-login';
+import { Form } from '../components/form';
 
 export function LoginScreen() {
   const navigate = useNavigate();
@@ -16,9 +17,7 @@ export function LoginScreen() {
     <Modal
       title='Kirjaudu Sisään'
       onClose={() => navigate('/')}>
-      <form
-        className='flex flex-col gap-2 w-full'
-        onSubmit={submit}>
+      <Form onSubmit={submit}>
         <EmailInput />
         <PasswordInput placeholder='Anna salasanasi...' />
 
@@ -56,12 +55,19 @@ export function LoginScreen() {
         ) : status === 'success' ? (
           <SuccessMessage>Sisäänkirjautuminen onnistui!</SuccessMessage>
         ) : null}
-        <Link
-          to='/register'
-          className='w-full text-center mt-4'>
-          Eikö sinulla ole tiliä? Luo se tästä.
-        </Link>
-      </form>
+        <div className='flex flex-col gap-2 mt-4'>
+          <Link
+            to='/register'
+            className='w-full text-center link'>
+            Eikö sinulla ole tiliä? Luo se tästä.
+          </Link>
+          <Link
+            to='/reset-password'
+            className='w-full text-center link'>
+            Unohditko salasanasi?
+          </Link>
+        </div>
+      </Form>
     </Modal>
   );
 }

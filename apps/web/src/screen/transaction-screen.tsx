@@ -30,21 +30,18 @@ export function TransactionScreen() {
     );
   };
 
+  const AmountText = () => {
+    const textClassName = useClassName(isReceived ? 'text-green-600' : 'text-red-600');
+
+    const amt = Core.convertCurrencyAmount(transaction?.amount_in_cents || 0);
+    return (
+      <div className={textClassName}>
+        {Core.amountToString(isReceived ? amt : -amt, 'always')} mk
+      </div>
+    );
+  };
+
   const AmountDisplay = () => {
-    const Amount = () => {
-      const textClassName = useClassName(
-        'text-xl flex items-baseline',
-        isReceived ? 'text-green-600' : 'text-red-600',
-      );
-
-      const amt = Core.convertCurrencyAmount(transaction?.amount_in_cents || 0);
-      return (
-        <div className={textClassName}>
-          {Core.amountToString(isReceived ? amt : -amt, 'always')} mk
-        </div>
-      );
-    };
-
     const containerClassName = useClassName(
       'flex gap-4 items-center py-2 px-4 rounded-md border w-full',
       isReceived ? 'border-green-100 bg-green-50' : 'border-red-100 bg-red-50',
@@ -61,7 +58,7 @@ export function TransactionScreen() {
             {isReceived ? transaction?.from_email : transaction?.to_email}
           </span>
 
-          <Amount />
+          <AmountText />
         </div>
       </div>
     );
@@ -90,22 +87,41 @@ export function TransactionScreen() {
     <AppScreen
       title='Tapahtuma'
       onClose={() => navigate('/auth/overview')}>
-      <main className='flex flex-col w-full gap-4 items-center px-4 bg-white flex-1'>
-        <AmountDisplay />
-        <div className='flex flex-col w-full'>
-          <span className='text-xs text-slate-500'>Viesti</span>
-          <span>{transaction?.message || 'Ei viestiä.'}</span>
-        </div>
+      <main className='flex flex-col w-full gap-4 items-center px-4 bg-white flex-1 justify-center'>
+        <Symbol />
+        <table>
+          <thead className='font-semibold text-lg'>Rahasiirto</thead>
+          <tbody className='font-mono'>
+            <tr>
+              <td>Tunnus</td>
+              <td className='text-right text-xs'>{transaction?.id}</td>
+            </tr>
+            <tr className='bg-slate-200'>
+              <td>{isReceived ? 'Lähettäjä' : 'Vastaanottaja'}</td>
+              <td className='text-right'>
+                {isReceived ? transaction.from_email : transaction.to_email}
+              </td>
+            </tr>
+            <tr>
+              <td>Määrä</td>
+              <td className='text-right'>
+                <AmountText />
+              </td>
+            </tr>
 
-        <div className='flex flex-col w-full'>
-          <span className='text-xs text-slate-500'>Päivämäärä</span>
-          <span>{new Date(transaction?.timestamp).toLocaleDateString('fi')}</span>
-        </div>
+            <tr className='bg-slate-200'>
+              <td>Päivämäärä</td>
+              <td className='text-right'>
+                {new Date(transaction?.timestamp).toLocaleDateString('fi')}
+              </td>
+            </tr>
 
-        <div className='flex flex-col w-full'>
-          <span className='text-xs text-slate-500'>Tunnus</span>
-          <span>{transaction?.id}</span>
-        </div>
+            <tr>
+              <td>Viesti</td>
+              <td className='text-right'>{transaction?.message || 'Ei viestiä.'}</td>
+            </tr>
+          </tbody>
+        </table>
 
         <Button
           onClick={copyId}

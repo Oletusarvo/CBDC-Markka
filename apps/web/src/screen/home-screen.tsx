@@ -1,6 +1,15 @@
-import { LogIn, TriangleAlert, User, UserPlus } from 'lucide-react';
+import {
+  ArrowDown,
+  ArrowUp,
+  History,
+  LogIn,
+  QrCode,
+  TriangleAlert,
+  User,
+  UserPlus,
+} from 'lucide-react';
 import { Button } from '../components/button';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CurrencySymbol } from '../components/currency';
 import { useAnimatedNumber } from '../hooks/use-animated-number';
 import { Spinner } from '../components/spinner';
@@ -25,7 +34,7 @@ export function HomeScreen() {
               src='/app-icon.svg'
               className='w-24 h-24 rounded-lg shadow-md shadow-cyan-500'
             />
-            <h1 className='text-4xl font-semibold text-primary'>e-Markka</h1>
+            <h1 className='text-4xl font-semibold text-primary'>e-MRK</h1>
             <p className='text-center'>Suomen markan inspiroima digitaaliraha.</p>
             <WarningMessage>e-Markka ei ole laillinen maksuväline!</WarningMessage>
           </div>
@@ -80,7 +89,7 @@ export function HomeScreen() {
       </section>
 
       <section className='w-full py-16 bg-gray-900 text-white px-4'>
-        <h2 className='font-semibold text-xl mb-4'>Mikä on e-Markka?</h2>
+        <h2 className='font-semibold text-xl mb-4'>Mikä on e-MRK?</h2>
 
         <p className='text-gray-200'>
           <strong>Digitaalinen markka.</strong> Yksinkertainen tapa lähettää ja vastaanottaa rahaa
@@ -108,8 +117,16 @@ export function HomeScreen() {
         </p>
       </section>
 
-      <footer className='flex w-full py-16 px-4 bg-primary text-white'>
-        <CirculationDisplay />
+      <footer className='flex w-full py-16 px-4 bg-primary text-white flex-col'>
+        <div className='flex flex-col items-center'>
+          <span className='text-sm'>Database hosting powered by</span>
+          <Link
+            to='https://neon.com/signup?refcode=K2RWLMYK'
+            className='text-white font-semibold'
+            target='_blank'>
+            Neon Postgres
+          </Link>
+        </div>
       </footer>
     </main>
   );

@@ -12,6 +12,7 @@ export const checkAuth = (preventUnauthorizedAccess: boolean = true) =>
     } else if (token) {
       const payload = verifyJWT(token) as { id: string; username: string; email: string };
       req.session = {
+        token: token,
         user: payload,
       };
     }

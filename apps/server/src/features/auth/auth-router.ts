@@ -10,12 +10,17 @@ import {
   emailSchema,
   loginCredentialsSchema,
   passwordSchema,
+  resetPasswordSchema,
   userSchema,
 } from '@cbdc-markka/schemas';
 import { registerUserWithTokenHandler } from './handlers/register-user-with-token';
 import { createRegistrationTokenHandler } from './handlers/create-registration-token-handler';
 import z from 'zod';
 import { createHandler, createMiddleware } from '../../utils/create-handler';
+import {
+  createPasswordResetEmailHandler,
+  resetPasswordHandler,
+} from './handlers/reset-password-handler';
 
 const router = getRouter();
 
@@ -46,6 +51,19 @@ router.post(
 );
 
 router.post('/login', createBodyParser(loginCredentialsSchema), loginHandler);
+router.post(
+  '/reset-password',
+  createMiddleware(async (req, res, next) => {
+    const token = req.body.token;
+    const schema = token ? resetPasswordSchema : z.object({ email: emailSchema });
+    const parser = createBodyParser(schema);
+    return await parser(req, res, next);
+  }),
+  createHandler(async (req, res) => {
+    const token = req.data.token;
+    return token ? resetPasswordHandler(req, res) : createPasswordResetEmailHandler(req, res);
+  }),
+);
 router.get('/session', checkAuth(), getSessionHandler);
 router.put('/logout', checkAuth(), logoutHandler);
 

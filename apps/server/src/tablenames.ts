@@ -4,4 +4,6 @@ export const tablenames = {
   denomTypes: 'denom_type',
   users: 'user',
   transactions: 'transaction',
+  paymentSessions: 'payment_session',
+  paymentSessionStatus: 'payment_session_status_type',
 };
