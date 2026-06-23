@@ -9,6 +9,10 @@
 
 - Transaction screen appearance.
 
+### Fixed
+
+- Server not starting due to the Core package missing a .js in its import.
+
 ## [7.0.1] - 18-06-2026
 
 ### Fixed
