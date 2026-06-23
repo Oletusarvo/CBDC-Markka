@@ -1,19 +1,16 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Button, LoaderButton } from '../components/button';
-import { Check, CurrencyIcon, Pencil, QrCode, User } from 'lucide-react';
+import { LoaderButton } from '../components/button';
+import { Check, Pencil, QrCode, User } from 'lucide-react';
 import { useState } from 'react';
 import { Input } from '../components/input';
 
-import { ErrorMessage, SuccessMessage } from '../components/helper-message';
+import { ErrorMessage } from '../components/helper-message';
 import { setupContext, useAccount } from '@cbdc-markka/utils-react';
 import QRScanner from '../components/qr-scanner';
-import { AppScreen, DividedAppScreen } from '../components/app-screen';
-import { TabButton } from '../components/tab-button';
-import { appConfig } from '../util/app-config';
-import { CurrencyAmountInput, CurrencySymbol } from '../components/currency';
+import { DividedAppScreen } from '../components/app-screen';
+import { CurrencyAmountInput } from '../components/currency';
 import { Core } from '@cbdc-markka/core';
 import { NavButton } from '../components/overview-bottom-nav';
-import { useSubmit } from '../hooks/use-submit';
 
 const [SendContext, useSendContext] = setupContext<{
   status: string;

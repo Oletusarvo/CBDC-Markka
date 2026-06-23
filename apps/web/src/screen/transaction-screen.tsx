@@ -89,7 +89,7 @@ export function TransactionScreen() {
       onClose={() => navigate('/auth/overview')}>
       <main className='flex flex-col w-full gap-4 items-center px-4 bg-white flex-1 justify-center'>
         <Symbol />
-        <table>
+        <table className='text-sm w-full'>
           <thead className='font-semibold text-lg'>Rahasiirto</thead>
           <tbody className='font-mono'>
             <tr>
