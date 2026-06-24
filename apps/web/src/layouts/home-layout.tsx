@@ -1,6 +1,6 @@
 import { Outlet, Route } from 'react-router-dom';
 import { LoginScreen } from '../screen/login-screen';
-import { RegisterScreen } from '../screen/register-user-screen';
+import { RegisterUserScreen } from '../screen/register-user-screen';
 import { HomeScreen } from '../screen/home-screen';
 
 export function HomeLayout() {
@@ -19,7 +19,7 @@ export function HomeLayout() {
       />
       <Route
         path='register'
-        element={<RegisterScreen />}
+        element={<RegisterUserScreen />}
       />
     </Route>
   );

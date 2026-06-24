@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.alteTable('user', tbl => {
+  return knex.schema.alterTable('user', tbl => {
     tbl.string('username');
   });
 };
