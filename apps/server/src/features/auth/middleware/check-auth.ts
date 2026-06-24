@@ -10,7 +10,12 @@ export const checkAuth = (preventUnauthorizedAccess: boolean = true) =>
     if (!token && preventUnauthorizedAccess) {
       return res.status(401).end();
     } else if (token) {
-      const payload = verifyJWT(token) as { id: string; username: string; email: string };
+      const payload = verifyJWT(token) as {
+        id: string;
+        username: string;
+        email: string;
+        status: string;
+      };
       req.session = {
         token: token,
         user: payload,

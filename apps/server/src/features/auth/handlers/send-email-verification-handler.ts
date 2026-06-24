@@ -6,16 +6,13 @@ import { loadEnvVariable } from '../../../utils/load-env-variable';
 import { sendEmail } from '../../../utils/send-email';
 import { createEmailHTML } from '../util/create-email-html';
 
-export const createRegistrationTokenHandler = createHandler(async (req, res) => {
-  const { email } = req.data;
-  const user = await db('user').where({ email }).first();
-  if (user) {
-    return res.status(409).json({
-      error: 'auth:email-taken',
-    });
-  }
+export const sendEmailVerificationHandler = createHandler(async (req, res) => {
+  const { id } = req.data;
+  console.log(id);
+  const user = await db('user').where({ id }).first();
+  console.log(user);
   const token = createJWT(
-    { email },
+    { id: user.id },
     {
       expiresIn: '24h',
     },
@@ -30,7 +27,7 @@ export const createRegistrationTokenHandler = createHandler(async (req, res) => 
 
   const emailRes = await sendEmail({
     subject: 'Rekisteröityminen e-Markan käyttäjäksi',
-    to: email,
+    to: user.email,
     html,
   });
 

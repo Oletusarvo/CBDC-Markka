@@ -8,13 +8,12 @@ import { getSessionHandler } from './handlers/get-session-handler';
 import { logoutHandler } from './handlers/logout-handler';
 import {
   emailSchema,
-  loginCredentialsSchema,
+  loginUserCredentialsSchema,
   passwordSchema,
+  registerUserCredentialsSchema,
   resetPasswordSchema,
-  userSchema,
 } from '@cbdc-markka/schemas';
-import { registerUserWithTokenHandler } from './handlers/register-user-with-token';
-import { createRegistrationTokenHandler } from './handlers/create-registration-token-handler';
+import { sendEmailVerificationHandler } from './handlers/send-email-verification-handler';
 import z from 'zod';
 import { createHandler, createMiddleware } from '../../utils/create-handler';
 import {
@@ -24,33 +23,8 @@ import {
 
 const router = getRouter();
 
-router.post(
-  '/register',
-  createMiddleware(async (req, res, next) => {
-    const token = req.body.token;
-    const schema = token
-      ? z.object({
-          token: z.jwt(),
-          password1: passwordSchema,
-          password2: passwordSchema,
-        })
-      : z.object({
-          email: emailSchema,
-        });
-    const parser = createBodyParser(schema);
-    return await parser(req, res, next);
-  }),
-  createHandler(async (req, res) => {
-    const token = req.data.token;
-    return token
-      ? //User registers with token, proceed to create data.
-        await registerUserWithTokenHandler(req, res)
-      : //User is sending their email address only; send them a registration token.
-        await createRegistrationTokenHandler(req, res);
-  }),
-);
-
-router.post('/login', createBodyParser(loginCredentialsSchema), loginHandler);
+router.post('/register', createBodyParser(registerUserCredentialsSchema), registerUserHandler);
+router.post('/login', createBodyParser(loginUserCredentialsSchema), loginHandler);
 router.post(
   '/reset-password',
   createMiddleware(async (req, res, next) => {
@@ -66,5 +40,10 @@ router.post(
 );
 router.get('/session', checkAuth(), getSessionHandler);
 router.put('/logout', checkAuth(), logoutHandler);
+router.post(
+  '/send-email-verification',
+  createBodyParser(z.object({ id: z.uuid() })),
+  sendEmailVerificationHandler,
+);
 
 export { router as authRouter };
