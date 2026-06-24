@@ -9,6 +9,7 @@ export const verifyEmailHandler = createHandler(async (req, res) => {
   const { token } = req.data;
   const { id } = verifyJWT(token) as { id: string };
   const trx = await db.transaction();
+
   try {
     //Update the state of the pending user to active.
     const [updatedUser] = await trx(tablenames.users)
@@ -49,7 +50,6 @@ export const verifyEmailHandler = createHandler(async (req, res) => {
       user_id: updatedUser.id,
       balance_in_cents: supplyRowsAffected == 1 ? mint : 0,
     });
-
     await trx.commit();
     return res.status(200).end();
   } catch (err: any) {

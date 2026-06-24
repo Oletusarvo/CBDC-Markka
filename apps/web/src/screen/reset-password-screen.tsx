@@ -6,14 +6,14 @@ import { Button, LoaderButton } from '../components/button';
 import { useSubmit } from '../hooks/use-submit';
 import { useResetPassword } from '../hooks/use-reset-password';
 import { setupContext } from '@cbdc-markka/utils-react';
+import { ErrorMessage, SuccessMessage } from '../components/helper-message';
 
 export function ResetPasswordScreen() {
   const navigate = useNavigate();
-  const { submit, status, loading, token } = useResetPassword();
+  const { submit, status, loading } = useResetPassword();
   const success = status === 'success';
-  const step = token ? 1 : 0;
   const onClose = () => {
-    step === 0 ? navigate(-1) : navigate('/');
+    navigate('/');
   };
 
   return (
@@ -21,7 +21,15 @@ export function ResetPasswordScreen() {
       title='Vaihda salasanasi'
       onClose={onClose}>
       <Form onSubmit={submit}>
-        {step === 0 ? <ResetPasswordStepOne /> : <ResetPasswordStepTwo />}
+        <PasswordInput
+          placeholder='Anna uusi salasana...'
+          fullWidth
+        />
+        <PasswordInput
+          fullWidth
+          variant='secondary'
+          placeholder='Toista uusi salasana...'
+        />
 
         <div className='flex gap-2 w-full'>
           <Button
@@ -42,19 +50,13 @@ export function ResetPasswordScreen() {
             Lähetä
           </LoaderButton>
         </div>
+        {status !== 'success' && status !== 'loading' && status !== 'idle' ? (
+          <ErrorMessage>Jotain meni pieleen!</ErrorMessage>
+        ) : status === 'success' ? (
+          <SuccessMessage>Salasanan vaihto onnistui!</SuccessMessage>
+        ) : null}
       </Form>
     </Modal>
-  );
-}
-
-function ResetPasswordStepOne() {
-  return (
-    <>
-      <EmailInput />
-      <span className='text-slate-400 text-sm'>
-        Lähetämme sähköpostiisi linkin jonka kautta pääset luomaan uuden salasanan.
-      </span>
-    </>
   );
 }
 

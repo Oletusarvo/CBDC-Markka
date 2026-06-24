@@ -1,7 +1,9 @@
 import { loadEnvVariable } from './load-env-variable';
 
 require('dotenv').config();
-/**Sends an email using the configured transport-object in the nodemailer.config file.*/
+/**Sends an email using the configured transport-object in the nodemailer.config file.
+ * @deprecated
+ */
 export async function sendEmail({
   to,
   subject,

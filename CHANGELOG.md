@@ -6,6 +6,7 @@
 - Deposit sessions.
 - Email veification screen.
 - Pending user screen.
+- Added the useSendPasswordResetEmail-hook.
 
 ### Changed
 

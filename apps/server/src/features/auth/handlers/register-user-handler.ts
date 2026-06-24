@@ -6,12 +6,15 @@ import { db } from '../../../db-config';
 import { hashPassword } from '../../../utils/password';
 import { tablenames } from '../../../tablenames';
 import { registerUserCredentialsSchema } from '@cbdc-markka/schemas';
+import { tokenService } from '../../../services/token-service';
+import { emailService } from '../../../services/email-service';
 
 export const registerUserHandler = createHandler(
   async (req: ExpressRequest<z.infer<typeof registerUserCredentialsSchema>>, res) => {
     const credentials = req.data;
+    const trx = await db.transaction();
 
-    const [user] = await db(tablenames.users)
+    const [user] = await trx(tablenames.users)
       .insert({
         email: credentials.email,
         password: await hashPassword(credentials.password),
@@ -21,18 +24,18 @@ export const registerUserHandler = createHandler(
           .where({ label: 'pending' })
           .limit(1),
       })
-      .returning('id');
+      .returning(['id', 'email']);
 
     //Send verification email.
-    const PORT = process.env.PORT;
-    fetch(`http://localhost:${PORT}/api/auth/send-email-verification`, {
-      method: 'POST',
-      body: JSON.stringify({ id: user.id }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
+    const token = tokenService.createEmailVerificationToken(user.id);
+    const emailRes = await emailService.sendEmailVerification(user.email, token);
+    if (!emailRes.ok) {
+      await trx.rollback();
+      return res.status(emailRes.status).json({
+        error: 'auth:send-email-failed',
+      });
+    }
+    await trx.commit();
     return res.status(200).end();
   },
   (err, res) => {

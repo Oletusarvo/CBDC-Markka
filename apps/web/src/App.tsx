@@ -20,6 +20,7 @@ import { PaymentSessionScreen } from './screen/payment-session-screen';
 import { ResetPasswordScreen } from './screen/reset-password-screen';
 import { PendingUserScreen } from './screen/pending-user-screen';
 import { VerifyEmailScreen } from './screen/verify-email-screen';
+import { ForgotPasswordScreen } from './screen/forgot-password-screen';
 
 const RouterComponent = BrowserRouter;
 
@@ -52,6 +53,10 @@ export function App() {
                     <Route
                       path='reset-password'
                       element={<ResetPasswordScreen />}
+                    />
+                    <Route
+                      path='forgot-password'
+                      element={<ForgotPasswordScreen />}
                     />
                   </Route>
                   <Route

@@ -42,7 +42,7 @@ export function RegisterUserScreen() {
           <SuccessMessage>Linkki lähetetty!</SuccessMessage>
         ) : status === 'auth:password-mismatch' ? (
           <ErrorMessage>Salasanat eivät täsmää!</ErrorMessage>
-        ) : status === 'error' ? (
+        ) : status !== 'idle' && status !== 'loading' ? (
           <ErrorMessage>Jotain meni pieleen!</ErrorMessage>
         ) : null}
         <Link

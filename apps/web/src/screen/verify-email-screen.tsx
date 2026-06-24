@@ -4,7 +4,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useStatus } from '../hooks/use-status';
 import { useEffect, useRef } from 'react';
 import { NoticeScreen } from '../components/notice-screen';
-import { SpinnerTimer } from '../components/spinner';
+import { Spinner, SpinnerTimer } from '../components/spinner';
+import { Button } from '../components/button';
 
 export function VerifyEmailScreen() {
   const navigate = useNavigate();
@@ -16,32 +17,51 @@ export function VerifyEmailScreen() {
   const handleVerification = async () => {
     try {
       setStatus('loading');
+
       const res = await apiInterface.verifyUserById({ token });
       if (!res.ok) {
+        if (res.status === 409) {
+          navigate('/');
+        }
         setStatus('error');
       } else {
         setStatus('success');
       }
-    } catch (err: any) {}
+    } catch (err: any) {
+      console.log(err.message);
+    }
   };
 
   useEffect(() => {
+    handleVerification();
+  }, []);
+
+  useEffect(() => {
     let t = null;
-    handleVerification().then(() => {
+    if (status === 'success') {
       t = setTimeout(() => {
         navigate('/auth/overview');
       });
-    });
+    }
     return () => {
       clearTimeout(t);
     };
-  }, []);
+  }, [status]);
 
   return (
     <NoticeScreen
       title='Vahvistetaan sähköpostiosoitetta'
       bodyText='Ole hyvä ja odota kun vahvistamme sähköpostiosoitteesi...'>
-      <SpinnerTimer />
+      {status === 'loading' ? (
+        <Spinner />
+      ) : status !== 'idle' && status !== 'loading' && status !== 'success' ? (
+        <Button
+          onClick={handleVerification}
+          type='button'
+          rounded>
+          Yritä uudelleen
+        </Button>
+      ) : null}
     </NoticeScreen>
   );
 }

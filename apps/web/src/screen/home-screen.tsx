@@ -25,7 +25,7 @@ export function HomeScreen() {
     <main className='flex flex-col flex-1 antialiased overflow-y-scroll'>
       <section className='w-full px-4 py-32 flex items-center relative flex-1'>
         <div
-          className='absolute top-0 left-0 w-full h-full opacity-15 grayscale-100'
+          className='absolute top-0 left-0 w-full h-full opacity-10 grayscale-100'
           id='index-image'
         />
         <div className='flex flex-col items-center w-full z-10'>
@@ -93,9 +93,9 @@ export function HomeScreen() {
 
         <p className='text-gray-200'>
           <strong>Digitaalinen markka.</strong> Yksinkertainen tapa lähettää ja vastaanottaa rahaa
-          verkossa. Valuuttamme perustuu Suomen markkaan, tuttuun ja selkeään rahayksikköön.
-          Maksaminen on nopeaa: skannaa QR-koodi, syötä summa ja vahvista maksu. Kaikki maksut
-          näkyvät selkeästä tapahtumahistoriasta.
+          verkossa. Valuuttamme on nimetty Suomen markkan mukaan. Maksaminen on nopeaa: skannaa
+          QR-koodi, syötä summa ja vahvista maksu. Kaikki maksut näkyvät selkeästä
+          tapahtumahistoriasta.
           <br />
           <br /> Järjestelmä on <strong>keskitetty</strong>, jotta maksut pysyvät nopeina ja
           yksinkertaisina käyttää.
@@ -108,12 +108,7 @@ export function HomeScreen() {
             säilyttämään ostovoiman – ja pitkällä aikavälillä jopa vahvistamaan sitä.
           </strong>{' '}
           Digitaalisia markkoja tulee olemaan kierrossa <strong>21 trilioonaa</strong>, eikä määrää
-          kasvateta tämän rajan yli. Raja on sama kuin Bitcoinin 21 miljoonan raja, kun otetaan
-          huomioon e-markan jako 100 (sata) penniin.
-          <br />
-          <br />
-          Projekti on kokeilu, joka tuo markan digitaaliseen aikaan ja tutkii, millainen voisi olla
-          yksinkertainen suomalainen digitaalinen valuutta.
+          kasvateta tämän rajan yli.
         </p>
       </section>
 

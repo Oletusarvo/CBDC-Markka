@@ -1,20 +1,19 @@
 import { useApi } from '@cbdc-markka/utils-react';
 import { useSubmit } from './use-submit';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export function useResetPassword() {
+  const navigate = useNavigate();
   const { apiInterface } = useApi();
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
   const { submit, status, loading } = useSubmit({
     fetchFn: async e => {
       const payload = Object.fromEntries(new FormData(e.currentTarget)) as {
-        email?: string;
-        password1?: string;
-        password2?: string;
-        token?: string;
+        password: string;
+        password2: string;
       };
-      console.log(payload);
+
       const res = await apiInterface.resetPassword({
         ...payload,
         token,
@@ -28,6 +27,7 @@ export function useResetPassword() {
         success: true,
       };
     },
+    onSuccess: () => navigate('/login'),
   });
-  return { submit, status, loading, token };
+  return { submit, status, loading };
 }

@@ -62,7 +62,7 @@ export function LoginScreen() {
             Eikö sinulla ole tiliä? Luo se tästä.
           </Link>
           <Link
-            to='/reset-password'
+            to='/forgot-password'
             className='w-full text-center link'>
             Unohditko salasanasi?
           </Link>
