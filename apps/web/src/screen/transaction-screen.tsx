@@ -87,13 +87,13 @@ export function TransactionScreen() {
     <AppScreen
       title='Tapahtuma'
       onClose={() => navigate('/auth/overview')}>
-      <main className='flex flex-col w-full gap-4 items-center px-4 bg-white flex-1 justify-center'>
+      <main className='flex flex-col w-full gap-8 items-center px-4 bg-white flex-1 justify-center'>
         <Symbol />
+        <h2 className='font-semibold text-lg'>Rahansiirto</h2>
         <table className='text-sm w-full'>
-          <thead className='font-semibold text-lg'>Rahasiirto</thead>
           <tbody className='font-mono'>
             <tr>
-              <td>Tunnus</td>
+              <td className='align-text-top'>Tunnus</td>
               <td className='text-right text-xs'>{transaction?.id}</td>
             </tr>
             <tr className='bg-slate-200'>
@@ -117,7 +117,7 @@ export function TransactionScreen() {
             </tr>
 
             <tr>
-              <td>Viesti</td>
+              <td className='align-text-top'>Viesti</td>
               <td className='text-right'>{transaction?.message || 'Ei viestiä.'}</td>
             </tr>
           </tbody>

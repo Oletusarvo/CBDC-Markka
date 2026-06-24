@@ -1,30 +1,25 @@
-import { BrowserRouter, HashRouter, Outlet, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 import { AuthLayout } from './layouts/auth-layout';
 import { Suspense } from 'react';
 import { ServiceWorkerLoader } from './components/service-worker-loader';
 import { SessionLoadingScreen } from './screen/session-loading-screen';
-import {
-  AccountProvider,
-  ApiProvider,
-  AuthProvider,
-  QueryProvider,
-} from '@cbdc-markka/utils-react';
+import { ApiProvider, AuthProvider, QueryProvider } from '@cbdc-markka/utils-react';
 import { apiInterface } from './util/api-interface';
 import { Toaster } from 'react-hot-toast';
 import { WindowResizeManager } from './managers/window-resize-manager';
-import { HomeLayout } from './layouts/home-layout';
 import { HomeScreen } from './screen/home-screen';
 import { LoginScreen } from './screen/login-screen';
-import { RegisterScreen } from './screen/register-screen';
+import { RegisterUserScreen } from './screen/register-user-screen';
 import { OverviewBottomNav } from './components/overview-bottom-nav';
 import { OverviewScreen } from './screen/overview-screen';
 import { SendScreen } from './screen/send-screen';
 import { ReceiveScreen } from './screen/receive-screen';
 import { LogoutScreen } from './screen/logout-screen';
 import { TransactionScreen } from './screen/transaction-screen';
-import { SettingsScreen } from './screen/settings-screen';
 import { PaymentSessionScreen } from './screen/payment-session-screen';
 import { ResetPasswordScreen } from './screen/reset-password-screen';
+import { PendingUserScreen } from './screen/pending-user-screen';
+import { VerifyEmailScreen } from './screen/verify-email-screen';
 
 const RouterComponent = BrowserRouter;
 
@@ -52,7 +47,7 @@ export function App() {
                     />
                     <Route
                       path='register'
-                      element={<RegisterScreen />}
+                      element={<RegisterUserScreen />}
                     />
                     <Route
                       path='reset-password'
@@ -93,11 +88,20 @@ export function App() {
                       path='logout'
                       element={<LogoutScreen />}
                     />
+
                     <Route
                       path='payment-session/:id'
                       element={<PaymentSessionScreen />}
                     />
                   </Route>
+                  <Route
+                    path='/pending-user'
+                    element={<PendingUserScreen />}
+                  />
+                  <Route
+                    path='/verify-email'
+                    element={<VerifyEmailScreen />}
+                  />
                 </Routes>
               </AuthProvider>
             </Suspense>

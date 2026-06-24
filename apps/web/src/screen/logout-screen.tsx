@@ -1,34 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../components/modal';
 import { Button, LoaderButton } from '../components/button';
-import { useState } from 'react';
-import { useSession } from '@cbdc-markka/utils-react';
-import { ArrowLeft, Check, LogOut } from 'lucide-react';
+import { ArrowLeft, LogOut } from 'lucide-react';
 import { ErrorMessage } from '../components/helper-message';
+import { useLogout } from '../hooks/use-logout';
 
 export function LogoutScreen() {
   const navigate = useNavigate();
-  const [status, setStatus] = useState('idle');
-  const { signout } = useSession();
-  const pending = status === 'loading';
-
-  const handleSignout = async () => {
-    setStatus('loading');
-    try {
-      const res = await signout();
-      setTimeout(() => {
-        if (res.status === 200) {
-          navigate('/');
-        }
-        setStatus('success');
-      }, 500);
-    } catch (err) {
-      console.log(err.message);
-      setStatus('error');
-    } finally {
-      setStatus(prev => (prev === 'loading' ? 'idle' : prev));
-    }
-  };
+  const { handleSignout, status, pending } = useLogout();
 
   return (
     <Modal

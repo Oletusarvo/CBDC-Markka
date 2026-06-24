@@ -3,7 +3,7 @@ import { SessionLoadingScreen } from '../screen/session-loading-screen';
 import { AccountProvider, useSession } from '@cbdc-markka/utils-react';
 
 export function AuthLayout() {
-  const { status } = useSession();
+  const { status, session } = useSession();
   const location = useLocation();
   //const status: any = 'loading';
 
@@ -12,6 +12,8 @@ export function AuthLayout() {
     return <Navigate to={url} />;
   } else if (status === 'loading') {
     return <SessionLoadingScreen />;
+  } else if (session.user.status === 'pending') {
+    return <Navigate to='/pending-user' />;
   }
 
   return (

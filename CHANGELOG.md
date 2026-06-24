@@ -1,17 +1,24 @@
-## [7.1.0] - 23-06-2026
+## [8.0.0-alpha] - 24-06-2026
 
 ### Added
 
 - Password reset feature.
 - Deposit sessions.
+- Email veification screen.
+- Pending user screen.
 
 ### Changed
 
 - Transaction screen appearance.
+- User registration method.
 
 ### Fixed
 
 - Server not starting due to the Core package missing a .js in its import.
+
+### Notes
+
+- Renamed the previous 7.1.0 version on this changelog to 8.0.0-alpha.
 
 ## [7.0.1] - 18-06-2026
 

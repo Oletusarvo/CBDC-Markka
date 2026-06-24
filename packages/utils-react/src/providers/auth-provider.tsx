@@ -7,6 +7,7 @@ const [AuthContext, useSession] = setupContext<{
     user: {
       id: string;
       email: string;
+      status: string;
     };
   };
   signin: (credentials: any) => Promise<Response>;

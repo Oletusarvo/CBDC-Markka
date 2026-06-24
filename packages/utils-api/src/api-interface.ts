@@ -48,7 +48,7 @@ export class ApiInterface {
   }
 
   /**Registers a new user. */
-  public async registerUser(credentials: any) {
+  public async registerUser(credentials: { email: string; password: string; password2: string }) {
     return await fetch(
       this.withApi('auth/register'),
       this.asJson({
@@ -57,6 +57,14 @@ export class ApiInterface {
         credentials: 'include',
       }),
     );
+  }
+
+  /**Verifies a user by id. */
+  public async verifyUserById(credentials: { token: string }) {
+    return await fetch(this.withApi('auth/verify-email'), {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    });
   }
 
   /**Logs a user in. */
