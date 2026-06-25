@@ -36,7 +36,7 @@ export function HomeScreen() {
             />
             <h1 className='text-4xl font-semibold text-primary'>e-MRK</h1>
             <p className='text-center'>Suomen markan inspiroima digitaaliraha.</p>
-            <WarningMessage>e-Markka ei ole laillinen maksuväline!</WarningMessage>
+            <WarningMessage>e-MRK ei ole laillinen maksuväline!</WarningMessage>
           </div>
 
           <div className='flex w-full gap-2 mt-10 xs:flex-col sm:flex-row'>

@@ -16,6 +16,7 @@
 ### Fixed
 
 - Server not starting due to the Core package missing a .js in its import.
+- Redirection to the login screen directly after logging out.
 
 ### Notes
 

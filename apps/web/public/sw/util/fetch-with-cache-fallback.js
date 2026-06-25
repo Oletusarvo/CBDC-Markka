@@ -18,6 +18,7 @@ export async function fetchWithCacheFallback(req, timeout = 5000) {
   });
 
   try {
+    //In case nothing is in the cache, fetch via the network.
     if (!cachedResponse) {
       return await networkPromise;
     }

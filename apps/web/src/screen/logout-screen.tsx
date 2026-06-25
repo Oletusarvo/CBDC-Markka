@@ -4,9 +4,11 @@ import { Button, LoaderButton } from '../components/button';
 import { ArrowLeft, LogOut } from 'lucide-react';
 import { ErrorMessage } from '../components/helper-message';
 import { useLogout } from '../hooks/use-logout';
+import { useSession } from '@cbdc-markka/utils-react';
 
 export function LogoutScreen() {
   const navigate = useNavigate();
+  const { session } = useSession();
   const { handleSignout, status, pending } = useLogout();
 
   return (
