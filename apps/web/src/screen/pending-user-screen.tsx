@@ -4,9 +4,24 @@ import { Button, LoaderButton } from '../components/button';
 import { useNavigate } from 'react-router-dom';
 import { useLogout } from '../hooks/use-logout';
 import { NoticeScreen } from '../components/notice-screen';
+import { useSession } from '@cbdc-markka/utils-react';
 
 export function PendingUserScreen() {
   const { handleSignout, status, pending } = useLogout();
+  const { session } = useSession();
+  const navigate = useNavigate();
+
+  const abortButton = (
+    <LoaderButton
+      loading={pending}
+      disabled={pending || status === 'success'}
+      onClick={session ? handleSignout : () => navigate(-1)}
+      rounded
+      variant='ghost'>
+      {session ? 'Kirjaudu Ulos' : 'Peruuta'}
+    </LoaderButton>
+  );
+
   return (
     <NoticeScreen
       title='Vahvista sähköpostiosoitteesi'
@@ -23,14 +38,7 @@ export function PendingUserScreen() {
             shadow>
             Lähetä Vahvistuslinkki
           </LoaderButton>
-          <LoaderButton
-            loading={pending}
-            disabled={pending || status === 'success'}
-            onClick={handleSignout}
-            rounded
-            variant='ghost'>
-            Kirjaudu Ulos
-          </LoaderButton>
+          {abortButton}
         </div>
       }></NoticeScreen>
   );
