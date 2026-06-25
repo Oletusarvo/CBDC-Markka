@@ -7,6 +7,7 @@
 - Email veification screen.
 - Pending user screen.
 - Added the useSendPasswordResetEmail-hook.
+- Global rate limiting on the server.
 
 ### Changed
 

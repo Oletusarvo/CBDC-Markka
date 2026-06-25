@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { transactionsRouter } from './src/features/transactions/transactions-router';
 import { accountsRouter } from './src/features/accounts/accounts-router';
 import { currenciesRouter } from './src/features/currencies/currencies-router';
+import rateLimit from 'express-rate-limit';
 
 const app = express();
 const allowedOrigins = [
@@ -17,6 +18,12 @@ const allowedOrigins = [
   'capacitor://localhost',
   'https://cbdc-markka.onrender.com',
 ];
+const limiter = rateLimit({
+  limit: 100,
+  windowMs: 1000 * 15 * 60,
+});
+
+app.use(limiter);
 app.use(cookieParser());
 app.use(
   cors({
