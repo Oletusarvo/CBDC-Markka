@@ -90,8 +90,8 @@ export function TransactionScreen() {
       <main className='flex flex-col w-full gap-4 items-center px-4 bg-white flex-1 justify-center'>
         <Symbol />
         <h2 className='font-semibold text-lg'>Rahansiirto</h2>
-        <div className='flex flex-col w-full py-1'>
-          <div className='flex flex-col'>
+        <div className='flex flex-col w-full'>
+          <div className='flex flex-col py-1'>
             <span className='font-semibold text-sm'>Rahasiirron Tunnus</span>
             <span>{transaction?.id}</span>
           </div>
@@ -101,11 +101,15 @@ export function TransactionScreen() {
             </span>
             <span> {isReceived ? transaction.from_email : transaction.to_email}</span>
           </div>
+          <div className='flex flex-col py-1'>
+            <span className='font-semibold text-sm'>Viesti</span>
+            <span> {transaction?.message || 'Ei viestiä.'}</span>
+          </div>
         </div>
         <div className='w-full border-b border-dashed border-gray-500' />
         <table className='w-full'>
           <tbody className='font-mono'>
-            <tr>
+            <tr className='px-2 py-1'>
               <td>Määrä</td>
               <td className='text-right'>
                 <AmountText />
@@ -117,11 +121,6 @@ export function TransactionScreen() {
               <td className='text-right'>
                 {new Date(transaction?.timestamp).toLocaleDateString('fi')}
               </td>
-            </tr>
-
-            <tr>
-              <td className='align-text-top'>Viesti</td>
-              <td className='text-right'>{transaction?.message || 'Ei viestiä.'}</td>
             </tr>
           </tbody>
         </table>
