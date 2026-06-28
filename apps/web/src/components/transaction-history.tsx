@@ -88,7 +88,7 @@ function Transaction({ data }: { data: TTransaction }) {
         {received ? <ArrowDown className='text-green-600' /> : <ArrowUp className='text-red-600' />}
         <div className='flex flex-col'>
           <span className='text-xs'>{new Date(data.timestamp).toLocaleDateString('fi')}</span>
-          <span className='text-xs text-slate-500'>
+          <span className='text-xs text-slate-500 text-ellipsis overflow-hidden max-w-[100px]'>
             {received ? data.from_email : data.to_email}
           </span>
         </div>
