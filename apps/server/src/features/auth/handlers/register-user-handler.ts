@@ -3,28 +3,17 @@ import { ExpressRequest } from '../../../types/express';
 
 import { createHandler } from '../../../utils/create-handler';
 import { db } from '../../../db-config';
-import { hashPassword } from '../../../utils/password';
-import { tablenames } from '../../../tablenames';
 import { registerUserCredentialsSchema } from '@cbdc-markka/schemas';
 import { tokenService } from '../../../services/token-service';
 import { emailService } from '../../../services/email-service';
+import { userService } from '../../../services/user-service';
 
 export const registerUserHandler = createHandler(
   async (req: ExpressRequest<z.infer<typeof registerUserCredentialsSchema>>, res) => {
     const credentials = req.data;
     const trx = await db.transaction();
 
-    const [user] = await trx(tablenames.users)
-      .insert({
-        email: credentials.email,
-        password: await hashPassword(credentials.password),
-        user_status_id: db
-          .select('id')
-          .from('user_status_type')
-          .where({ label: 'pending' })
-          .limit(1),
-      })
-      .returning(['id', 'email']);
+    const [user] = await userService.create(credentials, trx);
 
     //Send verification email.
     const token = tokenService.createEmailVerificationToken(user.id);

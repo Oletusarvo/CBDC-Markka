@@ -3,6 +3,7 @@ import { db } from '../../../db-config';
 import { tablenames } from '../../../tablenames';
 import { createHandler } from '../../../utils/create-handler';
 import { verifyJWT } from '../../../utils/jwt';
+import { mintingService } from '../../../services/minting-service';
 
 /**Flips the status of a user to active if they are pending, and creates an account for them. */
 export const verifyEmailHandler = createHandler(async (req, res) => {
@@ -39,17 +40,13 @@ export const verifyEmailHandler = createHandler(async (req, res) => {
     }
 
     //Create an account for the activated user.
-    const mint = Core.COIN * 20;
-    const supplyRowsAffected = await trx('supply')
-      .where('unreleased_supply', '>=', mint)
-      .decrement('unreleased_supply', mint)
-      .forUpdate()
-      .limit(1);
+    const mint = await mintingService.mint(Core.COIN * 20, trx);
 
     await trx(tablenames.accounts).insert({
       user_id: updatedUser.id,
-      balance_in_cents: supplyRowsAffected == 1 ? mint : 0,
+      balance_in_cents: mint,
     });
+
     await trx.commit();
     return res.status(200).end();
   } catch (err: any) {

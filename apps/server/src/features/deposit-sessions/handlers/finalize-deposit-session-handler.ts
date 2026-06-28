@@ -1,8 +1,8 @@
 import { db } from '../../../db-config';
+import { transactionService } from '../../../services/transaction-service';
 import { tablenames } from '../../../tablenames';
 import { AuthenticatedExpressRequest } from '../../../types/express';
 import { createHandler } from '../../../utils/create-handler';
-import { createTransaction } from '../../transactions/handlers/create-transaction';
 
 export const finalizePaymentSessionHandler = createHandler(
   async (req: AuthenticatedExpressRequest, res) => {
@@ -13,6 +13,7 @@ export const finalizePaymentSessionHandler = createHandler(
         id: sessionId,
       })
       .first();
+
     if (!paymentSession) {
       return res.status(404).json({
         error: 'deposit-session:not-found',
@@ -23,18 +24,24 @@ export const finalizePaymentSessionHandler = createHandler(
       to: paymentSession.to,
       amount_in_cents: paymentSession.amount_in_cents,
       nonce: req.data.nonce,
+      message: paymentSession.message,
     };
 
-    const transactionRes = await fetch('/auth/transact', {
-      method: 'POST',
-      body: JSON.stringify(transaction),
-      headers: {
-        Authorization: session.token,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!transactionRes.ok) {
+    try {
+      await db.transaction(async trx => {
+        await transactionService.transact(transaction, trx);
+        //Mark the deposit session as successful.
+        await trx(tablenames.paymentSessions)
+          .where({ id: paymentSession.id })
+          .update({
+            deposit_status_id: db
+              .select('id')
+              .from(tablenames.paymentSessionStatus)
+              .where({ label: 'success' })
+              .limit(1),
+          });
+      });
+    } catch (err: any) {
       //Mark the deposit session as failed.
       await db(tablenames.paymentSessions)
         .where({ id: paymentSession.id })
@@ -45,21 +52,10 @@ export const finalizePaymentSessionHandler = createHandler(
             .where({ label: 'failed' })
             .limit(1),
         });
-      return res.status(transactionRes.status).json({
-        error: await transactionRes.json(),
+      return res.status(409).json({
+        error: 'payment-session:payment-failed',
       });
     }
-
-    //Mark the deposit session as successful.
-    await db(tablenames.paymentSessions)
-      .where({ id: paymentSession.id })
-      .update({
-        deposit_status_id: db
-          .select('id')
-          .from(tablenames.paymentSessionStatus)
-          .where({ label: 'success' })
-          .limit(1),
-      });
 
     //Call the webhook.
     const webhookBody = {
@@ -67,6 +63,7 @@ export const finalizePaymentSessionHandler = createHandler(
       depositId: paymentSession.id,
       amountInCents: paymentSession.amount_in_cents,
     };
+
     //Fire and forget.
     fetch(paymentSession.callback_url, {
       method: 'POST',

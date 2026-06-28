@@ -17,9 +17,11 @@ import z from 'zod';
 import { resetPasswordHandler } from './handlers/reset-password-handler';
 import { sendPasswordResetEmailHandler } from './handlers/send-password-reset-email-handler';
 import { verifyEmailHandler } from './handlers/verify-email-handler';
+import { checkUserByIdHandler } from './handlers/check-user-by-id-handler';
 
 const router = getRouter();
 
+router.get('/users', checkAuth(), checkUserByIdHandler);
 router.post('/register', createBodyParser(registerUserCredentialsSchema), registerUserHandler);
 router.post('/login', createBodyParser(loginUserCredentialsSchema), loginHandler);
 router.post(

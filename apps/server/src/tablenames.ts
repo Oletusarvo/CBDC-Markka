@@ -6,4 +6,5 @@ export const tablenames = {
   transactions: 'transaction',
   paymentSessions: 'payment_session',
   paymentSessionStatus: 'payment_session_status_type',
+  authCodes: 'auth_code',
 };

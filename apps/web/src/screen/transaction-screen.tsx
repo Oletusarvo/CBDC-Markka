@@ -87,21 +87,24 @@ export function TransactionScreen() {
     <AppScreen
       title='Tapahtuma'
       onClose={() => navigate('/auth/overview')}>
-      <main className='flex flex-col w-full gap-8 items-center px-4 bg-white flex-1 justify-center'>
+      <main className='flex flex-col w-full gap-4 items-center px-4 bg-white flex-1 justify-center'>
         <Symbol />
         <h2 className='font-semibold text-lg'>Rahansiirto</h2>
-        <table className='text-sm w-full'>
+        <div className='flex flex-col w-full py-1'>
+          <div className='flex flex-col'>
+            <span className='font-semibold text-sm'>Rahasiirron Tunnus</span>
+            <span>{transaction?.id}</span>
+          </div>
+          <div className='flex flex-col py-1'>
+            <span className='font-semibold text-sm'>
+              {isReceived ? 'Lähettäjä' : 'Vastaanottaja'}
+            </span>
+            <span> {isReceived ? transaction.from_email : transaction.to_email}</span>
+          </div>
+        </div>
+        <div className='w-full border-b border-dashed border-gray-500' />
+        <table className='w-full'>
           <tbody className='font-mono'>
-            <tr>
-              <td className='align-text-top'>Tunnus</td>
-              <td className='text-right text-xs'>{transaction?.id}</td>
-            </tr>
-            <tr className='bg-slate-200'>
-              <td>{isReceived ? 'Lähettäjä' : 'Vastaanottaja'}</td>
-              <td className='text-right'>
-                {isReceived ? transaction.from_email : transaction.to_email}
-              </td>
-            </tr>
             <tr>
               <td>Määrä</td>
               <td className='text-right'>
