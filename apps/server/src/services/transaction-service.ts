@@ -2,6 +2,7 @@ import { Knex } from 'knex';
 import { db } from '../db-config';
 import { tablenames } from '../tablenames';
 import { DBContext } from '../types/db-context';
+import { v4 } from 'uuid';
 
 class TransactionService {
   async transact(
@@ -51,12 +52,38 @@ class TransactionService {
     } else if (transaction.amount_in_cents > senderAccount.balance_in_cents) {
       return Error('transaction:funds-insufficient');
     }
+    //Insert a transaction for both the sender and receiver.
 
-    await ctx(tablenames.transactions).insert({
-      from: senderAccount.id,
-      to: receiverAccount.id,
-      amount_in_cents: transaction.amount_in_cents,
+    const ledgerEntries = {
       message: transaction.message,
+      sender: {
+        id: v4(),
+        account_id: senderAccount.id,
+        amount_in_cents: transaction.amount_in_cents,
+        transaction_type_id: ctx
+          .select('id')
+          .from('transaction_type')
+          .where({ label: 'output' })
+          .limit(1),
+      },
+      recipient: {
+        id: v4(),
+        account_id: receiverAccount.id,
+        amount_in_cents: transaction.amount_in_cents,
+        transaction_type_id: ctx
+          .select('id')
+          .from('transaction_type')
+          .where({ label: 'input' })
+          .limit(1),
+      },
+    };
+    const ledgerData = [ledgerEntries.sender, ledgerEntries.recipient];
+    await ctx(tablenames.ledger).insert(ledgerData);
+    //Create metadata
+    await ctx(tablenames.ledger_metadata).insert({
+      output_transaction_id: ledgerEntries.sender.id,
+      input_transaction_id: ledgerEntries.recipient.id,
+      message: ledgerEntries.message,
     });
 
     await ctx(tablenames.accounts)

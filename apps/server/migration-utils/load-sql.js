@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs/promises');
-module.exports.loadSql = async function (filename) {
+module.exports = async function loadSql(filename) {
   const filepath = path.join(__dirname, `../sql/${filename}`);
   const sql = await fs.readFile(filepath, {
     encoding: 'utf-8',

@@ -42,9 +42,21 @@ export const verifyEmailHandler = createHandler(async (req, res) => {
     //Create an account for the activated user.
     const mint = await mintingService.mint(Core.COIN * 20, trx);
 
-    await trx(tablenames.accounts).insert({
-      user_id: updatedUser.id,
-      balance_in_cents: mint,
+    const [newAccount] = await trx(tablenames.accounts)
+      .insert({
+        user_id: updatedUser.id,
+        balance_in_cents: mint,
+      })
+      .returning('id');
+
+    await trx(tablenames.ledger).insert({
+      account_id: newAccount.id,
+      amount_in_cents: mint,
+      transaction_type_id: db
+        .select('id')
+        .from('transaction_type')
+        .where({ label: 'mint' })
+        .limit(1),
     });
 
     await trx.commit();

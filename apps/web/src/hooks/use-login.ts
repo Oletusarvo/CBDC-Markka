@@ -7,6 +7,7 @@ export function useLogin() {
   const { signin } = useSession();
   const [searchParams] = useSearchParams();
   const callbackUrl = searchParams.get('callback_url');
+  const returnTo = searchParams.get('return_to');
   const { submit, loading, status } = useSubmit({
     fetchFn: async e => {
       const credentials = Object.fromEntries(new FormData(e.currentTarget));
@@ -25,8 +26,8 @@ export function useLogin() {
     },
     onSuccess: () => {
       const navigateUrl = callbackUrl || '/auth/overview';
-      navigate(navigateUrl);
+      window.location.href = navigateUrl;
     },
   });
-  return { submit, loading, status };
+  return { submit, loading, status, returnTo };
 }

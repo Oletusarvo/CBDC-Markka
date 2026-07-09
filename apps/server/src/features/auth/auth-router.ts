@@ -18,6 +18,7 @@ import { resetPasswordHandler } from './handlers/reset-password-handler';
 import { sendPasswordResetEmailHandler } from './handlers/send-password-reset-email-handler';
 import { verifyEmailHandler } from './handlers/verify-email-handler';
 import { checkUserByIdHandler } from './handlers/check-user-by-id-handler';
+import { authorizeHandler } from './handlers/authorize-handler';
 
 const router = getRouter();
 
@@ -42,5 +43,6 @@ router.post(
   createBodyParser(z.object({ token: z.jwt({ error: 'Ryyppäx' }) })),
   verifyEmailHandler,
 );
+router.post('/authorize', checkAuth(false), authorizeHandler);
 
 export { router as authRouter };

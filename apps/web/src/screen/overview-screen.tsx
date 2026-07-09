@@ -8,6 +8,8 @@ import { Button } from '../components/button';
 import { Cog, LogOut, Settings } from 'lucide-react';
 import { AppScreen, DividedAppScreen } from '../components/app-screen';
 import { Core } from '@cbdc-markka/core';
+import { lang } from '../util/lang';
+import { useAppContext } from '../providers/app-provider';
 
 export function OverviewScreen() {
   const navigate = useNavigate();
@@ -38,10 +40,11 @@ function WalletContainer() {
   const { account, isPending } = useAccount();
   const convertedBalance = Core.convertCurrencyAmount(account?.balance_in_cents || 0);
   //const currentBalance = useAnimatedNumber(convertedBalance);
+  const { selectedLanguage } = useAppContext();
 
   return (
     <div className='flex flex-col'>
-      <h3 className='text-white text-sm'>Tilin Saldo</h3>
+      <h3 className='text-white text-sm'>{lang.balance[selectedLanguage]}</h3>
       <h2 className='text-white text-3xl font-mono flex gap-1 items-baseline'>
         <CurrencySymbol
           strokeWidth={0.9}

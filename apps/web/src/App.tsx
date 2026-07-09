@@ -21,6 +21,7 @@ import { ResetPasswordScreen } from './screen/reset-password-screen';
 import { PendingUserScreen } from './screen/pending-user-screen';
 import { VerifyEmailScreen } from './screen/verify-email-screen';
 import { ForgotPasswordScreen } from './screen/forgot-password-screen';
+import { AppProvider } from './providers/app-provider';
 
 const RouterComponent = BrowserRouter;
 
@@ -32,83 +33,85 @@ export function App() {
         <QueryProvider>
           <RouterComponent>
             <Suspense fallback={<SessionLoadingScreen />}>
-              <AuthProvider>
-                <Routes>
-                  <Route
-                    path='/'
-                    element={
-                      <>
-                        <HomeScreen />
-                        <Outlet />
-                      </>
-                    }>
+              <AppProvider>
+                <AuthProvider>
+                  <Routes>
                     <Route
-                      path='login'
-                      element={<LoginScreen />}
-                    />
-                    <Route
-                      path='register'
-                      element={<RegisterUserScreen />}
-                    />
-                    <Route
-                      path='reset-password'
-                      element={<ResetPasswordScreen />}
-                    />
-                    <Route
-                      path='forgot-password'
-                      element={<ForgotPasswordScreen />}
-                    />
-                  </Route>
-                  <Route
-                    path='/auth'
-                    element={<AuthLayout />}>
-                    <Route
-                      path='transaction/:id'
-                      element={<TransactionScreen />}
-                    />
-                    <Route
+                      path='/'
                       element={
                         <>
-                          <div className='flex-1 max-h-full overflow-y-scroll'>
-                            <Outlet />
-                          </div>
-
-                          <OverviewBottomNav />
+                          <HomeScreen />
+                          <Outlet />
                         </>
                       }>
                       <Route
-                        path='overview'
-                        element={<OverviewScreen />}
+                        path='login'
+                        element={<LoginScreen />}
                       />
                       <Route
-                        path='send'
-                        element={<SendScreen />}
+                        path='register'
+                        element={<RegisterUserScreen />}
                       />
                       <Route
-                        path='receive'
-                        element={<ReceiveScreen />}
+                        path='reset-password'
+                        element={<ResetPasswordScreen />}
+                      />
+                      <Route
+                        path='forgot-password'
+                        element={<ForgotPasswordScreen />}
                       />
                     </Route>
                     <Route
-                      path='logout'
-                      element={<LogoutScreen />}
-                    />
+                      path='/auth'
+                      element={<AuthLayout />}>
+                      <Route
+                        path='transaction/:id'
+                        element={<TransactionScreen />}
+                      />
+                      <Route
+                        element={
+                          <>
+                            <div className='flex-1 max-h-full overflow-y-scroll'>
+                              <Outlet />
+                            </div>
 
+                            <OverviewBottomNav />
+                          </>
+                        }>
+                        <Route
+                          path='overview'
+                          element={<OverviewScreen />}
+                        />
+                        <Route
+                          path='send'
+                          element={<SendScreen />}
+                        />
+                        <Route
+                          path='receive'
+                          element={<ReceiveScreen />}
+                        />
+                      </Route>
+                      <Route
+                        path='logout'
+                        element={<LogoutScreen />}
+                      />
+
+                      <Route
+                        path='payment-session/:id'
+                        element={<PaymentSessionScreen />}
+                      />
+                    </Route>
                     <Route
-                      path='payment-session/:id'
-                      element={<PaymentSessionScreen />}
+                      path='/pending-user'
+                      element={<PendingUserScreen />}
                     />
-                  </Route>
-                  <Route
-                    path='/pending-user'
-                    element={<PendingUserScreen />}
-                  />
-                  <Route
-                    path='/verify-email'
-                    element={<VerifyEmailScreen />}
-                  />
-                </Routes>
-              </AuthProvider>
+                    <Route
+                      path='/verify-email'
+                      element={<VerifyEmailScreen />}
+                    />
+                  </Routes>
+                </AuthProvider>
+              </AppProvider>
             </Suspense>
           </RouterComponent>
         </QueryProvider>

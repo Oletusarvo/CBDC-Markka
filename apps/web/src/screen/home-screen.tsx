@@ -21,6 +21,7 @@ import { WarningMessage } from '../components/helper-message';
 export function HomeScreen() {
   const navigate = useNavigate();
   const { status } = useSession();
+
   return (
     <main className='flex flex-col flex-1 antialiased overflow-y-scroll'>
       <section className='w-full px-4 py-32 flex items-center relative flex-1'>

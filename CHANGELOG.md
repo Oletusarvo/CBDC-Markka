@@ -1,3 +1,9 @@
+## [9.0.0] - 09-07-2026
+
+### Changed
+
+- Transactions are now records without a from- and to-field, and instead have a separate record tying transaction between users together.
+
 ## [8.0.0-alpha] - 24-06-2026
 
 ### Added

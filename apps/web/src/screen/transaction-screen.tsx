@@ -9,15 +9,17 @@ import { useClassName } from '../hooks/use-class-name';
 import { Button } from '../components/button';
 import { useState } from 'react';
 import { Core } from '@cbdc-markka/core';
+import { lang } from '../util/lang';
+import { useAppContext } from '../providers/app-provider';
 
 export function TransactionScreen() {
   const navigate = useNavigate();
   const { account, isPending } = useAccount();
   const { id } = useParams();
   const [status, setStatus] = useState('uncopied');
-
+  const { selectedLanguage } = useAppContext();
   const transaction = account?.transactions.find(t => t.id === id);
-  const isReceived = transaction?.to === account?.id;
+  const isReceived = ['mint', 'input'].includes(transaction.type);
 
   const Symbol = () => {
     const color = isReceived ? 'var(--color-green-600)' : 'var(--color-red-600)';
@@ -52,10 +54,12 @@ export function TransactionScreen() {
         <Symbol />
         <div className='flex flex-col'>
           <span className='text-xs text-slate-500'>
-            {isReceived ? transaction?.from : transaction?.to}
+            {transaction.type !== 'mint'
+              ? transaction?.foreign_transaction?.account_id
+              : 'e-MRK Mint'}
           </span>
           <span className='text-xs'>
-            {isReceived ? transaction?.from_email : transaction?.to_email}
+            {transaction.type !== 'mint' ? transaction?.foreign_transaction?.email : null}
           </span>
 
           <AmountText />
@@ -65,11 +69,11 @@ export function TransactionScreen() {
   };
 
   const copyId = async () => {
-    if (!transaction) return;
+    if (!transaction || transaction.type === 'mint') return;
 
     try {
       setStatus('loading');
-      const data = isReceived ? transaction.from : transaction.to;
+      const data = transaction.foreign_transaction?.account_id;
       await navigator.clipboard.writeText(data);
       setStatus('copied');
     } catch (err) {
@@ -85,41 +89,46 @@ export function TransactionScreen() {
 
   return (
     <AppScreen
-      title='Tapahtuma'
+      title={lang.transaction[selectedLanguage]}
       onClose={() => navigate('/auth/overview')}>
       <main className='flex flex-col w-full gap-4 items-center px-4 bg-white flex-1 justify-center'>
         <Symbol />
-        <h2 className='font-semibold text-lg'>Rahansiirto</h2>
-        <div className='flex flex-col w-full'>
+        <h2 className='font-semibold text-lg'>{lang.transaction[selectedLanguage]}</h2>
+        <div className='flex flex-col w-full text-sm'>
           <div className='flex flex-col py-1'>
-            <span className='font-semibold text-sm'>Rahasiirron Tunnus</span>
-            <span>{transaction?.id}</span>
+            <span className='font-semibold text-sm'>{lang.transactionId[selectedLanguage]}</span>
+            <span className='font-mono text-sm'>{transaction?.id}</span>
           </div>
           <div className='flex flex-col py-1'>
             <span className='font-semibold text-sm'>
-              {isReceived ? 'Lähettäjä' : 'Vastaanottaja'}
+              {isReceived ? lang.sender[selectedLanguage] : lang.recipient[selectedLanguage]}
             </span>
-            <span> {isReceived ? transaction.from_email : transaction.to_email}</span>
+            <span>
+              {' '}
+              {transaction?.type !== 'mint'
+                ? transaction?.foreign_transaction?.email
+                : 'e-MRK Mint'}
+            </span>
           </div>
           <div className='flex flex-col py-1'>
-            <span className='font-semibold text-sm'>Viesti</span>
-            <span> {transaction?.message || 'Ei viestiä.'}</span>
+            <span className='font-semibold text-sm'>{lang.message[selectedLanguage]}</span>
+            <span> {transaction?.message || lang.noMessage[selectedLanguage]}</span>
           </div>
         </div>
         <div className='w-full border-b border-dashed border-gray-500' />
         <table className='w-full'>
           <tbody className='font-mono'>
             <tr className='px-2 py-1'>
-              <td>Määrä</td>
+              <td>{lang.amount[selectedLanguage]}</td>
               <td className='text-right'>
                 <AmountText />
               </td>
             </tr>
 
             <tr className='bg-slate-200'>
-              <td>Päivämäärä</td>
+              <td>{lang.date[selectedLanguage]}</td>
               <td className='text-right'>
-                {new Date(transaction?.timestamp).toLocaleDateString('fi')}
+                {new Date(transaction?.created_at).toLocaleDateString('fi')}
               </td>
             </tr>
           </tbody>
@@ -145,10 +154,10 @@ export function TransactionScreen() {
           )}
 
           {status === 'copied'
-            ? 'ID Kopioitu!'
+            ? lang.idCopied[selectedLanguage]
             : isReceived
-              ? 'Kopioi Lähettäjän ID'
-              : 'Kopioi vastaanottajan ID'}
+              ? lang.copySenderId[selectedLanguage]
+              : lang.copyRecipientId[selectedLanguage]}
         </Button>
       </main>
     </AppScreen>

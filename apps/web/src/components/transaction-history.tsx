@@ -10,13 +10,15 @@ import { Core } from '@cbdc-markka/core';
 
 type TTransaction = {
   id: string;
-  from: string;
-  from_email: string;
-  to_email: string;
-  to: string;
   amount_in_cents: number;
-  timestamp: number;
+  created_at: number;
+  type: 'mint' | 'input' | 'output';
   message?: string;
+  foreign_transaction?: {
+    id: string;
+    email: string;
+    account_id: string;
+  };
 };
 
 export function TransactionHistory() {
@@ -24,7 +26,7 @@ export function TransactionHistory() {
 
   const today = new Date().toLocaleDateString('fi');
   const dateSet: Set<string> = new Set(
-    account?.transactions?.map(t => new Date(t.timestamp).toLocaleDateString('fi')),
+    account?.transactions?.map(t => new Date(t.created_at).toLocaleDateString('fi')),
   );
 
   const generateTransactionList = () => {
@@ -34,7 +36,7 @@ export function TransactionHistory() {
         <>
           <span className='text-slate-500'>{date === today ? 'Tänään' : date}</span>
           {account?.transactions
-            .filter(t => new Date(t.timestamp).toLocaleDateString('fi') === date)
+            .filter(t => new Date(t.created_at).toLocaleDateString('fi') === date)
             .map(t => {
               return (
                 <Transaction
@@ -72,7 +74,7 @@ export function TransactionHistory() {
 function Transaction({ data }: { data: TTransaction }) {
   const { account } = useAccount();
   const navigate = useNavigate();
-  const received = data.to === account?.id;
+  const received = data.type === 'input' || data.type === 'mint';
   const amt = Core.convertCurrencyAmount(data.amount_in_cents || 0) * (received ? 1 : -1);
 
   const amountClassName = useClassName(
@@ -87,9 +89,9 @@ function Transaction({ data }: { data: TTransaction }) {
       <div className='flex items-center gap-4'>
         {received ? <ArrowDown className='text-green-600' /> : <ArrowUp className='text-red-600' />}
         <div className='flex flex-col'>
-          <span className='text-xs'>{new Date(data.timestamp).toLocaleDateString('fi')}</span>
-          <span className='text-xs text-slate-500 text-ellipsis overflow-hidden max-w-[100px]'>
-            {received ? data.from_email : data.to_email}
+          <span className='text-xs'>{new Date(data.created_at).toLocaleDateString('fi')}</span>
+          <span className='text-xs text-slate-500 text-ellipsis overflow-hidden max-w-35'>
+            {data.type !== 'mint' ? data.foreign_transaction?.email : 'e-MRK Mint'}
           </span>
         </div>
       </div>

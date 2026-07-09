@@ -10,13 +10,14 @@ import { Form } from '../components/form';
 
 export function LoginScreen() {
   const navigate = useNavigate();
-  const { submit, status, loading } = useLogin();
-  const [searchParams] = useSearchParams();
+  const { submit, status, loading, returnTo } = useLogin();
 
   return (
     <Modal
       title='Kirjaudu Sisään'
-      onClose={() => navigate('/')}>
+      onClose={() => {
+        window.location.href = returnTo || '/';
+      }}>
       <Form onSubmit={submit}>
         <EmailInput />
         <PasswordInput placeholder='Anna salasanasi...' />

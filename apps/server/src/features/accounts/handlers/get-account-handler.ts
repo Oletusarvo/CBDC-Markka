@@ -1,7 +1,7 @@
 import { db } from '../../../db-config';
 import { tablenames } from '../../../tablenames';
 import { AuthenticatedExpressRequest } from '../../../types/express';
-import { transactionRepo } from '../../../utils/classes/transaction-repo';
+import { transactionRepo } from '../../../repositories/transaction-repo';
 import { createHandler } from '../../../utils/create-handler';
 
 export const getAccountHandler = createHandler(async (req: AuthenticatedExpressRequest, res) => {
@@ -21,12 +21,9 @@ export const getAccountHandler = createHandler(async (req: AuthenticatedExpressR
   const transactions = await transactionRepo
     .getRawQuery(db)
     .where({
-      from: acc.id,
+      't.account_id': acc.id,
     })
-    .orWhere({
-      to: acc.id,
-    })
-    .orderBy('transaction.timestamp', 'desc')
+    .orderBy('t.created_at', 'desc')
     .limit(25);
 
   return res.status(200).json({
