@@ -1,13 +1,4 @@
-import {
-  ArrowDown,
-  ArrowUp,
-  History,
-  LogIn,
-  QrCode,
-  TriangleAlert,
-  User,
-  UserPlus,
-} from "lucide-react";
+import { LogIn, User, UserPlus } from "lucide-react";
 import { Button } from "../components/button";
 import { Link, useNavigate } from "react-router-dom";
 import { CurrencySymbol } from "../components/currency";
@@ -17,7 +8,6 @@ import { useApi, useSession } from "@cbdc-markka/utils-react";
 import { useQuery } from "@tanstack/react-query";
 import { Core } from "@cbdc-markka/core";
 import { WarningMessage } from "../components/helper-message";
-import { NativeBannerAd } from "../components/ad";
 
 export function HomeScreen() {
   const navigate = useNavigate();
@@ -78,9 +68,6 @@ export function HomeScreen() {
             )}
           </div>
         </div>
-      </section>
-      <section>
-        <NativeBannerAd />
       </section>
 
       <section className='w-full py-16 bg-gray-900 text-white px-4'>
