@@ -1,60 +1,56 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { Modal } from '../components/modal';
+import { useNavigate, useParams } from "react-router-dom";
+import { Modal } from "../components/modal";
 
-import { Spinner } from '../components/spinner';
-import { useAccount, useTransactions } from '@cbdc-markka/utils-react';
-import { AppScreen } from '../components/app-screen';
-import { ArrowDownCircle, ArrowUpCircle, Check, ContainerIcon, Pencil } from 'lucide-react';
-import { useClassName } from '../hooks/use-class-name';
-import { Button } from '../components/button';
-import { useState } from 'react';
-import { Core } from '@cbdc-markka/core';
-import { lang } from '../util/lang';
-import { useAppContext } from '../providers/app-provider';
+import { Spinner } from "../components/spinner";
+import { useAccount, useTransactions } from "@cbdc-markka/utils-react";
+import { AppScreen } from "../components/app-screen";
+import { ArrowDownCircle, ArrowUpCircle, Check, ContainerIcon, Pencil } from "lucide-react";
+import { useClassName } from "../hooks/use-class-name";
+import { Button } from "../components/button";
+import { useState } from "react";
+import { Core } from "@cbdc-markka/core";
+import { lang } from "../util/lang";
+import { useAppContext } from "../providers/app-provider";
+import { NativeBannerAd } from "../components/ad";
 
 export function TransactionScreen() {
   const navigate = useNavigate();
   const { account, isPending } = useAccount();
   const { id } = useParams();
-  const [status, setStatus] = useState('uncopied');
+  const [status, setStatus] = useState("uncopied");
   const { selectedLanguage } = useAppContext();
-  const transaction = account?.transactions.find(t => t.id === id);
-  const isReceived = ['mint', 'input'].includes(transaction.type);
+  const transaction = account?.transactions.find((t) => t.id === id);
+  const isReceived = ["mint", "input"].includes(transaction.type);
 
   const Symbol = () => {
-    const color = isReceived ? 'var(--color-green-600)' : 'var(--color-red-600)';
+    const color = isReceived ? "var(--color-green-600)" : "var(--color-red-600)";
     const Component = isReceived ? ArrowDownCircle : ArrowUpCircle;
-    return (
-      <Component
-        color={color}
-        size='3rem'
-      />
-    );
+    return <Component color={color} size='3rem' />;
   };
 
   const AmountText = () => {
-    const textClassName = useClassName(isReceived ? 'text-green-600' : 'text-red-600');
+    const textClassName = useClassName(isReceived ? "text-green-600" : "text-red-600");
 
     const amt = Core.convertCurrencyAmount(transaction?.amount_in_cents || 0);
     return (
       <div className={textClassName}>
-        {Core.amountToString(isReceived ? amt : -amt, 'always')} mk
+        {Core.amountToString(isReceived ? amt : -amt, "always")} mk
       </div>
     );
   };
 
   const copyId = async () => {
-    if (!transaction || transaction.type === 'mint') return;
+    if (!transaction || transaction.type === "mint") return;
 
     try {
-      setStatus('loading');
+      setStatus("loading");
       const data = transaction.foreign_transaction?.account_id;
       await navigator.clipboard.writeText(data);
-      setStatus('copied');
+      setStatus("copied");
     } catch (err) {
       console.log(err.message);
     } finally {
-      setStatus(prev => (prev === 'loading' ? 'uncopied' : prev));
+      setStatus((prev) => (prev === "loading" ? "uncopied" : prev));
     }
   };
 
@@ -65,7 +61,8 @@ export function TransactionScreen() {
   return (
     <AppScreen
       title={lang.transaction[selectedLanguage]}
-      onClose={() => navigate('/auth/overview')}>
+      onClose={() => navigate("/auth/overview")}
+    >
       <main className='flex flex-col w-full gap-4 items-center px-4 bg-white flex-1 justify-center'>
         <Symbol />
         <h2 className='font-semibold text-lg'>{lang.transaction[selectedLanguage]}</h2>
@@ -79,10 +76,10 @@ export function TransactionScreen() {
               {isReceived ? lang.sender[selectedLanguage] : lang.recipient[selectedLanguage]}
             </span>
             <span>
-              {' '}
-              {transaction?.type !== 'mint'
+              {" "}
+              {transaction?.type !== "mint"
                 ? transaction?.foreign_transaction?.email
-                : 'e-MRK Mint'}
+                : "e-MRK Mint"}
             </span>
           </div>
           <div className='flex flex-col py-1'>
@@ -103,7 +100,7 @@ export function TransactionScreen() {
             <tr className='bg-slate-200'>
               <td>{lang.date[selectedLanguage]}</td>
               <td className='text-right'>
-                {new Date(transaction?.created_at).toLocaleDateString('fi')}
+                {new Date(transaction?.created_at).toLocaleDateString("fi")}
               </td>
             </tr>
           </tbody>
@@ -111,29 +108,25 @@ export function TransactionScreen() {
 
         <Button
           onClick={copyId}
-          disabled={status === 'loading' || status === 'copied'}
-          color={status === 'copied' ? 'success' : 'primary'}
+          disabled={status === "loading" || status === "copied"}
+          color={status === "copied" ? "success" : "primary"}
           type='button'
           variant='outlined'
-          rounded>
-          {status === 'copied' ? (
-            <Check
-              size='1rem'
-              color='var(--color-green-600)'
-            />
+          rounded
+        >
+          {status === "copied" ? (
+            <Check size='1rem' color='var(--color-green-600)' />
           ) : (
-            <Pencil
-              size='1rem'
-              color={'var(--color-primary)'}
-            />
+            <Pencil size='1rem' color={"var(--color-primary)"} />
           )}
 
-          {status === 'copied'
+          {status === "copied"
             ? lang.idCopied[selectedLanguage]
             : isReceived
               ? lang.copySenderId[selectedLanguage]
               : lang.copyRecipientId[selectedLanguage]}
         </Button>
+        <NativeBannerAd />
       </main>
     </AppScreen>
   );
