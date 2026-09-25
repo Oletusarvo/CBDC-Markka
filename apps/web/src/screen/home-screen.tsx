@@ -17,7 +17,7 @@ import { useApi, useSession } from "@cbdc-markka/utils-react";
 import { useQuery } from "@tanstack/react-query";
 import { Core } from "@cbdc-markka/core";
 import { WarningMessage } from "../components/helper-message";
-import { Ad } from "../components/ad";
+import { NativeBannerAd } from "../components/ad";
 
 export function HomeScreen() {
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ export function HomeScreen() {
         </div>
       </section>
       <section>
-        <Ad />
+        <NativeBannerAd />
       </section>
 
       <section className='w-full py-16 bg-gray-900 text-white px-4'>
