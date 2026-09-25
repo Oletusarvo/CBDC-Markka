@@ -37,7 +37,6 @@ export function HomeScreen() {
             <p className='text-center'>Suomen markan inspiroima digitaaliraha.</p>
             <WarningMessage>e-MRK ei ole laillinen maksuväline!</WarningMessage>
           </div>
-          <Ad />
 
           <div className='flex w-full gap-2 mt-10 xs:flex-col sm:flex-row'>
             {status === "unauthenticated" ? (
@@ -79,6 +78,9 @@ export function HomeScreen() {
             )}
           </div>
         </div>
+      </section>
+      <section>
+        <Ad />
       </section>
 
       <section className='w-full py-16 bg-gray-900 text-white px-4'>
