@@ -7,16 +7,17 @@ import {
   TriangleAlert,
   User,
   UserPlus,
-} from 'lucide-react';
-import { Button } from '../components/button';
-import { Link, useNavigate } from 'react-router-dom';
-import { CurrencySymbol } from '../components/currency';
-import { useAnimatedNumber } from '../hooks/use-animated-number';
-import { Spinner } from '../components/spinner';
-import { useApi, useSession } from '@cbdc-markka/utils-react';
-import { useQuery } from '@tanstack/react-query';
-import { Core } from '@cbdc-markka/core';
-import { WarningMessage } from '../components/helper-message';
+} from "lucide-react";
+import { Button } from "../components/button";
+import { Link, useNavigate } from "react-router-dom";
+import { CurrencySymbol } from "../components/currency";
+import { useAnimatedNumber } from "../hooks/use-animated-number";
+import { Spinner } from "../components/spinner";
+import { useApi, useSession } from "@cbdc-markka/utils-react";
+import { useQuery } from "@tanstack/react-query";
+import { Core } from "@cbdc-markka/core";
+import { WarningMessage } from "../components/helper-message";
+import { Ad } from "../components/ad";
 
 export function HomeScreen() {
   const navigate = useNavigate();
@@ -31,58 +32,49 @@ export function HomeScreen() {
         />
         <div className='flex flex-col items-center w-full z-10'>
           <div className='w-full flex flex-col items-center gap-2'>
-            <img
-              src='/app-icon.svg'
-              className='w-24 h-24 rounded-lg shadow-md shadow-cyan-500'
-            />
+            <img src='/app-icon.svg' className='w-24 h-24 rounded-lg shadow-md shadow-cyan-500' />
             <h1 className='text-4xl font-semibold text-primary'>e-MRK</h1>
             <p className='text-center'>Suomen markan inspiroima digitaaliraha.</p>
             <WarningMessage>e-MRK ei ole laillinen maksuväline!</WarningMessage>
           </div>
+          <Ad />
 
           <div className='flex w-full gap-2 mt-10 xs:flex-col sm:flex-row'>
-            {status === 'unauthenticated' ? (
+            {status === "unauthenticated" ? (
               <>
                 <Button
                   color='primary-pretty'
-                  onClick={() => navigate('/register')}
+                  onClick={() => navigate("/register")}
                   fullWidth
                   type='button'
                   rounded
-                  shadow>
-                  <UserPlus
-                    color='white'
-                    size='1rem'
-                  />
+                  shadow
+                >
+                  <UserPlus color='white' size='1rem' />
                   <span>Luo Tili</span>
                 </Button>
                 <Button
-                  onClick={() => navigate('/login')}
+                  onClick={() => navigate("/login")}
                   fullWidth
                   type='button'
                   variant='outlined'
-                  rounded>
-                  <LogIn
-                    color='var(--color-primary)'
-                    size='1rem'
-                  />
+                  rounded
+                >
+                  <LogIn color='var(--color-primary)' size='1rem' />
                   Kirjaudu Sisään
                 </Button>
               </>
             ) : (
               <Button
-                onClick={() => navigate('/auth/overview')}
+                onClick={() => navigate("/auth/overview")}
                 color='primary-pretty'
                 fullWidth
                 type='button'
                 variant='contained'
                 rounded
-                shadow>
-                <User
-                  color='white'
-                  size='1rem'
-                />{' '}
-                Näytä Tilisi
+                shadow
+              >
+                <User color='white' size='1rem' /> Näytä Tilisi
               </Button>
             )}
           </div>
@@ -104,10 +96,10 @@ export function HomeScreen() {
           <br />
           Monet nykyiset valuutat perustuvat jatkuvaan rahan luomiseen, mikä voi heikentää niiden
           arvoa ajan myötä. Tämän valuutan perusajatus on päinvastainen: rajallinen määrä rahaa voi
-          auttaa{' '}
+          auttaa{" "}
           <strong>
             säilyttämään ostovoiman – ja pitkällä aikavälillä jopa vahvistamaan sitä.
-          </strong>{' '}
+          </strong>{" "}
           Digitaalisia markkoja tulee olemaan kierrossa <strong>21 trilioonaa</strong>, eikä määrää
           kasvateta tämän rajan yli.
         </p>
@@ -119,7 +111,8 @@ export function HomeScreen() {
           <Link
             to='https://neon.com/signup?refcode=K2RWLMYK'
             className='text-white font-semibold'
-            target='_blank'>
+            target='_blank'
+          >
             Neon Postgres
           </Link>
         </div>
@@ -131,10 +124,10 @@ export function HomeScreen() {
 function CirculationDisplay() {
   const { apiInterface } = useApi();
   const { data, isPending } = useQuery({
-    queryKey: ['circulation'],
+    queryKey: ["circulation"],
     queryFn: async () => {
-      const res = await fetch(apiInterface.withApi('currencies/circulation'), {
-        method: 'GET',
+      const res = await fetch(apiInterface.withApi("currencies/circulation"), {
+        method: "GET",
       });
       return res.status === 200 ? await res.json() : null;
     },

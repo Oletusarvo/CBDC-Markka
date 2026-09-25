@@ -43,31 +43,6 @@ export function TransactionScreen() {
     );
   };
 
-  const AmountDisplay = () => {
-    const containerClassName = useClassName(
-      'flex gap-4 items-center py-2 px-4 rounded-md border w-full',
-      isReceived ? 'border-green-100 bg-green-50' : 'border-red-100 bg-red-50',
-    );
-
-    return (
-      <div className={containerClassName}>
-        <Symbol />
-        <div className='flex flex-col'>
-          <span className='text-xs text-slate-500'>
-            {transaction.type !== 'mint'
-              ? transaction?.foreign_transaction?.account_id
-              : 'e-MRK Mint'}
-          </span>
-          <span className='text-xs'>
-            {transaction.type !== 'mint' ? transaction?.foreign_transaction?.email : null}
-          </span>
-
-          <AmountText />
-        </div>
-      </div>
-    );
-  };
-
   const copyId = async () => {
     if (!transaction || transaction.type === 'mint') return;
 

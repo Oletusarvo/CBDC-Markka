@@ -10,7 +10,11 @@ exports.up = function (knex) {
       const batchSize = 10;
 
       for (let i = 0; i < numAccounts.result; i += batchSize) {
-        const accounts = await trx('account').select('id').offset(i).limit(batchSize);
+        const accounts = await trx('account')
+          .join('user', 'user.id', 'account.user_id')
+          .select('account.id', 'user.created_at')
+          .offset(i)
+          .limit(batchSize);
         const promises = [];
         const data = accounts.map(acc => {
           return {
@@ -21,6 +25,7 @@ exports.up = function (knex) {
               .from('transaction_type')
               .where({ label: 'mint' })
               .limit(1),
+            created_at: acc.created_at,
           };
         });
 
