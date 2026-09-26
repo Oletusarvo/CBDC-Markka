@@ -1,18 +1,18 @@
-import { useClassName } from '../hooks/use-class-name';
+import { useClassName } from "../hooks/use-class-name";
 
-import { Spinner } from './spinner';
-import { ArrowDown, ArrowDownCircle, ArrowUp, ArrowUpCircle } from 'lucide-react';
+import { Spinner } from "./spinner";
+import { ArrowDown, ArrowDownCircle, ArrowUp, ArrowUpCircle } from "lucide-react";
 
-import { useNavigate } from 'react-router-dom';
-import { useAccount, useTransactions } from '@cbdc-markka/utils-react';
-import { CurrencySymbol } from './currency';
-import { Core } from '@cbdc-markka/core';
+import { useNavigate } from "react-router-dom";
+import { useAccount, useTransactions } from "@cbdc-markka/utils-react";
+import { CurrencySymbol } from "./currency";
+import { Core } from "@cbdc-markka/core";
 
 type TTransaction = {
   id: string;
   amount_in_cents: number;
   created_at: number;
-  type: 'mint' | 'input' | 'output';
+  type: "mint" | "input" | "output";
   message?: string;
   foreign_transaction?: {
     id: string;
@@ -24,9 +24,9 @@ type TTransaction = {
 export function TransactionHistory() {
   const { account, isPending } = useAccount();
 
-  const today = new Date().toLocaleDateString('fi');
+  const today = new Date().toLocaleDateString("fi");
   const dateSet: Set<string> = new Set(
-    account?.transactions?.map(t => new Date(t.created_at).toLocaleDateString('fi')),
+    account?.transactions?.map((t) => new Date(t.created_at).toLocaleDateString("fi")),
   );
 
   const generateTransactionList = () => {
@@ -34,16 +34,11 @@ export function TransactionHistory() {
     for (const date of dateSet) {
       list.push(
         <>
-          <span className='text-slate-500'>{date === today ? 'Tänään' : date}</span>
+          <span className='text-slate-500'>{date === today ? "Tänään" : date}</span>
           {account?.transactions
-            .filter(t => new Date(t.created_at).toLocaleDateString('fi') === date)
-            .map(t => {
-              return (
-                <Transaction
-                  data={t}
-                  key={`transaction-${t.id}`}
-                />
-              );
+            .filter((t) => new Date(t.created_at).toLocaleDateString("fi") === date)
+            .map((t) => {
+              return <Transaction data={t} key={`transaction-${t.id}`} />;
             })}
         </>,
       );
@@ -56,15 +51,10 @@ export function TransactionHistory() {
       {isPending ? (
         <Spinner />
       ) : account?.transactions.length > 0 ? (
-        account?.transactions.map((t, i) => (
-          <Transaction
-            data={t}
-            key={i}
-          />
-        ))
+        account?.transactions.map((t, i) => <Transaction data={t} key={i} />)
       ) : (
         <div className='flex flex-col justify-center items-center flex-1'>
-          <h2 className='text-sm text-slate-500'>Ei tapahtumia.</h2>
+          <h2 className='text-sm text-slate-500'>No transactions.</h2>
         </div>
       )}
     </>
@@ -74,30 +64,31 @@ export function TransactionHistory() {
 function Transaction({ data }: { data: TTransaction }) {
   const { account } = useAccount();
   const navigate = useNavigate();
-  const received = data.type === 'input' || data.type === 'mint';
+  const received = data.type === "input" || data.type === "mint";
   const amt = Core.convertCurrencyAmount(data.amount_in_cents || 0) * (received ? 1 : -1);
 
   const amountClassName = useClassName(
-    received ? 'text-green-600' : 'text-slate-600',
-    'font-mono flex gap-2 items-center text-sm',
+    received ? "text-green-600" : "text-slate-600",
+    "font-mono flex gap-2 items-center text-sm",
   );
 
   return (
     <div
-      className='bg-white py-4 px-4 flex w-full gap-4 items-center cursor-pointer border-b border-slate-200 justify-between'
-      onClick={() => navigate('/auth/transaction/' + data.id)}>
+      className='bg-white py-4 h-pad flex w-full gap-4 items-center cursor-pointer border-b border-slate-200 justify-between'
+      onClick={() => navigate("/auth/transaction/" + data.id)}
+    >
       <div className='flex items-center gap-4'>
         {received ? <ArrowDown className='text-green-600' /> : <ArrowUp className='text-red-600' />}
         <div className='flex flex-col'>
-          <span className='text-xs'>{new Date(data.created_at).toLocaleDateString('fi')}</span>
+          <span className='text-xs'>{new Date(data.created_at).toLocaleDateString("fi")}</span>
           <span className='text-xs text-slate-500 text-ellipsis overflow-hidden max-w-35'>
-            {data.type !== 'mint' ? data.foreign_transaction?.email : 'e-MRK Mint'}
+            {data.type !== "mint" ? data.foreign_transaction?.email : "e-MRK Mint"}
           </span>
         </div>
       </div>
       <div className={amountClassName}>
         <div className='flex items-baseline'>
-          <span>{Core.amountToString(amt, 'always')} mk</span>
+          <span>{Core.amountToString(amt, "always")} mk</span>
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@
   gap: --spacing(2);
   transition: transform 0.2s ease-out;
   font-size: var(--text-xs);
+  text-wrap: nowrap;
 }
 
 .button:enabled:active {

@@ -1,5 +1,5 @@
-import { X } from 'lucide-react';
-import { Button } from './button';
+import { X } from "lucide-react";
+import { Button } from "./button";
 
 type ModalProps = React.PropsWithChildren & {
   onClose: () => void;
@@ -8,14 +8,11 @@ type ModalProps = React.PropsWithChildren & {
 
 export function Modal({ children, title, onClose }: ModalProps) {
   return (
-    <div className='fixed top-0 left-0 flex w-full h-full z-90 bg-[#0004] backdrop-blur-lg items-center justify-center py-4 xs:px-4 sm:px-32 lg:px-64 xl:px-96'>
-      <div className='bg-white rounded-xl shadow-lg p-4 w-full animate-slide-up'>
+    <div className='fixed top-0 left-0 flex w-full h-full z-90 bg-[#0004] backdrop-blur-lg items-center justify-center p-4'>
+      <div className='bg-white rounded-xl shadow-lg p-4 w-full animate-slide-up xs:w-full sm:w-[70%] lg:w-[50%] xl:w-[30%]'>
         <div className='flex items-center w-full justify-between mb-4'>
           <h3 className='font-semibold'>{title}</h3>
-          <Button
-            variant='ghost'
-            circular
-            onClick={() => onClose()}>
+          <Button variant='ghost' circular onClick={() => onClose()}>
             <X />
           </Button>
         </div>

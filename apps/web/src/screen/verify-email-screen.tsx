@@ -1,12 +1,12 @@
-import { useApi } from '@cbdc-markka/utils-react';
-import { AppScreen } from '../components/app-screen';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useStatus } from '../hooks/use-status';
-import { useEffect, useRef } from 'react';
-import { NoticeScreen } from '../components/notice-screen';
-import { Spinner, SpinnerTimer } from '../components/spinner';
-import { Button, LoaderButton } from '../components/button';
-import { ErrorMessage, SuccessMessage } from '../components/helper-message';
+import { useApi } from "@cbdc-markka/utils-react";
+import { AppScreen } from "../components/app-screen";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useStatus } from "../hooks/use-status";
+import { useEffect, useRef } from "react";
+import { NoticeScreen } from "../components/notice-screen";
+import { Spinner, SpinnerTimer } from "../components/spinner";
+import { Button, LoaderButton } from "../components/button";
+import { ErrorMessage, SuccessMessage } from "../components/helper-message";
 
 /**Verifies a users email in the background and redirects to the login page if it succeeds. */
 export function VerifyEmailScreen() {
@@ -14,17 +14,17 @@ export function VerifyEmailScreen() {
   const { apiInterface } = useApi();
   const [searchParams] = useSearchParams();
   const { status, setStatus, loading } = useStatus();
-  const success = status === 'success';
-  const token = searchParams.get('token');
+  const success = status === "success";
+  const token = searchParams.get("token");
 
   const handleVerification = async () => {
     try {
-      setStatus('loading');
+      setStatus("loading");
       const res = await apiInterface.verifyUserById({ token });
       if (!res.ok) {
-        setStatus('error');
+        setStatus("error");
       } else {
-        setStatus('success');
+        setStatus("success");
       }
     } catch (err: any) {
       console.log(err.message);
@@ -37,9 +37,9 @@ export function VerifyEmailScreen() {
 
   useEffect(() => {
     let t = null;
-    if (status === 'success') {
+    if (status === "success") {
       t = setTimeout(() => {
-        navigate('/auth/overview');
+        navigate("/auth/overview");
       });
     }
     return () => {
@@ -49,33 +49,36 @@ export function VerifyEmailScreen() {
 
   return (
     <NoticeScreen
-      title='Vahvistetaan sähköpostiosoitetta'
-      bodyText='Ole hyvä ja odota kun vahvistamme sähköpostiosoitteesi...'
+      title='Verifying your email'
+      bodyText='Please wait while we verify your email...'
       footer={
-        <div className='flex flex-col gap-4 w-full'>
-          <div className='flex flex-col gap-2 w-full'>
+        <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-2'>
             <LoaderButton
               loading={loading}
               disabled={loading || success}
               onClick={handleVerification}
               type='button'
-              rounded>
-              Yritä uudelleen
+              rounded
+            >
+              Try again
             </LoaderButton>
             <Button
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
               disabled={loading || success}
               variant='outlined'
-              rounded>
-              Peruuta
+              rounded
+            >
+              Cancel
             </Button>
           </div>
-          {status !== 'loading' && status !== 'idle' && status !== 'success' ? (
-            <ErrorMessage>Jotain meni pieleen!</ErrorMessage>
-          ) : status === 'success' ? (
-            <SuccessMessage>Sähköpostin vahvistus onnistui!</SuccessMessage>
+          {status !== "loading" && status !== "idle" && status !== "success" ? (
+            <ErrorMessage>Something went wrong!</ErrorMessage>
+          ) : status === "success" ? (
+            <SuccessMessage>Email verified!</SuccessMessage>
           ) : null}
         </div>
-      }></NoticeScreen>
+      }
+    ></NoticeScreen>
   );
 }

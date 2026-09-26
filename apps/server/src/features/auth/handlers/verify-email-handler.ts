@@ -1,9 +1,9 @@
-import { Core } from '@cbdc-markka/core';
-import { db } from '../../../db-config';
-import { tablenames } from '../../../tablenames';
-import { createHandler } from '../../../utils/create-handler';
-import { verifyJWT } from '../../../utils/jwt';
-import { mintingService } from '../../../services/minting-service';
+import { Core } from "@cbdc-markka/core";
+import { db } from "../../../db-config";
+import { tablenames } from "../../../tablenames";
+import { createHandler } from "../../../utils/create-handler";
+import { verifyJWT } from "../../../utils/jwt";
+import { mintingService } from "../../../services/minting-service";
 
 /**Flips the status of a user to active if they are pending, and creates an account for them. */
 export const verifyEmailHandler = createHandler(async (req, res) => {
@@ -17,25 +17,25 @@ export const verifyEmailHandler = createHandler(async (req, res) => {
       .where({
         id,
         user_status_id: db
-          .select('id')
-          .from('user_status_type')
-          .where({ label: 'pending' })
+          .select("id")
+          .from("user_status_type")
+          .where({ label: "pending" })
           .limit(1),
       })
       .update({
         user_status_id: db
-          .select('id')
-          .from('user_status_type')
-          .where({ label: 'active' })
+          .select("id")
+          .from("user_status_type")
+          .where({ label: "active" })
           .limit(1),
       })
-      .returning('id')
+      .returning("id")
       .limit(1);
 
     //Return an error if no user was updated.
     if (!updatedUser) {
       return res.status(409).json({
-        error: 'auth:no-pending-user',
+        error: "auth:no-pending-user",
       });
     }
 
@@ -47,17 +47,19 @@ export const verifyEmailHandler = createHandler(async (req, res) => {
         user_id: updatedUser.id,
         balance_in_cents: mint,
       })
-      .returning('id');
+      .returning("id");
 
-    await trx(tablenames.ledger).insert({
-      account_id: newAccount.id,
-      amount_in_cents: mint,
-      transaction_type_id: db
-        .select('id')
-        .from('transaction_type')
-        .where({ label: 'mint' })
-        .limit(1),
-    });
+    if (mint > 0) {
+      await trx(tablenames.ledger).insert({
+        account_id: newAccount.id,
+        amount_in_cents: mint,
+        transaction_type_id: db
+          .select("id")
+          .from("transaction_type")
+          .where({ label: "mint" })
+          .limit(1),
+      });
+    }
 
     await trx.commit();
     return res.status(200).end();

@@ -15,20 +15,18 @@ export function HomeScreen() {
 
   return (
     <main className='flex flex-col flex-1 antialiased overflow-y-scroll'>
-      <section className='w-full px-4 py-32 flex items-center relative flex-1'>
-        <div
-          className='absolute top-0 left-0 w-full h-full opacity-10 grayscale-100'
-          id='index-image'
-        />
-        <div className='flex flex-col items-center w-full z-10'>
+      <section className='w-full h-pad py-32 flex items-center relative flex-1 '>
+        <div className='flex flex-col items-center w-full z-20 gap-4'>
           <div className='w-full flex flex-col items-center gap-2'>
             <img src='/app-icon.svg' className='w-24 h-24 rounded-lg shadow-md shadow-cyan-500' />
             <h1 className='text-4xl font-semibold text-primary'>e-MRK</h1>
-            <p className='text-center'>Suomen markan inspiroima digitaaliraha.</p>
-            <WarningMessage>e-MRK ei ole laillinen maksuväline!</WarningMessage>
+            <p className='text-center text-primary font-semibold'>
+              A digital currency inspired by the finnish mark.
+            </p>
+            <WarningMessage>The e-MRK is not legal tender!</WarningMessage>
           </div>
 
-          <div className='flex w-full gap-2 mt-10 xs:flex-col sm:flex-row'>
+          <div className='grid xs:grid-cols-1 sm:grid-cols-2 gap-2'>
             {status === "unauthenticated" ? (
               <>
                 <Button
@@ -40,7 +38,7 @@ export function HomeScreen() {
                   shadow
                 >
                   <UserPlus color='white' size='1rem' />
-                  <span>Luo Tili</span>
+                  <span className='text-nowrap'>Create Account</span>
                 </Button>
                 <Button
                   onClick={() => navigate("/login")}
@@ -50,7 +48,7 @@ export function HomeScreen() {
                   rounded
                 >
                   <LogIn color='var(--color-primary)' size='1rem' />
-                  Kirjaudu Sisään
+                  Log In
                 </Button>
               </>
             ) : (
@@ -63,38 +61,48 @@ export function HomeScreen() {
                 rounded
                 shadow
               >
-                <User color='white' size='1rem' /> Näytä Tilisi
+                <User color='white' size='1rem' /> Show your account
               </Button>
             )}
           </div>
         </div>
       </section>
 
-      <section className='w-full py-16 bg-gray-900 text-white px-4'>
-        <h2 className='font-semibold text-xl mb-4'>Mikä on e-MRK?</h2>
+      <section className='w-full py-16 bg-gray-900 text-white h-pad flex flex-col items-start gap-2'>
+        <h2 className='font-semibold text-xl'>What is the e-MRK?</h2>
 
-        <p className='text-gray-200'>
-          <strong>Digitaalinen markka.</strong> Yksinkertainen tapa lähettää ja vastaanottaa rahaa
-          verkossa. Valuuttamme on nimetty Suomen markkan mukaan. Maksaminen on nopeaa: skannaa
-          QR-koodi, syötä summa ja vahvista maksu. Kaikki maksut näkyvät selkeästä
-          tapahtumahistoriasta.
-          <br />
-          <br /> Järjestelmä on <strong>keskitetty</strong>, jotta maksut pysyvät nopeina ja
-          yksinkertaisina käyttää.
-          <br />
-          <br />
-          Monet nykyiset valuutat perustuvat jatkuvaan rahan luomiseen, mikä voi heikentää niiden
-          arvoa ajan myötä. Tämän valuutan perusajatus on päinvastainen: rajallinen määrä rahaa voi
-          auttaa{" "}
-          <strong>
-            säilyttämään ostovoiman – ja pitkällä aikavälillä jopa vahvistamaan sitä.
-          </strong>{" "}
-          Digitaalisia markkoja tulee olemaan kierrossa <strong>21 trilioonaa</strong>, eikä määrää
-          kasvateta tämän rajan yli.
+        <p className='text-gray-200 mb-4'>
+          The e-MRK is a mock virtual currency inspired by the finnish markka. The e-MRK is not
+          legal tender, and should not be used as such.
         </p>
+        <h3 className='text-lg font-semibold'>Features</h3>
+        <div className='xs:grid-cols-1 md:grid-cols-2 grid w-full gap-2'>
+          <div className='rounded-md border border-white/20 bg-white/10 p-4 flex flex-col'>
+            <h4 className='font-semibold'>Circulation Hard Cap</h4>
+            <p>The currency has a hard-cap that will not ever be exceeded, to prevent inflation.</p>
+          </div>
+          <div className='rounded-md border border-white/20 bg-white/10 p-4 flex flex-col'>
+            <h4 className='font-semibold'>Starting Balance</h4>
+            <p>
+              Each account is given 20mk as a starting balance, until the maximum circulating supply
+              is reached.
+            </p>
+          </div>
+          <div className='rounded-md border border-white/20 bg-white/10 p-4 flex flex-col'>
+            <h4 className='font-semibold'>Transaction History</h4>
+            <p>Your transactions are retained for 90 days.</p>
+          </div>
+          <div className='rounded-md border border-white/20 bg-white/10 p-4 flex flex-col'>
+            <h4 className='font-semibold'>Easy transactions</h4>
+            <p>
+              Transact money to other users by using their account id, or send or receive money
+              using a qr-code.
+            </p>
+          </div>
+        </div>
       </section>
 
-      <footer className='flex w-full py-16 px-4 bg-primary text-white flex-col'>
+      <footer className='flex w-full py-16 h-pad bg-gray-900 text-white flex-col'>
         <div className='flex flex-col items-center'>
           <span className='text-sm'>Database hosting powered by</span>
           <Link
@@ -127,7 +135,7 @@ function CirculationDisplay() {
 
   return (
     <div className='flex flex-col w-full items-center mb-4'>
-      <span className='text-sm'>Kierrossa</span>
+      <span className='text-sm'>Circulating Supply</span>
       <div className='font-mono text-lg flex items-center'>
         <CurrencySymbol size='1rem' />
         {isPending ? <Spinner /> : Core.amountToString(currentCirculation)}

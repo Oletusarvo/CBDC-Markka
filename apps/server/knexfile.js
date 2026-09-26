@@ -1,29 +1,29 @@
 // Update with your config settings.
-require('dotenv').config();
+require("dotenv").config();
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 module.exports = {
   development: {
-    client: 'pg',
+    client: "pg",
     connection: {
-      host: 'localhost',
+      host: "localhost",
       port: 5432,
-      user: 'dev_user',
+      user: "dev_user",
       password: process.env.DB_PASSWORD,
-      database: 'kryptomarkka_dev',
+      database: "cbdc_mark_dev",
     },
   },
 
   production: {
-    client: 'pg',
+    client: "pg",
     connection: process.env.DB_CONNECTION,
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
-      tableName: 'knex_migrations',
+      tableName: "knex_migrations",
     },
   },
 };

@@ -12,14 +12,13 @@ export function RegisterUserScreen() {
   const navigate = useNavigate();
   const { submit, status, loading } = useRegisterUser();
   return (
-    <Modal title='Luo Tili' onClose={() => navigate("/")}>
+    <Modal title='Create Account' onClose={() => navigate("/")}>
       <Form onSubmit={submit}>
         <EmailInput />
-        <PasswordInput placeholder='Luo salasana...' />
-        <PasswordInput variant='secondary' placeholder='Toista salasana...' />
+        <PasswordInput placeholder='Create password...' />
+        <PasswordInput variant='secondary' placeholder='Repeat password...' />
         <span className='text-slate-400 text-sm'>
-          Lähetämme rekisteröitymisen jälkeen sähköpostiisi linkin jonka kautta pääset vahvistamaan
-          tilisi.
+          We will send a link to your inbox through which to verify your account.
         </span>
         <LoaderButton
           rounded
@@ -29,21 +28,21 @@ export function RegisterUserScreen() {
           fullWidth
           type='submit'
         >
-          Lähetä Vahvistusviesti
+          Send Verification Link
         </LoaderButton>
         {status === "auth:email-taken" ? (
-          <ErrorMessage>Sähköpostiosoite on käytössä!</ErrorMessage>
+          <ErrorMessage>That email is already in use!</ErrorMessage>
         ) : status === "auth:unsupported-domain" ? (
-          <ErrorMessage>Tuemme ainoastaan gmail-tilejä!</ErrorMessage>
+          <ErrorMessage>We only support gmail accounts!</ErrorMessage>
         ) : status === "success" ? (
-          <SuccessMessage>Linkki lähetetty!</SuccessMessage>
+          <SuccessMessage>Link sent!</SuccessMessage>
         ) : status === "auth:password-mismatch" ? (
-          <ErrorMessage>Salasanat eivät täsmää!</ErrorMessage>
+          <ErrorMessage>The passwords do not match!</ErrorMessage>
         ) : status !== "idle" && status !== "loading" ? (
-          <ErrorMessage>Jotain meni pieleen!</ErrorMessage>
+          <ErrorMessage>Something went wrong!</ErrorMessage>
         ) : null}
         <Link to='/login' className='w-full text-center mt-4 link'>
-          Onko sinulla jo tili? Klikkaa tähän.
+          Already have an account? Click here.
         </Link>
       </Form>
       <NativeBannerAd />

@@ -1,7 +1,7 @@
-import { createEmailHTML } from '../features/auth/util/create-email-html';
-import { getDomainUrl } from '../utils/get-domain-url';
-import { loadEnvVariable } from '../utils/load-env-variable';
-import { sendEmail } from '../utils/send-email';
+import { createEmailHTML } from "../features/auth/util/create-email-html";
+import { getDomainUrl } from "../utils/get-domain-url";
+import { loadEnvVariable } from "../utils/load-env-variable";
+import { sendEmail } from "../utils/send-email";
 
 /**Responsible for sending emails. */
 class EmailService {
@@ -13,34 +13,34 @@ class EmailService {
   async sendPasswordReset(to: string, token: string) {
     const domainUrl = getDomainUrl();
     const html = createEmailHTML({
-      title: 'Tervehdys!',
-      bodyText: `Olet pyytänyt salasanasi vaihtamista. Jos se et ollut sinä, voit jättää tämän viestin huomiotta. Muussa tapauksessa klikkaa <a href="${domainUrl}/reset-password?token=${token}">tähän.</a>`,
+      title: "Greetings!",
+      bodyText: `You have requested to change your password. If it wasn't you, please ignore this message. Otherwise, please click <a href="${domainUrl}/reset-password?token=${token}">here.</a>`,
     });
     await this.send({
       to,
       html,
-      subject: 'Vaihda E-MRK salasanasi',
+      subject: "Change your e-MRK password",
     });
   }
 
   sendEmailVerification(to: string, token: string) {
     const domainUrl = getDomainUrl();
     const html = createEmailHTML({
-      title: 'Tervehdys!',
-      bodyText: `Olet rekisteröitynyt <strong>E-MRK</strong> käyttäjäksi. Jos tämä et ollut sinä, voit jättää viestin huomiotta. <br/>
-              Muussa tapauksessa ole hyvä ja napauta <a href="${domainUrl}/verify-email?token=${token}">tätä linkkiä</a> vahvistaaksesi sähköpostiosoitteesi.`,
+      title: "Greetings!",
+      bodyText: `You have registered as an <strong>e-MRK</strong> user. If it wasn't you, please ignore this message. <br/>
+              Otherwise, please click <a href="${domainUrl}/verify-email?token=${token}">here</a> to verify your email.`,
     });
     return this.send({
       to,
-      subject: 'Vahvista sähköpostiosoitteesi',
+      subject: "Verify your email",
       html,
     });
   }
 
   async send({ to, subject, html }: { to: string; subject: string; html: string }) {
-    const serviceEmail = loadEnvVariable('SERVICE_EMAIL', true);
+    const serviceEmail = loadEnvVariable("SERVICE_EMAIL", true);
     const body = JSON.stringify({
-      sender: { email: serviceEmail, name: 'E-MRK' },
+      sender: { email: serviceEmail, name: "E-MRK" },
       to: [{ email: to }],
       subject,
       htmlContent: html,
@@ -50,11 +50,11 @@ class EmailService {
       this.endpoint,
 
       {
-        method: 'POST',
+        method: "POST",
         body,
         headers: {
-          'api-key': this.apiKey.trim(),
-          'Content-Type': 'application/json',
+          "api-key": this.apiKey.trim(),
+          "Content-Type": "application/json",
         },
       },
     );
@@ -64,6 +64,6 @@ class EmailService {
 }
 
 export const emailService = new EmailService(
-  'https://api.brevo.com/v3/smtp/email',
-  loadEnvVariable('EMAIL_API_KEY'),
+  "https://api.brevo.com/v3/smtp/email",
+  loadEnvVariable("EMAIL_API_KEY"),
 );

@@ -1,6 +1,7 @@
-import { ReactNode } from 'react';
-import { AppIcon } from './app-icon';
-import { AppScreen } from './app-screen';
+import { ReactNode } from "react";
+import { AppIcon } from "./app-icon";
+import { AppScreen } from "./app-screen";
+import { NativeBannerAd } from "./ad";
 
 export type NoticeScreenProps = React.PropsWithChildren & {
   title: string;
@@ -11,7 +12,7 @@ export type NoticeScreenProps = React.PropsWithChildren & {
 export function NoticeScreen({ title, bodyText, footer, children }: NoticeScreenProps) {
   return (
     <AppScreen headerShown={false}>
-      <div className='flex flex-col w-full flex-1 items-center justify-center p-4 gap-8'>
+      <div className='flex flex-col w-full flex-1 items-center justify-center py-4 h-pad gap-8'>
         <div className='flex flex-col gap-4 items-center justify-center'>
           <AppIcon />
           <div className='flex items-center'>
@@ -20,6 +21,7 @@ export function NoticeScreen({ title, bodyText, footer, children }: NoticeScreen
 
           <p className='text-sm text-slate-500 text-center'>{bodyText}</p>
           {children}
+          <NativeBannerAd />
         </div>
 
         {footer}

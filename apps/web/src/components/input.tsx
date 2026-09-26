@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
-import { useClassName } from '../hooks/use-class-name';
-import { AtSign, Lock } from 'lucide-react';
+import { ReactNode } from "react";
+import { useClassName } from "../hooks/use-class-name";
+import { AtSign, Lock } from "lucide-react";
 
-type InputProps = React.ComponentProps<'input'> & {
+type InputProps = React.ComponentProps<"input"> & {
   fullWidth?: boolean;
   fontSize?: string | number;
   fontWeight?: number;
@@ -17,9 +17,9 @@ export function Input({
   ...props
 }: InputProps) {
   const className = useClassName(
-    'input pr-4 py-2',
-    IconComponent ? 'pl-12' : 'pl-4',
-    fullWidth ? 'w-full' : '',
+    "input pr-4 py-2",
+    IconComponent ? "pl-12" : "pl-4",
+    fullWidth ? "w-full" : "",
   );
   return (
     <div className='w-full flex items-center border border-slate-200 rounded-[100px] relative overflow-hidden'>
@@ -27,7 +27,7 @@ export function Input({
         <IconComponent
           className='text-slate-500 absolute left-4'
           color='var(--color-slate-500)'
-          size={'1.2rem'}
+          size={"1.2rem"}
         />
       )}
       <input
@@ -42,7 +42,7 @@ export function Input({
   );
 }
 
-export type DerivedInputProps = Omit<InputProps, 'name' | 'type' | 'required' | 'iconComponent'>;
+export type DerivedInputProps = Omit<InputProps, "name" | "type" | "required" | "iconComponent">;
 
 export function EmailInput(props: DerivedInputProps) {
   return (
@@ -53,7 +53,7 @@ export function EmailInput(props: DerivedInputProps) {
       name='email'
       type='email'
       required
-      placeholder='Sähköpostiosoitteesi...'
+      placeholder='Your email...'
     />
   );
 }
@@ -61,14 +61,14 @@ export function EmailInput(props: DerivedInputProps) {
 export function PasswordInput({
   variant,
   ...props
-}: DerivedInputProps & { variant?: 'primary' | 'secondary' }) {
+}: DerivedInputProps & { variant?: "primary" | "secondary" }) {
   return (
     <Input
       {...props}
       iconComponent={Lock}
       fullWidth
       name={
-        variant === 'primary' ? 'password1' : variant === 'secondary' ? 'password2' : 'password'
+        variant === "primary" ? "password1" : variant === "secondary" ? "password2" : "password"
       }
       type='password'
       required

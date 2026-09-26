@@ -1,24 +1,23 @@
-import { useNavigate } from 'react-router-dom';
-import { Form } from '../components/form';
-import { EmailInput } from '../components/input';
-import { Modal } from '../components/modal';
-import { useSendPasswordResetEmail } from '../hooks/use-send-password-reset-email';
-import { Button, LoaderButton } from '../components/button';
-import { ErrorMessage, SuccessMessage } from '../components/helper-message';
+import { useNavigate } from "react-router-dom";
+import { Form } from "../components/form";
+import { EmailInput } from "../components/input";
+import { Modal } from "../components/modal";
+import { useSendPasswordResetEmail } from "../hooks/use-send-password-reset-email";
+import { Button, LoaderButton } from "../components/button";
+import { ErrorMessage, SuccessMessage } from "../components/helper-message";
+import { NativeBannerAd } from "../components/ad";
 
 export function ForgotPasswordScreen() {
   const navigate = useNavigate();
   const { submit, status, loading } = useSendPasswordResetEmail();
   const onClose = () => navigate(-1);
-  const success = status === 'success';
+  const success = status === "success";
   return (
-    <Modal
-      title='Unohtunut salasana'
-      onClose={onClose}>
+    <Modal title='Forgot Password' onClose={onClose}>
       <Form onSubmit={submit}>
         <EmailInput />
         <span className='text-slate-400 text-sm'>
-          Lähetämme sähköpostiisi linkin jonka kautta pääset luomaan uuden salasanan.
+          We will send you a link through which to update your password.
         </span>
 
         <div className='flex gap-2 w-full'>
@@ -28,24 +27,27 @@ export function ForgotPasswordScreen() {
             rounded
             fullWidth
             onClick={onClose}
-            variant='outlined'>
-            Peruuta
+            variant='outlined'
+          >
+            Cancel
           </Button>
           <LoaderButton
             loading={loading}
             disabled={loading || success}
             type='submit'
             rounded
-            fullWidth>
-            Lähetä
+            fullWidth
+          >
+            Submit
           </LoaderButton>
         </div>
-        {status !== 'loading' && status !== 'success' && status !== 'idle' ? (
-          <ErrorMessage>Jotain meni pieleen!</ErrorMessage>
-        ) : status === 'success' ? (
-          <SuccessMessage>Sähköposti lähetetty!</SuccessMessage>
+        {status !== "loading" && status !== "success" && status !== "idle" ? (
+          <ErrorMessage>Something went wrong!</ErrorMessage>
+        ) : status === "success" ? (
+          <SuccessMessage>Email sent!</SuccessMessage>
         ) : null}
       </Form>
+      <NativeBannerAd />
     </Modal>
   );
 }

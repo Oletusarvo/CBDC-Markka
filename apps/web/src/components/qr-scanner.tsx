@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import QrScanner from 'qr-scanner';
-import { Button, LoaderButton } from './button';
-import toast from 'react-hot-toast';
-import { Camera } from 'lucide-react';
+import { useEffect, useRef, useState } from "react";
+import QrScanner from "qr-scanner";
+import { Button, LoaderButton } from "./button";
+import toast from "react-hot-toast";
+import { Camera } from "lucide-react";
 
 export default function QRScanner({ onScan }) {
   const videoRef = useRef(null);
@@ -15,7 +15,7 @@ export default function QRScanner({ onScan }) {
 
     scannerRef.current = new QrScanner(
       videoRef.current,
-      result => {
+      (result) => {
         onScan?.(result.data);
       },
       {
@@ -28,12 +28,12 @@ export default function QRScanner({ onScan }) {
       setScannerLoading(true);
       await scannerRef.current.start();
       setStarted(true);
-      console.log('Scanner started.');
+      console.log("Scanner started.");
     } catch (err) {
       console.log(err);
-      if (typeof err === 'string') {
-        if (err.includes('Camera not found')) {
-          toast.error('Kameraa ei löydy!');
+      if (typeof err === "string") {
+        if (err.includes("Camera not found")) {
+          toast.error("Kameraa ei löydy!");
         } else {
           toast.error(err);
         }
@@ -59,22 +59,15 @@ export default function QRScanner({ onScan }) {
             disabled={scannerLoading}
             type='button'
             rounded
-            onClick={startScan}>
-            <Camera
-              color='white'
-              size='1rem'
-            />
-            Avaa Kamera
+            onClick={startScan}
+          >
+            <Camera color='white' size='1rem' />
+            Open Camera
           </LoaderButton>
         </div>
       )}
 
-      <video
-        playsInline
-        muted
-        ref={videoRef}
-        style={{ width: '100%', borderRadius: 12 }}
-      />
+      <video playsInline muted ref={videoRef} style={{ width: "100%", borderRadius: 12 }} />
     </div>
   );
 }

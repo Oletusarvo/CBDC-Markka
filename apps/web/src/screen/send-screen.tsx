@@ -1,16 +1,16 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { LoaderButton } from '../components/button';
-import { Check, Pencil, QrCode, User } from 'lucide-react';
-import { useState } from 'react';
-import { Input } from '../components/input';
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { LoaderButton } from "../components/button";
+import { Check, Pencil, QrCode, User } from "lucide-react";
+import { useState } from "react";
+import { Input } from "../components/input";
 
-import { ErrorMessage } from '../components/helper-message';
-import { setupContext, useAccount } from '@cbdc-markka/utils-react';
-import QRScanner from '../components/qr-scanner';
-import { DividedAppScreen } from '../components/app-screen';
-import { CurrencyAmountInput } from '../components/currency';
-import { Core } from '@cbdc-markka/core';
-import { NavButton } from '../components/overview-bottom-nav';
+import { ErrorMessage } from "../components/helper-message";
+import { setupContext, useAccount } from "@cbdc-markka/utils-react";
+import QRScanner from "../components/qr-scanner";
+import { DividedAppScreen } from "../components/app-screen";
+import { CurrencyAmountInput } from "../components/currency";
+import { Core } from "@cbdc-markka/core";
+import { NavButton } from "../components/overview-bottom-nav";
 
 const [SendContext, useSendContext] = setupContext<{
   status: string;
@@ -19,31 +19,31 @@ const [SendContext, useSendContext] = setupContext<{
   updateCurrentAddress: (e) => void;
   updateStep: (currentStep: number) => void;
   updateAmount: (e) => void;
-}>('SendContext');
+}>("SendContext");
 
 export function SendScreen() {
   const { createTransaction, account } = useAccount();
   const navigate = useNavigate();
-  const [status, setStatus] = useState('idle');
+  const [status, setStatus] = useState("idle");
   const [queryParams] = useSearchParams();
-  const callbackUrl = queryParams.get('callback_url');
-  const defaultAmount = Number(queryParams.get('amount')) / Core.COIN;
-  const defaultRecipient = queryParams.get('recipient_id');
+  const callbackUrl = queryParams.get("callback_url");
+  const defaultAmount = Number(queryParams.get("amount")) / Core.COIN;
+  const defaultRecipient = queryParams.get("recipient_id");
 
-  const [currentAddress, setCurrentAddress] = useState(defaultRecipient || '');
+  const [currentAddress, setCurrentAddress] = useState(defaultRecipient || "");
   const [currentAmount, setCurrentAmount] = useState(defaultAmount / Core.COIN || 1 / Core.COIN);
 
   const [step, setStep] = useState(0);
 
   const cancel = () => {
-    const url = callbackUrl || '/auth/overview';
+    const url = callbackUrl || "/auth/overview";
     navigate(url);
   };
 
   const handleSubmit = async (e: any) => {
     if (!account) return;
     e.preventDefault();
-    setStatus('loading');
+    setStatus("loading");
     try {
       const data = Object.fromEntries(new FormData(e.currentTarget));
       const res = await createTransaction({
@@ -54,26 +54,26 @@ export function SendScreen() {
       } as any);
 
       if (res.status === 200) {
-        setStatus('success');
+        setStatus("success");
         cancel();
       } else if (res.status !== 500) {
         const err = await res.json();
         setStatus(err.error);
       } else {
-        setStatus('error');
+        setStatus("error");
       }
     } catch (err) {
       console.log(err.message);
     } finally {
-      setStatus(prev => (prev === 'loading' ? 'idle' : prev));
+      setStatus((prev) => (prev === "loading" ? "idle" : prev));
     }
   };
 
-  const updateCurrentAddress = e => {
+  const updateCurrentAddress = (e) => {
     setCurrentAddress(e.target.value);
   };
 
-  const updateAmount = e => setCurrentAmount(e.target.valueAsNumber);
+  const updateAmount = (e) => setCurrentAmount(e.target.valueAsNumber);
 
   const updateStep = (currentStep: number) => {
     setStep(currentStep);
@@ -88,40 +88,42 @@ export function SendScreen() {
         updateCurrentAddress,
         updateAmount,
         updateStep,
-      }}>
+      }}
+    >
       <DividedAppScreen
         headerContent={
           <>
-            <h2 className='text-white font-semibold text-xl'>Lähetä Rahaa</h2>
+            <h2 className='text-white font-semibold text-xl'>Send Money</h2>
             <div className='flex items-center gap-2'>
               <NavButton
                 variant='white'
                 selected={step === 0}
                 onClick={() => setStep(0)}
-                icon={Pencil}></NavButton>
+                icon={Pencil}
+              ></NavButton>
               <NavButton
                 variant='white'
                 selected={step === 1}
                 onClick={() => setStep(1)}
-                icon={QrCode}></NavButton>
+                icon={QrCode}
+              ></NavButton>
             </div>
           </>
-        }>
-        <form
-          className='flex flex-col w-full gap-2 p-4 flex-1 h-full'
-          onSubmit={handleSubmit}>
+        }
+      >
+        <form className='flex flex-col w-full gap-2 h-pad flex-1 h-full' onSubmit={handleSubmit}>
           <div className='flex w-full flex-1 items-center justify-center flex-col gap-2 h-full'>
             {step === 0 ? (
               <ManualInputStep />
             ) : (
               <QRCodeReadStep
-                onScan={data => {
-                  const [protocol, address, amountInCents] = data.split(':');
-                  if (protocol !== 'mrk') {
+                onScan={(data) => {
+                  const [protocol, address, amountInCents] = data.split(":");
+                  if (protocol !== "mrk") {
                     return;
                   }
 
-                  if (amountInCents && amountInCents !== 'null') {
+                  if (amountInCents && amountInCents !== "null") {
                     setCurrentAmount(Core.convertCurrencyAmount(amountInCents));
                   }
 
@@ -155,7 +157,7 @@ function EmailInput({ defaultValue }: React.ComponentProps<typeof Input>) {
       fullWidth
       iconComponent={User}
       value={currentAddress}
-      placeholder='Vastaanottajan tunnus...'
+      placeholder='Recipient ID...'
       onChange={updateCurrentAddress}
       required
     />
@@ -181,9 +183,9 @@ function MessageInput() {
     <textarea
       className='w-full textarea'
       name='message'
-      placeholder='Kirjoita viesti...'
+      placeholder='Message...'
       required
-      spellCheck={'false'}
+      spellCheck={"false"}
     />
   );
 }
@@ -193,7 +195,7 @@ function ManualInputStep() {
   const { account } = useAccount();
   const { status, updateStep, currentAddress, currentAmount } = useSendContext();
 
-  const loading = status === 'loading';
+  const loading = status === "loading";
   const convertedBalance = Core.convertCurrencyAmount(account?.balance_in_cents || 0);
 
   return (
@@ -221,15 +223,13 @@ function ManualInputStep() {
       <div className='flex w-full gap-2'>
         <LoaderButton
           loading={loading}
-          disabled={!currentAddress?.length || loading || status === 'success'}
+          disabled={!currentAddress?.length || loading || status === "success"}
           rounded
           type='submit'
-          fullWidth>
-          <Check
-            color='white'
-            size='1rem'
-          />
-          Lähetä
+          fullWidth
+        >
+          <Check color='white' size='1rem' />
+          Send
         </LoaderButton>
       </div>
       <ErrorMessages />
@@ -240,17 +240,15 @@ function ManualInputStep() {
 function ErrorMessages() {
   const { status } = useSendContext();
 
-  return status === 'transaction:funds-insufficient' ? (
-    <ErrorMessage>Saldosi ei riitä!</ErrorMessage>
-  ) : status === 'transaction:recipient-invalid' ? (
-    <ErrorMessage>Virheellinen vastaanottaja!</ErrorMessage>
-  ) : status === 'transaction:self-transaction' ? (
-    <ErrorMessage>Samalle tilille ei voi lähettää!</ErrorMessage>
-  ) : status === 'transaction:signature-invalid' ? (
-    <ErrorMessage>Jomman kumman osapuolen tilin digitaalinen allekirjoitus ei täsmää!</ErrorMessage>
-  ) : status === 'transaction:sequence-invalid' ? (
-    <ErrorMessage>Tilisiirron järjestysvirhe! Ole hyvä ja yritä uudelleen.</ErrorMessage>
-  ) : status !== 'success' && status !== 'idle' && status !== 'loading' ? (
-    <ErrorMessage>Jotakin meni pieleen!</ErrorMessage>
+  return status === "transaction:funds-insufficient" ? (
+    <ErrorMessage>Insufficient balance!</ErrorMessage>
+  ) : status === "transaction:recipient-invalid" ? (
+    <ErrorMessage>Invalid recipient!</ErrorMessage>
+  ) : status === "transaction:self-transaction" ? (
+    <ErrorMessage>Cannot transact to the same account!</ErrorMessage>
+  ) : status === "transaction:signature-invalid" ? (
+    <ErrorMessage>The signature of either account is invalid!</ErrorMessage>
+  ) : status !== "success" && status !== "idle" && status !== "loading" ? (
+    <ErrorMessage>Something went wrong! Please try again.</ErrorMessage>
   ) : null;
 }

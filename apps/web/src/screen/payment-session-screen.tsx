@@ -1,20 +1,20 @@
-import { useParams } from 'react-router-dom';
-import { AppScreen } from '../components/app-screen';
-import { Button } from '../components/button';
-import { Input } from '../components/input';
-import { Box } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
-import { useAccount, useApi } from '@cbdc-markka/utils-react';
-import { Spinner } from '../components/spinner';
-import { Core } from '@cbdc-markka/core';
-import { AppIcon } from '../components/app-icon';
+import { useParams } from "react-router-dom";
+import { AppScreen } from "../components/app-screen";
+import { Button } from "../components/button";
+import { Input } from "../components/input";
+import { Box } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { useAccount, useApi } from "@cbdc-markka/utils-react";
+import { Spinner } from "../components/spinner";
+import { Core } from "@cbdc-markka/core";
+import { AppIcon } from "../components/app-icon";
 
 export function PaymentSessionScreen() {
   const { id } = useParams();
   const { account, isPending: accountIsPending } = useAccount();
   const { apiInterface } = useApi();
   const { data: paymentSession, isLoading } = useQuery({
-    queryKey: ['payment-session', id],
+    queryKey: ["payment-session", id],
     queryFn: async () => {
       const res = await apiInterface.getPaymentSession(id);
       return res.ok ? await res.json() : null;
@@ -35,21 +35,21 @@ export function PaymentSessionScreen() {
               <h2 className='font-semibold text-slate-500'>e-MRK</h2>
             </div>
 
-            <h3 className='font-semibold'>Maksusuoritus</h3>
+            <h3 className='font-semibold'>Payment</h3>
             <table className='w-full text-slate-500'>
               <tbody>
                 <tr>
-                  <td className='font-semibold'>Tilin saldo</td>
+                  <td className='font-semibold'>Balance</td>
                   <td className='text-right'>{balance}mk</td>
                 </tr>
                 <tr className='bg-slate-100'>
-                  <td className='font-semibold'>Vastaanottaja</td>
-                  <td className='text-right'>{paymentSession?.to || 'Ei määritelty'}</td>
+                  <td className='font-semibold'>Recipient</td>
+                  <td className='text-right'>{paymentSession?.to || "Ei määritelty"}</td>
                 </tr>
                 <tr>
-                  <td className='font-semibold'>Määrä</td>
+                  <td className='font-semibold'>Amount</td>
                   <td className='text-right'>
-                    {paymentSession?.amount_in_cents / Core.COIN || 'Ei määritelty'}
+                    {paymentSession?.amount_in_cents / Core.COIN || "Ei määritelty"}
                   </td>
                 </tr>
               </tbody>
@@ -57,18 +57,11 @@ export function PaymentSessionScreen() {
           </div>
 
           <div className='flex items-center gap-2 w-full'>
-            <Button
-              type='button'
-              fullWidth
-              rounded
-              variant='outlined'>
-              Hylkää
+            <Button type='button' fullWidth rounded variant='outlined'>
+              Cancel
             </Button>
-            <Button
-              type='button'
-              fullWidth
-              rounded>
-              Hyväksy
+            <Button type='button' fullWidth rounded>
+              Accept
             </Button>
           </div>
         </div>

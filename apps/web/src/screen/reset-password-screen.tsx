@@ -18,10 +18,10 @@ export function ResetPasswordScreen() {
   };
 
   return (
-    <Modal title='Vaihda salasanasi' onClose={onClose}>
+    <Modal title='Change Password' onClose={onClose}>
       <Form onSubmit={submit}>
-        <PasswordInput placeholder='Anna uusi salasana...' fullWidth />
-        <PasswordInput fullWidth variant='secondary' placeholder='Toista uusi salasana...' />
+        <PasswordInput placeholder='Type your new password...' fullWidth />
+        <PasswordInput fullWidth variant='secondary' placeholder='Repeat your new password...' />
 
         <div className='flex gap-2 w-full'>
           <Button
@@ -32,7 +32,7 @@ export function ResetPasswordScreen() {
             onClick={onClose}
             variant='outlined'
           >
-            Peruuta
+            Cancel
           </Button>
           <LoaderButton
             loading={loading}
@@ -41,13 +41,13 @@ export function ResetPasswordScreen() {
             rounded
             fullWidth
           >
-            Lähetä
+            Submit
           </LoaderButton>
         </div>
         {status !== "success" && status !== "loading" && status !== "idle" ? (
-          <ErrorMessage>Jotain meni pieleen!</ErrorMessage>
+          <ErrorMessage>Something went wrong!</ErrorMessage>
         ) : status === "success" ? (
-          <SuccessMessage>Salasanan vaihto onnistui!</SuccessMessage>
+          <SuccessMessage>Password changed successfully!</SuccessMessage>
         ) : null}
       </Form>
       <NativeBannerAd />

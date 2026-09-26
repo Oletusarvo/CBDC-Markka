@@ -5,7 +5,7 @@ export function createEmailHTML({ title, bodyText }: { title: string; bodyText: 
         <p>
           ${bodyText}
         </p>
-        <i>Ystävällisin terveisin, e-MRK tiimi.</i>
+        <i>With friendly regards, the e-MRK team.</i>
       </html>
     `;
 }

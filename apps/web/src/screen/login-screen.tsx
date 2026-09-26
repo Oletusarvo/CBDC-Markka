@@ -13,21 +13,24 @@ export function LoginScreen() {
   const navigate = useNavigate();
   const { submit, status, loading, returnTo } = useLogin();
 
+  const onClose = () => {
+    const url = new URL(returnTo, window.location.origin);
+    if (url.origin === window.location.origin) {
+      navigate("/");
+    } else {
+      window.location.href = returnTo;
+    }
+  };
   return (
-    <Modal
-      title='Kirjaudu Sisään'
-      onClose={() => {
-        window.location.href = returnTo || "/";
-      }}
-    >
+    <Modal title='Login' onClose={onClose}>
       <Form onSubmit={submit}>
         <EmailInput />
-        <PasswordInput placeholder='Anna salasanasi...' />
+        <PasswordInput placeholder='Enter your password...' />
 
         <div className='flex gap-2 w-full'>
           <Button rounded fullWidth variant='outlined' type='button' onClick={() => navigate("/")}>
             <ArrowLeft color='var(--color-primary)' size='1rem' />
-            Peruuta
+            Cancel
           </Button>
           <LoaderButton
             disabled={loading || status === "success"}
@@ -38,22 +41,22 @@ export function LoginScreen() {
             shadow
           >
             <LogIn color='white' size='1rem' />
-            Kirjaudu
+            Login
           </LoaderButton>
         </div>
         {status.includes("auth:") ? (
-          <ErrorMessage>Virheelliset tunnistautumistiedot!</ErrorMessage>
+          <ErrorMessage>Invalid credentials!</ErrorMessage>
         ) : status === "error" ? (
-          <ErrorMessage>Jotain meni pieleen!</ErrorMessage>
+          <ErrorMessage>Something went wrong!</ErrorMessage>
         ) : status === "success" ? (
-          <SuccessMessage>Sisäänkirjautuminen onnistui!</SuccessMessage>
+          <SuccessMessage>Login succeeded!</SuccessMessage>
         ) : null}
         <div className='flex flex-col gap-2 mt-4'>
           <Link to='/register' className='w-full text-center link'>
-            Eikö sinulla ole tiliä? Luo se tästä.
+            Don't have an account? Create one here.
           </Link>
           <Link to='/forgot-password' className='w-full text-center link'>
-            Unohditko salasanasi?
+            Forgot your password?
           </Link>
         </div>
       </Form>

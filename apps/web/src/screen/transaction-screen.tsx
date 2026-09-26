@@ -59,22 +59,17 @@ export function TransactionScreen() {
   }
 
   return (
-    <AppScreen
-      title={lang.transaction[selectedLanguage]}
-      onClose={() => navigate("/auth/overview")}
-    >
-      <main className='flex flex-col w-full gap-4 items-center px-4 bg-white flex-1 justify-center'>
+    <AppScreen title={"Transaction"} onClose={() => navigate("/auth/overview")}>
+      <main className='flex flex-col w-full gap-4 items-center h-pad bg-white flex-1 justify-center'>
         <Symbol />
-        <h2 className='font-semibold text-lg'>{lang.transaction[selectedLanguage]}</h2>
+        <h2 className='font-semibold text-lg'>Transaction</h2>
         <div className='flex flex-col w-full text-sm'>
           <div className='flex flex-col py-1'>
-            <span className='font-semibold text-sm'>{lang.transactionId[selectedLanguage]}</span>
+            <span className='font-semibold text-sm'>ID</span>
             <span className='font-mono text-sm'>{transaction?.id}</span>
           </div>
           <div className='flex flex-col py-1'>
-            <span className='font-semibold text-sm'>
-              {isReceived ? lang.sender[selectedLanguage] : lang.recipient[selectedLanguage]}
-            </span>
+            <span className='font-semibold text-sm'>{isReceived ? "Sender" : "Recipient"}</span>
             <span>
               {" "}
               {transaction?.type !== "mint"
@@ -83,22 +78,22 @@ export function TransactionScreen() {
             </span>
           </div>
           <div className='flex flex-col py-1'>
-            <span className='font-semibold text-sm'>{lang.message[selectedLanguage]}</span>
-            <span> {transaction?.message || lang.noMessage[selectedLanguage]}</span>
+            <span className='font-semibold text-sm'>Message</span>
+            <span> {transaction?.message || "No message."}</span>
           </div>
         </div>
         <div className='w-full border-b border-dashed border-gray-500' />
         <table className='w-full'>
           <tbody className='font-mono'>
             <tr className='px-2 py-1'>
-              <td>{lang.amount[selectedLanguage]}</td>
+              <td>Amount</td>
               <td className='text-right'>
                 <AmountText />
               </td>
             </tr>
 
             <tr className='bg-slate-200'>
-              <td>{lang.date[selectedLanguage]}</td>
+              <td>Date</td>
               <td className='text-right'>
                 {new Date(transaction?.created_at).toLocaleDateString("fi")}
               </td>
@@ -120,11 +115,7 @@ export function TransactionScreen() {
             <Pencil size='1rem' color={"var(--color-primary)"} />
           )}
 
-          {status === "copied"
-            ? lang.idCopied[selectedLanguage]
-            : isReceived
-              ? lang.copySenderId[selectedLanguage]
-              : lang.copyRecipientId[selectedLanguage]}
+          {status === "copied" ? "ID Copied" : isReceived ? "Copy sender ID" : "Copy recipient ID"}
         </Button>
         <NativeBannerAd />
       </main>

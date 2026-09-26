@@ -1,16 +1,16 @@
-import { useNavigate } from 'react-router-dom';
-import { QRCodeSVG } from 'qrcode.react';
-import { useAccount, useSession } from '@cbdc-markka/utils-react';
-import { useState } from 'react';
-import { AppScreen } from '../components/app-screen';
-import { Button } from '../components/button';
-import { Check, Pencil } from 'lucide-react';
-import toast from 'react-hot-toast';
-import { Core } from '@cbdc-markka/core';
+import { useNavigate } from "react-router-dom";
+import { QRCodeSVG } from "qrcode.react";
+import { useAccount, useSession } from "@cbdc-markka/utils-react";
+import { useState } from "react";
+import { AppScreen } from "../components/app-screen";
+import { Button } from "../components/button";
+import { Check, Pencil } from "lucide-react";
+import toast from "react-hot-toast";
+import { Core } from "@cbdc-markka/core";
 
 export function ReceiveScreen() {
   const { session } = useSession();
-  const [idCopyStatus, setIdCopyStatus] = useState('uncopied');
+  const [idCopyStatus, setIdCopyStatus] = useState("uncopied");
   const [amount, setAmount] = useState(null);
   const { account, isPending } = useAccount();
   const navigate = useNavigate();
@@ -19,21 +19,21 @@ export function ReceiveScreen() {
     if (!account) return;
 
     try {
-      setIdCopyStatus('loading');
+      setIdCopyStatus("loading");
       await navigator.clipboard.writeText(account.id);
-      setIdCopyStatus('copied');
+      setIdCopyStatus("copied");
     } catch (err) {
-      toast.error('Jotakin meni pieleen!');
+      toast.error("Something went wrong!");
     } finally {
-      setIdCopyStatus(prev => (prev === 'loading' ? 'uncopied' : prev));
+      setIdCopyStatus((prev) => (prev === "loading" ? "uncopied" : prev));
     }
   };
   return (
     <AppScreen headerShown={false}>
-      <main className='flex flex-col gap-4 items-center px-4 justify-center flex-1'>
-        <h2 className='text-xl font-semibold'>Vastaanota rahaa</h2>
+      <main className='flex flex-col gap-4 items-center h-pad justify-center flex-1'>
+        <h2 className='text-xl font-semibold'>Receive Money</h2>
         <p className='text-slate-500 text-sm text-center'>
-          Jaa tämä qr-koodi rahan lähettäjän kanssa. Saat maksun välittömästi.
+          Share this qr-code with the sender. You'll receive their payment immediately.
         </p>
 
         <div className='flex flex-col w-full gap-4 items-center'>
@@ -48,7 +48,7 @@ export function ReceiveScreen() {
             ) : null}
 
             <QRCodeSVG
-              value={`mrk:${account?.id}:${amount ? amount * Core.COIN : 'null'}`}
+              value={`mrk:${account?.id}:${amount ? amount * Core.COIN : "null"}`}
               size={150}
               level='H'
             />
@@ -63,40 +63,35 @@ export function ReceiveScreen() {
             <Button
               onClick={copyId}
               rounded
-              disabled={idCopyStatus === 'loading' || idCopyStatus === 'copied' || !account}
+              disabled={idCopyStatus === "loading" || idCopyStatus === "copied" || !account}
               type='button'
               variant='outlined'
-              color={idCopyStatus === 'copied' ? 'success' : 'primary'}>
-              {idCopyStatus === 'copied' ? (
+              color={idCopyStatus === "copied" ? "success" : "primary"}
+            >
+              {idCopyStatus === "copied" ? (
                 <>
-                  <Check
-                    size='1rem'
-                    color='var(--color-green-600)'
-                  />{' '}
-                  ID Kopioitu!
+                  <Check size='1rem' color='var(--color-green-600)' /> ID Copied
                 </>
               ) : (
                 <>
-                  <Pencil
-                    size='1rem'
-                    color='var(--color-primary)'></Pencil>
-                  Kopioi ID
+                  <Pencil size='1rem' color='var(--color-primary)'></Pencil>
+                  Copy ID
                 </>
               )}
             </Button>
           </div>
           <input
             value={amount}
-            onChange={e => {
+            onChange={(e) => {
               const value = e.target.value;
-              if (typeof value === 'string') {
-                const decimals = value.split('.').at(1);
+              if (typeof value === "string") {
+                const decimals = value.split(".").at(1);
                 if (decimals && decimals.length > 2) return;
               }
 
               setAmount(e.target.valueAsNumber);
             }}
-            placeholder='Määrä (vaihtoehtoinen)'
+            placeholder='Amount (optional)'
             type='number'
             min={1 / Core.COIN}
             step={1 / Core.COIN}
